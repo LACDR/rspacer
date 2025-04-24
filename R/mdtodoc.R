@@ -52,8 +52,8 @@ excel_to_doc_body <- function(path, document_name = NULL, verbose = T, file_type
   if (!file_type %in% c("xlsx", "csv", "tsv")) cli::cli_abort(message = c("x" = glue::glue("file_type is {file_type}. It should be xlsx, csv or tsv. Specify file_type manually or rename the input file.")))
   sections <- switch(file_type,
     "xlsx" = readxl::read_xlsx(path, col_names = c("name", "content"), col_types = "text"),
-    "csv" = readr::read_csv(path, col_names = c("name", "content"), col_types = "cc"),
-    "tsv" = readr::read_tsv(path, col_names = c("name", "content"), col_types = "cc")
+    "csv" = readr::read_csv(path, col_names = c("name", "content"), col_types = "cc", show_col_types = FALSE),
+    "tsv" = readr::read_tsv(path, col_names = c("name", "content"), col_types = "cc", show_col_types = FALSE)
   )
   # Set the RSpace entry title
   title <- excel_rspace_document_name(path, sections, document_name)

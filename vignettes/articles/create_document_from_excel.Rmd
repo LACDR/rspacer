@@ -1,0 +1,186 @@
+---
+title: "Tutorial: creating a document from a table"
+---
+
+## Before you start
+
+In this tutorial, we describe how to create an RSpace structured document from a delimited file format, such as Excel, TSV or CSV.
+We advice you to read `vignette("rspacer")` to make sure that you are ready to use this upload document.
+You need to install rspacer and set up your API url and API key before the start of this tutorial.
+
+## Load R libraries
+
+
+``` r
+library(tidyverse)
+library(rspacer)
+```
+
+## Check if the API is available
+
+This code checks if the API is available.
+The API status should be OK.
+
+
+``` r
+(res <- api_status())
+```
+
+```
+## $message
+## [1] "OK"
+## 
+## $rspaceVersion
+## [1] "1.109.1"
+```
+
+``` r
+stopifnot(res$message == "OK")
+```
+
+## Create a structured document in RSpace
+
+Create a Template from a Form with four text Fields named "Title", "Date", "Main part" and "Conclusion".
+Write down the unique Structured Document identifier, you will need it later.
+For us, this identifier was `SD377682`.
+Instructions to design a Template in RSpace can be found [here](https://documentation.researchspace.com/article/wxfk9gf0a0-templates).
+
+## Create a small example document
+
+Open Excel and create a csv file or run the code chunk below to create a small example file.
+It should have two columns.
+The first one should have all fields exactly the same as the template.
+The second column should have the content of each field in the correct format.
+If you use Excel, make sure that dates are saved as a string in the format dd-mm-yyyy.
+
+
+``` r
+(file_name <- "Template_example.csv")
+```
+
+```
+## [1] "Template_example.csv"
+```
+
+``` r
+data.frame(
+  name = c("Title", "Date", "Main part", "Conclusion"),
+  content = c("example title", "23-12-2024", "This is example text.",
+              "ready for uploading.")
+) |>
+  write_csv(file_name, col_names = FALSE)
+```
+
+## Specify the file name of the file to upload
+
+You need to define which file you want to upload.
+In this tutorial, we want to create a structured document from the file `Template_example.csv` that we created before.
+The path is defined in the `file_name` variable in the previous chunk.
+Here, we check that the file exists before we start the upload.
+We recommend to work with relative paths from within an R project, for example using the [`here` package](https://here.r-lib.org/).
+If this is not what you want, you need to specify the absolute file path.
+
+
+``` r
+stopifnot(file.exists(file_name))
+```
+
+### Upload the file
+
+To upload the document to the API inbox, this code chunk is sufficient and returns the created document.
+It creates a document from your Template_example.csv.
+The function works with CSV, TSV and XLSX file formats.
+Make sure that the template_id is the identifier of the template that you previously made in RSpace.
+
+
+``` r
+document_create_from_excel(
+    path = file_name,
+    template_id = "SD377682"
+)
+```
+
+```
+## Document created: <https://leiden.researchspace.com/globalId/SD409944>
+```
+
+The function `document_create_from_excel` has more parameters, for example to upload the document to the specified notebook or folder (click the function above to learn more).
+
+How to find the values for these parameters?
+Browse your RSpace folders using `folder_tree()` and use either the `id` or the `globalID`.
+Folder identifiers start with `FL`, notebook identifiers start with `NB`, structured document identifiers start with `SD`.
+For example:
+
+
+``` r
+folder_tree()
+```
+
+```
+## # A tibble: 8 × 9
+##       id globalId name                      created                  lastModified             parentFolderId type   `_links`   owner            
+##    <int> <chr>    <chr>                     <chr>                    <chr>                             <int> <chr>  <list>     <list>           
+## 1 368771 FL368771 i001_PhD_Hanneke          2024-04-12T11:37:28.954Z 2024-04-12T11:37:28.954Z           2790 FOLDER <list [1]> <named list [10]>
+## 2 366764 FL366764 Api Inbox                 2024-03-28T11:18:35.212Z 2024-03-28T11:18:35.212Z           2790 FOLDER <list [1]> <named list [10]>
+## 3 239405 FL239405 Ontologies                2023-04-17T12:54:17.626Z 2023-04-17T12:54:17.626Z           2790 FOLDER <list [1]> <named list [10]>
+## 4  37108 FL37108  Migrated_31-03_leegwaterh 2023-03-31T19:46:29.529Z 2023-03-31T19:46:29.529Z           2790 FOLDER <list [1]> <named list [10]>
+## 5  14411 FL14411  Testing_Rspace_folder     2023-01-12T21:07:31.965Z 2023-01-12T21:07:31.965Z           2790 FOLDER <list [1]> <named list [10]>
+## 6   2810 FL2810   Templates                 2022-12-22T12:19:03.336Z 2022-12-22T12:19:03.336Z           2790 FOLDER <list [1]> <named list [10]>
+## 7   2796 GF2796   Gallery                   2022-12-22T12:19:03.285Z 2022-12-22T12:19:03.285Z           2790 FOLDER <list [1]> <named list [10]>
+## 8   2791 FL2791   Shared                    2022-12-22T12:19:03.267Z 2022-12-22T12:19:03.267Z           2790 FOLDER <list [1]> <named list [10]>
+```
+
+``` r
+folder_tree("FL409926")
+```
+
+```
+## # A tibble: 3 × 9
+##       id globalId name                      created                  lastModified             parentFolderId type     `_links`   owner            
+##    <int> <chr>    <chr>                     <chr>                    <chr>                             <int> <chr>    <list>     <list>           
+## 2 409929 SD409929 a002_normalize_lipidomics 2025-04-24T10:01:59.773Z 2025-04-24T10:02:14.439Z         409926 DOCUMENT <list [1]> <named list [10]>
+## 3 409928 SD409928 a001_preprocess_data      2025-04-24T10:01:34.585Z 2025-04-24T10:01:52.594Z         409926 DOCUMENT <list [1]> <named list [10]>
+```
+
+Of course you can also find these by going to the web interface of your RSpace instance.
+You can also tag your documents using a `tags` vector, for example a status like "finished" or "in progress" or "failed".
+If you want to upload attachments to a field, use the `attachments` argument.
+Files will be added in the number of the field as an attachment.
+You can optionally replace an existing Document by specifying an `existing_file_id`.
+Use this only if a file needs to be replaced instead of created.
+
+In this example we add a Quarto code file and a HTML file Template_example.html as an attachment to the field with number 4.
+We also place the file in a specific folder, and add the "tutorial" tag.
+
+
+``` r
+attachment_file <- system.file("Template_example.html", package = "rspacer")
+(matching_code_file <- fs::path_ext_set(attachment_file, ".qmd"))
+```
+
+```
+## C:/Users/leegwaterh/Documents/R/win-library/4.4/rspacer/Template_example.qmd
+```
+
+``` r
+document_create_from_excel(
+  path = file_name,
+  template_id = "SD377682",
+  folder_id = "FL409926",
+  tags = c("tutorial"),
+  attachments = tibble(field = c(4, 4), path = c(attachment_file, matching_code_file))
+)
+```
+
+```
+## Rows: 4 Columns: 2
+## ── Column specification ──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────
+## Delimiter: ","
+## chr (2): name, content
+## 
+## ℹ Use `spec()` to retrieve the full column specification for this data.
+## ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.
+## File uploaded to <https://leiden.researchspace.com/globalId/GL409946>
+## File uploaded to <https://leiden.researchspace.com/globalId/GL409947>
+## Document created: <https://leiden.researchspace.com/globalId/SD409948>
+```
