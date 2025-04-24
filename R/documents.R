@@ -48,7 +48,7 @@ document_put <- function(body, existing_document_id, api_key = get_api_key()) {
     httr2::req_perform() |>
     httr2::resp_body_json() -> json
 
-  cli::cli_inform("Document replaced: {.url {create_global_id_link(json$globalId)}}")
+  cli::cli_inform("Document updated: {.url {create_global_id_link(json$globalId)}}")
 
   return(json)
 }
