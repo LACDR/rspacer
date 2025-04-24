@@ -70,57 +70,6 @@ excel_to_doc_body <- function(path, document_name = NULL, verbose = T, file_type
   )
 }
 
-attachment_upload <- function(doc_body, attachments, api_key) {
-  # QC
-  if (!is.data.frame(attachments)) cli::cli_abort(message = c("x" = "attachment is not provided as a tibble/data.frame"))
-  if (length(setdiff(c("field", "path"), names(attachments))) > 0) cli::cli_abort(message = c("x" = "attachments df is missing the `field` or `path` column"))
-  if (any(attachments$field < 1)) cli::cli_abort(message = c("x" = stringr::str_glue("attachments field number should be > 0")))
-  if (any(attachments$field > length(doc_body$fields))) cli::cli_abort(message = c("x" = stringr::str_glue("attachments field is higher than the total number of fields ({length(doc_body$fields)})")))
-
-  attachments <- attachments |>
-    dplyr::distinct() |> # filter out duplicates
-    dplyr::rowwise() |>
-    dplyr::mutate(rspace_id = file_upload(.data$path, api_key)$id)
-
-  attachments_res <- attachments |>
-    dplyr::mutate(html = glue::glue("<fileId={.data$rspace_id}>")) |>
-    dplyr::group_by(.data$field) |>
-    dplyr::summarize(html = paste0(.data$html, collapse = "\n"))
-
-  for(i in 1:nrow(attachments_res)) {
-    doc_body$fields[[attachments_res$field[i]]]$content <- glue::glue(
-      doc_body$fields[[attachments_res$field[i]]]$content,
-      "<p><b>Attachments:</b></p>",
-      attachments_res$html[i]
-    )
-  }
-
-  return(doc_body)
-}
-
-add_information_to_doc_body <- function(doc_body, template_id = NULL, folder_id = NULL, tags = NULL, attachments = NULL, api_key = get_api_key()) {
-  if (!is.null(template_id)) {
-    form_id <- parse_rspace_id(doc_to_form_id(template_id, verbose = F))
-    doc_body$form <- list(id = form_id)
-  }
-
-  if (!is.null(folder_id)) {
-    doc_body$parentFolderId <- parse_rspace_id(folder_id)
-  }
-
-  if (!is.null(tags)) {
-    doc_body$tags <- paste(tags, collapse = ",")
-  }
-
-  if (!is.null(attachments)) {
-    doc_body <- attachment_upload(doc_body, attachments, api_key)
-  }
-
-  # The API wants a plain array -> remove the names
-  names(doc_body$fields) <- NULL
-  return(doc_body)
-}
-
 #' Upload a html document to RSpace
 #'
 #' This function can upload a html document (e.g., generated from quarto) to an

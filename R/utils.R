@@ -53,3 +53,26 @@ can_overwrite <- function(path) {
 
   ui_yes("Overwrite pre-existing file {.file {path}}?")
 }
+
+add_information_to_doc_body <- function(doc_body, template_id = NULL, folder_id = NULL, tags = NULL, attachments = NULL, api_key = get_api_key()) {
+  if (!is.null(template_id)) {
+    form_id <- parse_rspace_id(doc_to_form_id(template_id, verbose = F))
+    doc_body$form <- list(id = form_id)
+  }
+
+  if (!is.null(folder_id)) {
+    doc_body$parentFolderId <- parse_rspace_id(folder_id)
+  }
+
+  if (!is.null(tags)) {
+    doc_body$tags <- paste(tags, collapse = ",")
+  }
+
+  if (!is.null(attachments)) {
+    doc_body <- attachment_upload(doc_body, attachments, api_key)
+  }
+
+  # The API wants a plain array -> remove the names
+  names(doc_body$fields) <- NULL
+  return(doc_body)
+}

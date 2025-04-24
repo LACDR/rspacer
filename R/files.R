@@ -52,3 +52,31 @@ file_download <- function(file_id, path = ".", api_key = get_api_key()) {
   cli::cli_inform("Downloaded to {.path {resp$body}} ({file.size(resp$body)} bytes)")
   return(invisible(path))
 }
+
+attachment_upload <- function(doc_body, attachments, api_key) {
+  # QC
+  if (!is.data.frame(attachments)) cli::cli_abort(message = c("x" = "attachment is not provided as a tibble/data.frame"))
+  if (length(setdiff(c("field", "path"), names(attachments))) > 0) cli::cli_abort(message = c("x" = "attachments df is missing the `field` or `path` column"))
+  if (any(attachments$field < 1)) cli::cli_abort(message = c("x" = stringr::str_glue("attachments field number should be > 0")))
+  if (any(attachments$field > length(doc_body$fields))) cli::cli_abort(message = c("x" = stringr::str_glue("attachments field is higher than the total number of fields ({length(doc_body$fields)})")))
+
+  attachments <- attachments |>
+    dplyr::distinct() |> # filter out duplicates
+    dplyr::rowwise() |>
+    dplyr::mutate(rspace_id = file_upload(.data$path, api_key)$id)
+
+  attachments_res <- attachments |>
+    dplyr::mutate(html = glue::glue("<fileId={.data$rspace_id}>")) |>
+    dplyr::group_by(.data$field) |>
+    dplyr::summarize(html = paste0(.data$html, collapse = "\n"))
+
+  for(i in 1:nrow(attachments_res)) {
+    doc_body$fields[[attachments_res$field[i]]]$content <- glue::glue(
+      doc_body$fields[[attachments_res$field[i]]]$content,
+      "<p><b>Attachments:</b></p>",
+      attachments_res$html[i]
+    )
+  }
+
+  return(doc_body)
+}
