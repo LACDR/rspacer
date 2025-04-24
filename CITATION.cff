@@ -1,0 +1,30 @@
+# --------------------------------------------
+# CITATION file created with {cffr} R package
+# See also: https://docs.ropensci.org/cffr/
+# --------------------------------------------
+ 
+cff-version: 1.2.0
+message: 'To cite package "rspacer" in publications use:'
+type: software
+license: MIT
+title: 'rspacer: RSpace API Wrapper'
+version: 0.1.0.9001
+abstract: Wrapper for the RSpace ELN (<https://www.researchspace.com/>) API. This
+  R package is not developed or endorsed by Research Space.
+authors:
+- family-names: Burger
+  given-names: Gerhard
+  email: burger.ga@gmail.com
+  orcid: https://orcid.org/0000-0003-1062-5576
+- family-names: Leegwater
+  given-names: Hanneke
+  email: h.leegwater@lacdr.leidenuniv.nl
+  orcid: https://orcid.org/0000-0001-6003-1544
+repository-code: https://github.com/lacdr/rspacer
+url: https://lacdr.github.io/rspacer/
+contact:
+- family-names: Burger
+  given-names: Gerhard
+  email: burger.ga@gmail.com
+  orcid: https://orcid.org/0000-0003-1062-5576
+

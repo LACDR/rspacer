@@ -4,7 +4,7 @@ title: "Tutorial document_create_from_html()"
 
 ## Before you start
 
-In this tutorial, we describe how to create an Rspace structured document from a Quarto file. We advice you to read the rspacer Get started website on <https://burgerga.github.io/rspacer/index.html> to make sure that you are ready to use this upload document. You need to install rspacer and set up your API url and API key before the start of this tutorial.
+In this tutorial, we describe how to create an Rspace structured document from a Quarto file. We advice you to read the rspacer [Get started website](https://lacdr.github.io/rspacer/index.html) to make sure that you are ready to use this upload document. You need to install rspacer and set up your API url and API key before the start of this tutorial.
 
 ## 1. Load R libraries
 

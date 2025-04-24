@@ -19,13 +19,13 @@ you to use the API directly from R using convenience functions.
 You can install the development version of rspacer with
 
 ``` r
-remotes::install_github("burgerga/rspacer")
+remotes::install_github("lacdr/rspacer")
 ```
 
 ## Usage
 
 See the [Get
-started](https://burgerga.github.io/rspacer/articles/rspacer.html)
+started](https://lacdr.github.io/rspacer/articles/rspacer.html)
 article how to use this package.
 
 **NB:** API Paging/rate limiting is not properly handled yet, but this
