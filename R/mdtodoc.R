@@ -202,14 +202,9 @@ document_append_from_html <- function(path, existing_document_id, tags = NULL, a
   doc_body$fields <- data_frame_to_fields(new_fields)
 
   # Update tags and upload attachments
-  if (!is.null(tags)) {
-    doc_body$tags <- paste(tags, collapse = ",")
-  }
-
-  if (!is.null(attachments)) {
-    # TODO maybe use the columnIndex because I already removed all non-altered field numbers?
-    doc_body <- attachment_upload(doc_body, attachments, api_key)
-  }
+  doc_body <- add_information_to_doc_body(doc_body, tags = tags,
+                                          attachments = attachments,
+                                          api_key = api_key)
 
   # Replace old fields with new fields
   json <- document_put(doc_body, existing_document_id)
@@ -243,7 +238,6 @@ document_create_from_excel <- function(path, file_type = NULL, document_name = N
       cli::cli_abort("Document has different number of fields ({length(doc_body$fields)}) than template ({nrow(template_fields)})")
     }
   } else {
-    # TODO Basic Document can have only 1 field
     doc_body$fields <- put_all_fields_in_one_field(doc_body$fields)
   }
   # Add tags, form ID and attachments to doc_body
