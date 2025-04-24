@@ -44,7 +44,7 @@ Config/testthat/edition: 3
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.3.2
 Language: en-US
-URL: https://github.com/burgerga/rspacer, https://burgerga.github.io/rspacer/
-BugReports: https://github.com/burgerga/rspacer/issues
+URL: https://github.com/lacdr/rspacer, https://lacdr.github.io/rspacer/
+BugReports: https://github.com/lacdr/rspacer/issues
 Config/Needs/website: rmarkdown
 VignetteBuilder: knitr

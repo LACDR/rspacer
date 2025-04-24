@@ -96,7 +96,7 @@ create_global_id_link <- function(global_id) {
 
 request <- function() {
   httr2::request(get_api_url()) |>
-    httr2::req_user_agent("rspacer (https://github.com/burgerga/rspacer)") |>
+    httr2::req_user_agent("rspacer (https://github.com/lacdr/rspacer)") |>
     httr2::req_error(body = rspace_error_body)
 }
 

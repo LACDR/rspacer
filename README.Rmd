@@ -26,11 +26,11 @@ The goal of rspacer is to wrap the [RSpace API](https://community.researchspace.
 You can install the development version of rspacer with
 
 ```{r, eval=F}
-remotes::install_github("burgerga/rspacer")
+remotes::install_github("lacdr/rspacer")
 ```
 
 ## Usage
 
-See the [Get started](https://burgerga.github.io/rspacer/articles/rspacer.html) article how to use this package.
+See the [Get started](https://lacdr.github.io/rspacer/articles/rspacer.html) article how to use this package.
 
 **NB:** API Paging/rate limiting is not properly handled yet, but this can be worked around.
