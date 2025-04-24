@@ -133,3 +133,28 @@ document_list_attachments <- function(doc_id, field_id = NULL, field_name = NULL
     fields_to_data_frame() -> attachment_list
   return(attachment_list)
 }
+
+#'
+#' Add attachments to existing document
+#'
+#' @param doc_id Unique identifier of the document
+#' @param attachments attachments to attach to the fields in tibble/data.frame
+#' form (one attachment per row), e.g., `tibble(field = 7, path = "file.txt")`
+#' @inheritParams api_status
+#'
+#' @returns
+#' A JSON object, invisibly. The function will raise an error if `doc_id` is not specified.
+#'
+#' @export
+document_add_attachments <- function(doc_id, attachments, api_key = get_api_key()) {
+  if (is.null(doc_id)) cli::cli_abort("Specify the document identifier `doc_id`")
+
+  doc_body <- list()
+  doc_body$fields <- document_retrieve(doc_id, api_key)$fields
+  doc_body <- add_information_to_doc_body(doc_body, attachments = attachments, api_key = api_key)
+
+  json <- document_put(doc_body, doc_id)
+
+  return(invisible(json))
+
+}
