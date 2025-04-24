@@ -14,7 +14,9 @@ document_retrieve <- function(doc_id, api_key = get_api_key()) {
 }
 
 document_post <- function(body, api_key = get_api_key()) {
-  body$tags <- paste0(c("rspacer", body$tags), collapse = ",")
+  if(getOption("rspacer.set_rspacer_tag", TRUE))
+    body$tags <- paste0(c("rspacer", body$tags), collapse = ",")
+
   request() |>
     httr2::req_url_path_append("documents") |>
     httr2::req_headers(`apiKey` = api_key) |>
@@ -28,9 +30,16 @@ document_post <- function(body, api_key = get_api_key()) {
 }
 
 document_put <- function(body, existing_document_id, api_key = get_api_key()) {
-  if(!is.null(body$tags)) {
-    ifelse("rspacer" %in% stringr::str_split_1(body$tags, ","), body$tags, paste0(c("rspacer", body$tags), collapse = ","))
+  if(getOption("rspacer.set_rspacer_tag", TRUE)) {
+    if(is.null(body$tags)) {
+      body$tags <- "rspacer"
+    } else {
+      body$tags <- ifelse("rspacer" %in% stringr::str_split_1(body$tags, ","),
+                          body$tags,
+                          paste0(c("rspacer", body$tags), collapse = ","))
+    }
   }
+
   request() |>
     httr2::req_url_path_append("documents", parse_rspace_id(existing_document_id)) |>
     httr2::req_headers(`apiKey` = api_key) |>
