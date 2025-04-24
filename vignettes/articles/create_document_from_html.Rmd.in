@@ -106,7 +106,7 @@ document_create_from_html(
   template_id = "SD377682",
   folder_id = "FL242398",
   tags = c("tutorial"),
-  attachment = tibble(field = 3, path = matching_code_file),
+  attachments = tibble(field = 3, path = matching_code_file),
   existing_document_id = NULL
 )
 ```

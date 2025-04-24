@@ -2,3 +2,5 @@
 knitr::knit("vignettes/rspacer.Rmd.in", output = "vignettes/rspacer.Rmd")
 knitr::knit("vignettes/articles/create_document_from_html.Rmd.in",
             output = "vignettes/articles/create_document_from_html.Rmd")
+knitr::knit("vignettes/articles/create_document_from_excel.Rmd.in",
+            output = "vignettes/articles/create_document_from_excel.Rmd")
