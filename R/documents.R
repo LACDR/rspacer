@@ -101,7 +101,7 @@ doc_to_form_id <- function(doc_id, verbose = TRUE, api_key = get_api_key()) {
 #' Returns `FALSE` if no files are attached to the field.
 #' @export
 document_list_attachments <- function(doc_id, field_id = NULL, field_name = NULL, api_key = get_api_key()) {
-  if (is.null(doc_id)) cli::cli_abort("Specify the documnt identifier `doc_id`")
+  if (is.null(doc_id)) cli::cli_abort("Specify the document identifier `doc_id`")
   # Check field id and/or name
   if (is.null(field_id) && is.null(field_name)) cli::cli_abort("Specify `field_id` or `field_name`")
   if (!is.null(field_id) && !is.null(field_name)) cli::cli_abort("Specify only `field_id` or `field_name`")
