@@ -5,7 +5,7 @@ articles:
   articles/create_document_from_excel: create_document_from_excel.html
   articles/create_document_from_html: create_document_from_html.html
   rspacer: rspacer.html
-last_built: 2025-04-24T12:37Z
+last_built: 2025-04-24T12:47Z
 urls:
   reference: https://lacdr.github.io/rspacer/reference
   article: https://lacdr.github.io/rspacer/articles
