@@ -169,7 +169,7 @@ document_create_from_html <- function(path, template_id = NULL, folder_id = NULL
   if (is.null(existing_document_id)) {
     json <- document_post(doc_body)
   } else {
-    json <- document_replace(doc_body, existing_document_id)
+    json <- document_put(doc_body, existing_document_id)
   }
 
   return(invisible(json))
@@ -263,7 +263,7 @@ document_append_from_html <- function(path, existing_document_id, tags = NULL, a
   }
 
   # Replace old fields with new fields
-  json <- document_replace(doc_body, existing_document_id)
+  json <- document_put(doc_body, existing_document_id)
   return(json)
 }
 
@@ -304,7 +304,7 @@ document_create_from_excel <- function(path, file_type = NULL, document_name = N
   if (is.null(existing_document_id)) {
     json <- document_post(doc_body)
   } else {
-    json <- document_replace(doc_body, existing_document_id)
+    json <- document_put(doc_body, existing_document_id)
   }
 
   return(invisible(json))

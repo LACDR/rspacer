@@ -27,7 +27,7 @@ document_post <- function(body, api_key = get_api_key()) {
   json
 }
 
-document_replace <- function(body, existing_document_id, api_key = get_api_key()) {
+document_put <- function(body, existing_document_id, api_key = get_api_key()) {
   if(!is.null(body$tags)) {
     ifelse("rspacer" %in% stringr::str_split_1(body$tags, ","), body$tags, paste0(c("rspacer", body$tags), collapse = ","))
   }
