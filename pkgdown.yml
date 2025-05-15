@@ -1,11 +1,11 @@
 pandoc: 3.1.11
-pkgdown: 2.1.1
+pkgdown: 2.1.2
 pkgdown_sha: ~
 articles:
-  articles/create_document_from_excel: create_document_from_excel.html
   articles/create_document_from_html: create_document_from_html.html
+  articles/create_document_from_table: create_document_from_table.html
   rspacer: rspacer.html
-last_built: 2025-04-24T12:47Z
+last_built: 2025-05-15T10:01Z
 urls:
   reference: https://lacdr.github.io/rspacer/reference
   article: https://lacdr.github.io/rspacer/articles

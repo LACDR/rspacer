@@ -5,12 +5,12 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<title>Tutorial: creating a document from html • rspacer</title>
+<title>Tutorial: creating a document from a tabular file • rspacer</title>
 <script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="../deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet">
 <script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="../deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
 <link href="../deps/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet">
-<script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Tutorial: creating a document from html">
+<script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Tutorial: creating a document from a tabular file">
 </head>
 <body>
     <a href="#main" class="visually-hidden-focusable">Skip to contents</a>
@@ -58,11 +58,11 @@
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
 
-      <h1>Tutorial: creating a document from html</h1>
+      <h1>Tutorial: creating a document from a tabular file</h1>
             
       
-      <small class="dont-index">Source: <a href="https://github.com/lacdr/rspacer/blob/main/vignettes/articles/create_document_from_html.Rmd" class="external-link"><code>vignettes/articles/create_document_from_html.Rmd</code></a></small>
-      <div class="d-none name"><code>create_document_from_html.Rmd</code></div>
+      <small class="dont-index">Source: <a href="https://github.com/lacdr/rspacer/blob/main/vignettes/articles/create_document_from_table.Rmd" class="external-link"><code>vignettes/articles/create_document_from_table.Rmd</code></a></small>
+      <div class="d-none name"><code>create_document_from_table.Rmd</code></div>
     </div>
 
     
@@ -71,11 +71,11 @@
 <h2 id="before-you-start">Before you start<a class="anchor" aria-label="anchor" href="#before-you-start"></a>
 </h2>
 <p>In this tutorial, we describe how to create an RSpace structured
-document from a Quarto file using
-<code><a href="../reference/document_create_from_html.html">document_create_from_html()</a></code>. We advice you to read
-<code><a href="../articles/rspacer.html">vignette("rspacer")</a></code> to make sure that you are ready to use
-this upload document. You need to install rspacer and set up your API
-url and API key before the start of this tutorial.</p>
+document from a delimited file format, such as Excel, TSV or CSV. We
+advice you to read <code><a href="../articles/rspacer.html">vignette("rspacer")</a></code> to make sure that
+you are ready to use this upload document. You need to install rspacer
+and set up your API url and API key before the start of this
+tutorial.</p>
 </div>
 <div class="section level2">
 <h2 id="load-r-libraries">Load R libraries<a class="anchor" aria-label="anchor" href="#load-r-libraries"></a>
@@ -95,7 +95,7 @@ OK.</p>
 <span><span class="co">## [1] "OK"</span></span>
 <span><span class="co">## </span></span>
 <span><span class="co">## $rspaceVersion</span></span>
-<span><span class="co">## [1] "1.107.1"</span></span></code></pre>
+<span><span class="co">## [1] "1.109.2"</span></span></code></pre>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/stopifnot.html" class="external-link">stopifnot</a></span><span class="op">(</span><span class="va">res</span><span class="op">$</span><span class="va">message</span> <span class="op">==</span> <span class="st">"OK"</span><span class="op">)</span></span></code></pre></div>
 </div>
@@ -104,74 +104,68 @@ OK.</p>
 </h2>
 <p>Create a Template from a Form with four text Fields named “Title”,
 “Date”, “Main part” and “Conclusion”. Write down the unique Structured
-Document identifier, you will need it later. Instructions to design a
-Template in RSpace can be found <a href="https://documentation.researchspace.com/article/wxfk9gf0a0-templates" class="external-link">here</a>.</p>
+Document identifier, you will need it later. For us, this identifier was
+<code>SD377682</code>. Instructions to design a Template in RSpace can
+be found <a href="https://documentation.researchspace.com/article/wxfk9gf0a0-templates" class="external-link">here</a>.</p>
 </div>
 <div class="section level2">
 <h2 id="create-a-small-example-document">Create a small example document<a class="anchor" aria-label="anchor" href="#create-a-small-example-document"></a>
 </h2>
-<ol style="list-style-type: decimal">
-<li>The rspacer package has an example file. In RStudio, go to File &gt;
-New File &gt; R Markdown. At the moment (2025-02-06) there is not yet an
-option to create Quarto files from template, which is why we chose to
-provide the file as an R Markdown template.</li>
-<li>On the left, click From Template.</li>
-<li>Choose the rspacer Template example. Save the file as a Quarto file
-(<code>.qmd</code>).</li>
-<li>Render the file to a html report.</li>
-</ol>
-<p>Alternatively, you can create a new Quarto document. Include the same
-headers as the RSpace Template that you previously created, and make
-sure that these headers all have two hashtags (h2 headers, with
-<code>##</code>). You can write any code, or use h3 or h4 headers (with
-three or four hashtags), as long the h2 headers are identical to your
-structured document template.</p>
+<p>Open Excel and create a csv file or run the code chunk below to
+create a small example file. It should have two columns. The first one
+should have all fields exactly the same as the template. The second
+column should have the content of each field in the correct format. If
+you use Excel, make sure that dates are saved as a string in the format
+dd-mm-yyyy.</p>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="op">(</span><span class="va">file_name</span> <span class="op">&lt;-</span> <span class="st">"Template_example.csv"</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">## [1] "Template_example.csv"</span></span></code></pre>
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span></span>
+<span>  name <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Title"</span>, <span class="st">"Date"</span>, <span class="st">"Main part"</span>, <span class="st">"Conclusion"</span><span class="op">)</span>,</span>
+<span>  content <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"example title"</span>, <span class="st">"23-12-2024"</span>, <span class="st">"This is example text."</span>,</span>
+<span>              <span class="st">"ready for uploading."</span><span class="op">)</span></span>
+<span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">write_csv</span><span class="op">(</span><span class="va">file_name</span>, col_names <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="specify-the-file-name-of-the-file-to-upload">Specify the file name of the file to upload<a class="anchor" aria-label="anchor" href="#specify-the-file-name-of-the-file-to-upload"></a>
 </h2>
-<p>rspacer needs to know which file you want to upload. In this
-tutorial, we want to create a structured document from the file
-<code>Template_example.html</code> that we created before, and we want
-to upload the <code>.qmd</code> file as an attachment. We recommend to
-work with relative paths from within an R project (you can specify these
-using the <a href="https://here.r-lib.org/" class="external-link"><code>here</code>
+<p>You need to define which file you want to upload. In this tutorial,
+we want to create a structured document from the file
+<code>Template_example.csv</code> that we created before. The path is
+defined in the <code>file_name</code> variable in the previous chunk.
+Here, we check that the file exists before we start the upload. We
+recommend to work with relative paths from within an R project, for
+example using the <a href="https://here.r-lib.org/" class="external-link"><code>here</code>
 package</a>. If this is not what you want, you need to specify the
-absolute file path. The code below assumes that the html file and qmd
-file have the same filename. If this is not the case, change both the
-<code>file_name</code> and the <code>matching_code_file</code>
-variables.</p>
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="op">(</span><span class="va">file_name</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"Template_example.html"</span>, package <span class="op">=</span> <span class="st">"rspacer"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">## [1] "/Users/gerhard/GitHub/rspacer/inst/Template_example.html"</span></span></code></pre>
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="op">(</span><span class="va">matching_code_file</span> <span class="op">&lt;-</span> <span class="fu">fs</span><span class="fu">::</span><span class="fu"><a href="https://fs.r-lib.org/reference/path_file.html" class="external-link">path_ext_set</a></span><span class="op">(</span><span class="va">file_name</span>, <span class="st">".qmd"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">## /Users/gerhard/GitHub/rspacer/inst/Template_example.qmd</span></span></code></pre>
-<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/stopifnot.html" class="external-link">stopifnot</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/files.html" class="external-link">file.exists</a></span><span class="op">(</span><span class="va">file_name</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/stopifnot.html" class="external-link">stopifnot</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/files.html" class="external-link">file.exists</a></span><span class="op">(</span><span class="va">matching_code_file</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+absolute file path.</p>
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/stopifnot.html" class="external-link">stopifnot</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/files.html" class="external-link">file.exists</a></span><span class="op">(</span><span class="va">file_name</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <div class="section level3">
 <h3 id="upload-the-file">Upload the file<a class="anchor" aria-label="anchor" href="#upload-the-file"></a>
 </h3>
-<p>To upload the document and attachment to the API inbox, this code
-chunk is sufficient:</p>
-<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="../reference/document_create_from_html.html">document_create_from_html</a></span><span class="op">(</span></span>
+<p>To upload the document to the API inbox, this code chunk is
+sufficient and returns the created document. It creates a document from
+your Template_example.csv. The function works with CSV, TSV and XLSX
+file formats. Make sure that the template_id is the identifier of the
+template that you previously made in RSpace.</p>
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/document_create_from_tabfile.html">document_create_from_tabfile</a></span><span class="op">(</span></span>
 <span>    path <span class="op">=</span> <span class="va">file_name</span>,</span>
-<span>    template_id <span class="op">=</span> <span class="va">template_id</span></span>
+<span>    template_id <span class="op">=</span> <span class="st">"SD377682"</span></span>
 <span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">## Document created: &lt;https://leiden.researchspace.com/globalId/SD402050&gt;</span></span></code></pre>
-<p>However, <code><a href="../reference/document_create_from_html.html">document_create_from_html()</a></code> has more
-parameters, in case you want to, for example, upload the file to a
-specific folder or replace an existing document (click the function
-above to learn more).</p>
+<pre><code><span><span class="co">## Document created: &lt;https://leiden.researchspace.com/globalId/SD412229&gt;</span></span></code></pre>
+<p>The function <code><a href="../reference/document_create_from_tabfile.html">document_create_from_tabfile()</a></code> has more
+parameters, for example to upload the document to the specified notebook
+or folder (click the function above to learn more).</p>
 <p>How to find the values for these parameters? Browse your RSpace
 folders using <code><a href="../reference/folder_tree.html">folder_tree()</a></code> and use either the
 <code>id</code> or the <code>globalID</code>. Folder identifiers start
 with <code>FL</code>, notebook identifiers start with <code>NB</code>,
 structured document identifiers start with <code>SD</code>. For
 example:</p>
-<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/folder_tree.html">folder_tree</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## # A tibble: 10 × 9</span></span>
 <span><span class="co">##        id globalId name                   created          lastModified parentFolderId type  `_links` owner       </span></span>
@@ -186,35 +180,41 @@ example:</p>
 <span><span class="co">##  8   7833 FL7833   Templates              2022-12-22T12:3… 2022-12-22T…           7813 FOLD… &lt;list&gt;   &lt;named list&gt;</span></span>
 <span><span class="co">##  9   7819 GF7819   Gallery                2022-12-22T12:3… 2022-12-22T…           7813 FOLD… &lt;list&gt;   &lt;named list&gt;</span></span>
 <span><span class="co">## 10   7814 FL7814   Shared                 2022-12-22T12:3… 2022-12-22T…           7813 FOLD… &lt;list&gt;   &lt;named list&gt;</span></span></code></pre>
-<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="../reference/folder_tree.html">folder_tree</a></span><span class="op">(</span><span class="st">"FL7833"</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">## # A tibble: 6 × 9</span></span>
-<span><span class="co">##       id globalId name                             created lastModified parentFolderId type  `_links` owner       </span></span>
-<span><span class="co">##    &lt;int&gt; &lt;chr&gt;    &lt;chr&gt;                            &lt;chr&gt;   &lt;chr&gt;                 &lt;int&gt; &lt;chr&gt; &lt;list&gt;   &lt;list&gt;      </span></span>
-<span><span class="co">## 1 242238 SD242238 LACDR-ISA - Contact v0.2.0       2023-0… 2023-11-06T…           7833 DOCU… &lt;list&gt;   &lt;named list&gt;</span></span>
-<span><span class="co">## 2 242213 SD242213 LACDR-ISA - Publication v0.1.0   2023-0… 2023-11-06T…           7833 DOCU… &lt;list&gt;   &lt;named list&gt;</span></span>
-<span><span class="co">## 3 260025 SD260025 LACDR-ISA - Assay (General) v1.… 2023-1… 2023-11-06T…           7833 DOCU… &lt;list&gt;   &lt;named list&gt;</span></span>
-<span><span class="co">## 4 260008 SD260008 LACDR-ISA - Study v1.0.0         2023-1… 2023-11-06T…           7833 DOCU… &lt;list&gt;   &lt;named list&gt;</span></span>
-<span><span class="co">## 5 260005 SD260005 LACDR-ISA - Investigation v1.0.0 2023-1… 2023-11-06T…           7833 DOCU… &lt;list&gt;   &lt;named list&gt;</span></span>
-<span><span class="co">## 6 242170 SD242170 DDS Beltman - In Silico Assay v… 2023-0… 2023-05-30T…           7833 DOCU… &lt;list&gt;   &lt;named list&gt;</span></span></code></pre>
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/folder_tree.html">folder_tree</a></span><span class="op">(</span><span class="st">"FL409926"</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">## # A tibble: 4 × 9</span></span>
+<span><span class="co">##       id globalId name                      created        lastModified parentFolderId type  `_links` owner       </span></span>
+<span><span class="co">##    &lt;int&gt; &lt;chr&gt;    &lt;chr&gt;                     &lt;chr&gt;          &lt;chr&gt;        &lt;lgl&gt;          &lt;chr&gt; &lt;list&gt;   &lt;list&gt;      </span></span>
+<span><span class="co">## 1 409948 SD409948 example title             2025-04-24T10… 2025-04-24T… NA             DOCU… &lt;list&gt;   &lt;named list&gt;</span></span>
+<span><span class="co">## 2 409942 SD409942 example title             2025-04-24T10… 2025-04-24T… NA             DOCU… &lt;list&gt;   &lt;named list&gt;</span></span>
+<span><span class="co">## 3 409929 SD409929 a002_normalize_lipidomics 2025-04-24T10… 2025-04-24T… NA             DOCU… &lt;list&gt;   &lt;named list&gt;</span></span>
+<span><span class="co">## 4 409928 SD409928 a001_preprocess_data      2025-04-24T10… 2025-04-24T… NA             DOCU… &lt;list&gt;   &lt;named list&gt;</span></span></code></pre>
 <p>Of course you can also find these by going to the web interface of
 your RSpace instance. You can also tag your documents using a
 <code>tags</code> vector, for example a status like “finished” or “in
-progress” or “failed”. Finally, you can upload attachments, these need
-to be specified using list of lists, with the field number and the path
-of the file that needs to be attached to that field. An example where we
-also upload the source <code>.qmd</code> file is provided below.</p>
-<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="../reference/document_create_from_html.html">document_create_from_html</a></span><span class="op">(</span></span>
+progress” or “failed”. If you want to upload attachments to a field, use
+the <code>attachments</code> argument. Files will be added in the number
+of the field as an attachment. You can optionally replace an existing
+Document by specifying an <code>existing_file_id</code>. Use this only
+if a file needs to be replaced instead of created.</p>
+<p>In this example we add a Quarto code file and a HTML file
+Template_example.html as an attachment to the field with number 4. We
+also place the file in a specific folder, and add the “tutorial”
+tag.</p>
+<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">attachment_file</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"Template_example.html"</span>, package <span class="op">=</span> <span class="st">"rspacer"</span><span class="op">)</span></span>
+<span><span class="op">(</span><span class="va">matching_code_file</span> <span class="op">&lt;-</span> <span class="fu">fs</span><span class="fu">::</span><span class="fu"><a href="https://fs.r-lib.org/reference/path_file.html" class="external-link">path_ext_set</a></span><span class="op">(</span><span class="va">attachment_file</span>, <span class="st">".qmd"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">## /Users/gerhard/GitHub/rspacer/inst/Template_example.qmd</span></span></code></pre>
+<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/document_create_from_tabfile.html">document_create_from_tabfile</a></span><span class="op">(</span></span>
 <span>  path <span class="op">=</span> <span class="va">file_name</span>,</span>
 <span>  template_id <span class="op">=</span> <span class="st">"SD377682"</span>,</span>
-<span>  folder_id <span class="op">=</span> <span class="st">"FL242398"</span>,</span>
 <span>  tags <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"tutorial"</span><span class="op">)</span>,</span>
-<span>  attachments <span class="op">=</span> <span class="fu">tibble</span><span class="op">(</span>field <span class="op">=</span> <span class="fl">3</span>, path <span class="op">=</span> <span class="va">matching_code_file</span><span class="op">)</span>,</span>
-<span>  existing_document_id <span class="op">=</span> <span class="cn">NULL</span></span>
+<span>  attachments <span class="op">=</span> <span class="fu">tibble</span><span class="op">(</span>field <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">4</span>, <span class="fl">4</span><span class="op">)</span>, path <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">attachment_file</span>, <span class="va">matching_code_file</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">## File uploaded to &lt;https://leiden.researchspace.com/globalId/GL402052&gt;</span></span>
-<span><span class="co">## Document created: &lt;https://leiden.researchspace.com/globalId/SD402053&gt;</span></span></code></pre>
+<pre><code><span><span class="co">## File uploaded to &lt;https://leiden.researchspace.com/globalId/GL412231&gt;</span></span>
+<span><span class="co">## File uploaded to &lt;https://leiden.researchspace.com/globalId/GL412232&gt;</span></span>
+<span><span class="co">## Document created: &lt;https://leiden.researchspace.com/globalId/SD412233&gt;</span></span></code></pre>
 </div>
 </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
