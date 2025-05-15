@@ -9,7 +9,7 @@ put_all_fields_in_one_field(doc_body_fields, use_html_sep = T)
 \arguments{
 \item{doc_body_fields}{multiple fields in a list}
 
-\item{use_html_sep}{If \code{TRUE}, each field is placed in a html paragraph, with \if{html}{\out{</p>}} and \if{html}{\out{<p>}}}
+\item{use_html_sep}{If \code{TRUE}, each field is placed in a html paragraph}
 }
 \value{
 a list with one field, with only content, all contents from other fields, separated by \verb{\\n}.
