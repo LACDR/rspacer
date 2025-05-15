@@ -26,7 +26,7 @@ html_to_doc_body <- function(path, verbose = T) {
   )
 }
 
-excel_rspace_document_name <- function(path, sections, document_name = NULL) {
+create_rspace_document_name <- function(path, sections, document_name = NULL) {
   # If a name is already supplied, just use that
   if (!is.null(document_name)) {
     if (!is.character(document_name)) cli::cli_abort(message = c("x" = "Document name should be a character string or NULL"))
@@ -44,7 +44,7 @@ excel_rspace_document_name <- function(path, sections, document_name = NULL) {
   return(path |> fs::path_file() |> fs::path_ext_remove())
 }
 
-excel_to_doc_body <- function(path, document_name = NULL, verbose = T, file_type = NULL) {
+tabfile_to_doc_body <- function(path, document_name = NULL, verbose = T, file_type = NULL) {
   if (!file.exists(path)) cli::cli_abort(message = c("x" = glue::glue("File not found: {path}")))
   if (is.null(file_type)) {
     file_type <- fs::path_ext(path)
@@ -56,7 +56,7 @@ excel_to_doc_body <- function(path, document_name = NULL, verbose = T, file_type
     "tsv" = readr::read_tsv(path, col_names = c("name", "content"), col_types = "cc", show_col_types = FALSE)
   )
   # Set the RSpace entry title
-  title <- excel_rspace_document_name(path, sections, document_name)
+  title <- create_rspace_document_name(path, sections, document_name)
 
   if (verbose) {
     cli::cli_inform("{.field Title}: {title}")
@@ -224,9 +224,9 @@ document_append_from_html <- function(path, existing_document_id, tags = NULL, a
 #' @inheritParams api_status
 #' @inheritParams document_create_from_html
 #' @export
-document_create_from_excel <- function(path, file_type = NULL, document_name = NULL, template_id = NULL, folder_id = NULL,
+document_create_from_tabfile <- function(path, file_type = NULL, document_name = NULL, template_id = NULL, folder_id = NULL,
                                        tags = NULL, attachments = NULL, existing_document_id = NULL, api_key = get_api_key()) {
-  doc_body <- excel_to_doc_body(path, document_name = document_name, verbose = F, file_type = file_type)
+  doc_body <- tabfile_to_doc_body(path, document_name = document_name, verbose = F, file_type = file_type)
 
   if (!is.null(existing_document_id)) {
     template_id <- existing_document_id

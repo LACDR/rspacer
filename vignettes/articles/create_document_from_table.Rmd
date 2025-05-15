@@ -1,5 +1,5 @@
 ---
-title: "Tutorial: creating a document from a table"
+title: "Tutorial: creating a document from a tabular file"
 ---
 
 
@@ -96,17 +96,17 @@ Make sure that the template_id is the identifier of the template that you previo
 
 
 ``` r
-document_create_from_excel(
+document_create_from_tabfile(
     path = file_name,
     template_id = "SD377682"
 )
 ```
 
 ```
-## Document created: <https://leiden.researchspace.com/globalId/SD412208>
+## Document created: <https://leiden.researchspace.com/globalId/SD412229>
 ```
 
-The function `document_create_from_excel()` has more parameters, for example to upload the document to the specified notebook or folder (click the function above to learn more).
+The function `document_create_from_tabfile()` has more parameters, for example to upload the document to the specified notebook or folder (click the function above to learn more).
 
 How to find the values for these parameters?
 Browse your RSpace folders using `folder_tree()` and use either the `id` or the `globalID`.
@@ -169,7 +169,7 @@ attachment_file <- system.file("Template_example.html", package = "rspacer")
 ```
 
 ``` r
-document_create_from_excel(
+document_create_from_tabfile(
   path = file_name,
   template_id = "SD377682",
   tags = c("tutorial"),
@@ -178,7 +178,7 @@ document_create_from_excel(
 ```
 
 ```
-## File uploaded to <https://leiden.researchspace.com/globalId/GL412210>
-## File uploaded to <https://leiden.researchspace.com/globalId/GL412211>
-## Document created: <https://leiden.researchspace.com/globalId/SD412212>
+## File uploaded to <https://leiden.researchspace.com/globalId/GL412231>
+## File uploaded to <https://leiden.researchspace.com/globalId/GL412232>
+## Document created: <https://leiden.researchspace.com/globalId/SD412233>
 ```

@@ -1,5 +1,5 @@
 ---
-title: "Tutorial: creating a document from a table"
+title: "Tutorial: creating a document from a tabular file"
 ---
 
 ```{r, include = FALSE}
@@ -75,13 +75,13 @@ The function works with CSV, TSV and XLSX file formats.
 Make sure that the template_id is the identifier of the template that you previously made in RSpace.
 
 ```{r}
-document_create_from_excel(
+document_create_from_tabfile(
     path = file_name,
     template_id = "SD377682"
 )
 ```
 
-The function `document_create_from_excel()` has more parameters, for example to upload the document to the specified notebook or folder (click the function above to learn more).
+The function `document_create_from_tabfile()` has more parameters, for example to upload the document to the specified notebook or folder (click the function above to learn more).
 
 How to find the values for these parameters?
 Browse your RSpace folders using `folder_tree()` and use either the `id` or the `globalID`.
@@ -107,7 +107,7 @@ We also place the file in a specific folder, and add the "tutorial" tag.
 attachment_file <- system.file("Template_example.html", package = "rspacer")
 (matching_code_file <- fs::path_ext_set(attachment_file, ".qmd"))
 
-document_create_from_excel(
+document_create_from_tabfile(
   path = file_name,
   template_id = "SD377682",
   tags = c("tutorial"),
