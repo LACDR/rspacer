@@ -8,6 +8,7 @@
 [![Project Status: WIP – Initial development is in progress, but there
 has not yet been a stable, usable release suitable for the
 public.](https://www.repostatus.org/badges/latest/wip.svg)](https://www.repostatus.org/#wip)
+[![R-CMD-check](https://github.com/LACDR/rspacer/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/LACDR/rspacer/actions/workflows/R-CMD-check.yaml)
 <!-- badges: end -->
 
 The goal of rspacer is to wrap the [RSpace
@@ -25,8 +26,8 @@ remotes::install_github("lacdr/rspacer")
 ## Usage
 
 See the [Get
-started](https://lacdr.github.io/rspacer/articles/rspacer.html)
-article how to use this package.
+started](https://lacdr.github.io/rspacer/articles/rspacer.html) article
+how to use this package.
 
 **NB:** API Paging/rate limiting is not properly handled yet, but this
 can be worked around.
