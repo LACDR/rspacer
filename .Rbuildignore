@@ -8,3 +8,5 @@
 ^\.github$
 ^vignettes/articles$
 ^CITATION\.cff$
+^cran-comments\.md$
+^CRAN-SUBMISSION$
