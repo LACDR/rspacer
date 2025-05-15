@@ -2,6 +2,10 @@
 title: "Tutorial: creating a document from html"
 ---
 
+```{r, include = FALSE}
+options(tidyverse.quiet = TRUE)
+```
+
 ## Before you start
 
 In this tutorial, we describe how to create an RSpace structured document from a

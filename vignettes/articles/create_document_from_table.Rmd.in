@@ -2,6 +2,10 @@
 title: "Tutorial: creating a document from a table"
 ---
 
+```{r, include = FALSE}
+options(tidyverse.quiet = TRUE)
+```
+
 ## Before you start
 
 In this tutorial, we describe how to create an RSpace structured document from a delimited file format, such as Excel, TSV or CSV.
@@ -77,7 +81,7 @@ document_create_from_excel(
 )
 ```
 
-The function `document_create_from_excel` has more parameters, for example to upload the document to the specified notebook or folder (click the function above to learn more).
+The function `document_create_from_excel()` has more parameters, for example to upload the document to the specified notebook or folder (click the function above to learn more).
 
 How to find the values for these parameters?
 Browse your RSpace folders using `folder_tree()` and use either the `id` or the `globalID`.
@@ -106,7 +110,6 @@ attachment_file <- system.file("Template_example.html", package = "rspacer")
 document_create_from_excel(
   path = file_name,
   template_id = "SD377682",
-  folder_id = "FL409926",
   tags = c("tutorial"),
   attachments = tibble(field = c(4, 4), path = c(attachment_file, matching_code_file))
 )
