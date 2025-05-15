@@ -8,10 +8,6 @@ vignette: >
 ---
 
 ```{r, include = FALSE}
-knitr::opts_chunk$set(
-  collapse = TRUE,
-  comment = "#>"
-)
 options(tidyverse.quiet = TRUE)
 ```
 
@@ -80,4 +76,4 @@ tibble(fields = res$fields) |>
 
 #### Create
 
-Creating (structured) documents is slightly more involved, see "create_document_from_html" in the Articles tab for more info.
+Creating (structured) documents is slightly more involved, see the Articles tab for more info.
