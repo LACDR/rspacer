@@ -19,7 +19,7 @@ The goal of rspacer is to "wrap" the [RSpace API](https://community.researchspac
 
 To use rspacer it needs to know two things:
 
-1. The API URL for your RSpace instance (this is typically the URL of your RSpace instance followed by `api/v1`, e.g. https://leiden.researchspace.com/api/v1)
+1. The API URL for your RSpace instance (this is typically the URL of your RSpace instance followed by `api/v1`, e.g., `https://leiden.researchspace.com/api/v1`)
 2. Your API key, which is an authentication token you can use instead of your username and password. To create an API key go to 'Manage API Key' section of your RSpace profile page (MyRSpace -> My Profile). **You should keep your API key private.** You can regenerate an API key at any time, which will invalidate the old key.
 
 You can use the `set_api_url()` and `set_api_key()` functions to make these available to rspacer in the current session.
