@@ -123,7 +123,7 @@ document_list_attachments <- function(doc_id, field_id = NULL, field_name = NULL
 
   fields |>
     dplyr::pull(files) |>
-    unlist(recursive = F) -> files
+    unlist(recursive = FALSE) -> files
   # Return FALSE if no files are attached
   if (is.null(files)) {
     return(FALSE)

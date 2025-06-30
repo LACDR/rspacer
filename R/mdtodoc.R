@@ -1,4 +1,4 @@
-html_to_doc_body <- function(path, verbose = T) {
+html_to_doc_body <- function(path, verbose = TRUE) {
   xml <- xml2::read_html(path)
   title <- rvest::html_element(xml, xpath = "//title") |> rvest::html_text()
 
@@ -34,7 +34,7 @@ create_rspace_document_name <- function(path, sections, document_name = NULL) {
   }
 
   # Otherwise, test if any sections are named title or name (case-insensitive)
-  detected <- stringr::str_detect(sections$name, stringr::regex("title|name", ignore_case = T))
+  detected <- stringr::str_detect(sections$name, stringr::regex("title|name", ignore_case = TRUE))
   if (any(detected)) {
     # Return first field that matches
     return(sections$content[detected][1])
@@ -44,7 +44,7 @@ create_rspace_document_name <- function(path, sections, document_name = NULL) {
   return(path |> fs::path_file() |> fs::path_ext_remove())
 }
 
-tabfile_to_doc_body <- function(path, document_name = NULL, verbose = T, file_type = NULL) {
+tabfile_to_doc_body <- function(path, document_name = NULL, verbose = TRUE, file_type = NULL) {
   if (!file.exists(path)) cli::cli_abort(message = c("x" = glue::glue("File not found: {path}")))
   if (is.null(file_type)) {
     file_type <- fs::path_ext(path)
@@ -88,7 +88,7 @@ tabfile_to_doc_body <- function(path, document_name = NULL, verbose = T, file_ty
 #' @export
 document_create_from_html <- function(path, template_id = NULL, folder_id = NULL, tags = NULL, attachments = NULL,
                                       existing_document_id = NULL, api_key = get_api_key()) {
-  doc_body <- html_to_doc_body(path, verbose = F)
+  doc_body <- html_to_doc_body(path, verbose = FALSE)
 
   if (!is.null(existing_document_id)) {
     template_id <- existing_document_id
@@ -143,7 +143,7 @@ document_append_from_html <- function(path, existing_document_id, tags = NULL, a
   current_fields <- doc_get_fields(existing_document_id)
 
   # Create a doc_body from the html file and process the fields to be put in a tibble
-  doc_body <- html_to_doc_body(path, verbose = F)
+  doc_body <- html_to_doc_body(path, verbose = FALSE)
   doc_body_types <- current_fields |>
     dplyr::filter(.data$name %in% names(doc_body$fields)) |>
     dplyr::pull(.data$type)
@@ -171,7 +171,7 @@ document_append_from_html <- function(path, existing_document_id, tags = NULL, a
     } else {
       cli::cli_abort(message = paste0("Some fields are missing in the html to append: ",
         paste0(setdiff(current_fields$name, new_fields$name), collapse = ", "),
-        ". Specify allow_missing_fields = T if you still want to append the matching fields.",
+        ". Specify allow_missing_fields = TRUE if you still want to append the matching fields.",
         collapse = ", "
       ))
     }
@@ -186,7 +186,7 @@ document_append_from_html <- function(path, existing_document_id, tags = NULL, a
     } else {
       cli::cli_abort(message = paste0("The following fields are not in the RSpace document: ",
         paste0(setdiff(new_fields$name, current_fields$name), collapse = ", "),
-        ". Specify allow_missing_fields = T if you want to ignore these missing fields.",
+        ". Specify allow_missing_fields = TRUE if you want to ignore these missing fields.",
         collapse = ", "
       ))
     }
@@ -195,7 +195,7 @@ document_append_from_html <- function(path, existing_document_id, tags = NULL, a
   # Merge the old and new fields.
   new_fields <- dplyr::left_join(current_fields, new_fields, by = "name") |>
     dplyr::filter(!is.na(.data$content.y) | .data$content.y != "") |>
-    tidyr::unite("content", .data$content.x, .data$content.y, sep = "\n", na.rm = T) |>
+    tidyr::unite("content", .data$content.x, .data$content.y, sep = "\n", na.rm = TRUE) |>
     dplyr::mutate(id = as.character(.data$id))
 
   # Create a nested list with the new contents and identifiers
@@ -226,7 +226,7 @@ document_append_from_html <- function(path, existing_document_id, tags = NULL, a
 #' @export
 document_create_from_tabfile <- function(path, file_type = NULL, document_name = NULL, template_id = NULL, folder_id = NULL,
                                        tags = NULL, attachments = NULL, existing_document_id = NULL, api_key = get_api_key()) {
-  doc_body <- tabfile_to_doc_body(path, document_name = document_name, verbose = F, file_type = file_type)
+  doc_body <- tabfile_to_doc_body(path, document_name = document_name, verbose = FALSE, file_type = file_type)
 
   if (!is.null(existing_document_id)) {
     template_id <- existing_document_id

@@ -56,7 +56,7 @@ can_overwrite <- function(path) {
 
 add_information_to_doc_body <- function(doc_body, template_id = NULL, folder_id = NULL, tags = NULL, attachments = NULL, api_key = get_api_key()) {
   if (!is.null(template_id)) {
-    form_id <- parse_rspace_id(doc_to_form_id(template_id, verbose = F))
+    form_id <- parse_rspace_id(doc_to_form_id(template_id, verbose = FALSE))
     doc_body$form <- list(id = form_id)
   }
 

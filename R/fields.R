@@ -36,7 +36,7 @@ doc_get_fields <- function(doc_id, api_key = get_api_key()) {
 #' doc_body$fields <- put_all_fields_in_one_field(doc_body$fields)
 #' }
 #'
-put_all_fields_in_one_field <- function(doc_body_fields, use_html_sep = T) {
+put_all_fields_in_one_field <- function(doc_body_fields, use_html_sep = TRUE) {
   text_content <- fields_to_data_frame(doc_body_fields)
 
   if (use_html_sep) {

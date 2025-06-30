@@ -26,7 +26,7 @@ The goal of rspacer is to wrap the [RSpace API](https://community.researchspace.
 
 You can install the development version of rspacer with
 
-```{r, eval=F}
+```{r, eval = FALSE}
 remotes::install_github("lacdr/rspacer")
 ```
 
