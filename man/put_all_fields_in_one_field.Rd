@@ -2,9 +2,9 @@
 % Please edit documentation in R/fields.R
 \name{put_all_fields_in_one_field}
 \alias{put_all_fields_in_one_field}
-\title{put_all_fields_in_one_field}
+\title{Put a list of all fields into one field.}
 \usage{
-put_all_fields_in_one_field(doc_body_fields, use_html_sep = T)
+put_all_fields_in_one_field(doc_body_fields, use_html_sep = TRUE)
 }
 \arguments{
 \item{doc_body_fields}{multiple fields in a list}
@@ -15,14 +15,8 @@ put_all_fields_in_one_field(doc_body_fields, use_html_sep = T)
 a list with one field, with only content, all contents from other fields, separated by \verb{\\n}.
 }
 \description{
-Put a list of fields into one field. This can be needed when no Structured
-Document template is specified and a Basic Document is used, but the
-html/excel/other input has multiple subheaders or fields.
-}
-\examples{
-\dontrun{
-doc_body$fields <- put_all_fields_in_one_field(doc_body$fields)
-}
-
+This can be needed when no Structured Document template is specified and a
+Basic Document is used, but the html/excel/other input has multiple
+subheaders or fields.
 }
 \keyword{internal}

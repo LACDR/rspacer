@@ -24,7 +24,7 @@ for which attachments need to be listed.}
 \item{api_key}{RSpace API key}
 }
 \value{
-A data frame with identifiers and information on attachments.
+description A tibble with identifiers and information on attachments, one attachment per row.
 Returns \code{FALSE} if no files are attached to the field.
 }
 \description{

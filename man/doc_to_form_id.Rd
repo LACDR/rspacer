@@ -13,6 +13,9 @@ doc_to_form_id(doc_id, verbose = TRUE, api_key = get_api_key())
 
 \item{api_key}{RSpace API key}
 }
+\value{
+A form id.
+}
 \description{
 Get the form id used for a document
 }

@@ -11,6 +11,9 @@ file_upload(path, api_key = get_api_key())
 
 \item{api_key}{RSpace API key}
 }
+\value{
+Parsed JSON response from the API.
+}
 \description{
 Upload a file to the gallery
 }

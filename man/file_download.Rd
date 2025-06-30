@@ -16,7 +16,7 @@ file_download(file_id, path = ".", api_key = get_api_key())
 \value{
 The file path of the downloaded file. If the file already exists,
 the user is asked whether the function should overwrite the pre-existing file.
-If not, the download is canceled and \code{FALSE} is returned.
+If not, the download is canceled and \code{FALSE} is returned invisibly.
 }
 \description{
 Download a file from the gallery

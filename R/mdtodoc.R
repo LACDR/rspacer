@@ -84,7 +84,7 @@ tabfile_to_doc_body <- function(path, document_name = NULL, verbose = TRUE, file
 #' @param attachments attachments to attach to the fields in tibble/data.frame form (one attachment per row), e.g., `tibble(field = 7, path = "file.txt")`
 #' @param existing_document_id document id of a document to be replaced, if NULL (the default) a new document will be created.
 #' @inheritParams api_status
-#' @return Invisible JSON response from the API.
+#' @returns Invisible JSON response from the API.
 #' @export
 document_create_from_html <- function(path, template_id = NULL, folder_id = NULL, tags = NULL, attachments = NULL,
                                       existing_document_id = NULL, api_key = get_api_key()) {
@@ -136,6 +136,7 @@ document_create_from_html <- function(path, template_id = NULL, folder_id = NULL
 #' If it is `TRUE`, only fields with the same name as in the template will be appended.
 #' @inheritParams api_status
 #' @inheritParams document_create_from_html
+#' @returns Invisible JSON response from the API.
 #' @export
 document_append_from_html <- function(path, existing_document_id, tags = NULL, attachments = NULL,
                                       allow_missing_fields = FALSE, api_key = get_api_key()) {
@@ -223,6 +224,7 @@ document_append_from_html <- function(path, existing_document_id, tags = NULL, a
 #' If that does not exist, it will be the file name.
 #' @inheritParams api_status
 #' @inheritParams document_create_from_html
+#' @returns Invisible JSON response from the API.
 #' @export
 document_create_from_tabfile <- function(path, file_type = NULL, document_name = NULL, template_id = NULL, folder_id = NULL,
                                        tags = NULL, attachments = NULL, existing_document_id = NULL, api_key = get_api_key()) {

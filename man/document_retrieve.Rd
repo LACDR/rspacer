@@ -11,6 +11,9 @@ document_retrieve(doc_id, api_key = get_api_key())
 
 \item{api_key}{RSpace API key}
 }
+\value{
+An RSpace document as parsed JSON.
+}
 \description{
 Get document from RSpace based on document ID
 }

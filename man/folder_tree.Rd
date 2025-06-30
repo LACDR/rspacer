@@ -2,7 +2,7 @@
 % Please edit documentation in R/folders.R
 \name{folder_tree}
 \alias{folder_tree}
-\title{List contents of a folder}
+\title{List contents of a folder, if no folder is specified the contents of the root folder will be listed.}
 \usage{
 folder_tree(folder_id = NULL, api_key = get_api_key())
 }
@@ -12,6 +12,9 @@ if NULL will return contents of the Workspace Home folder}
 
 \item{api_key}{RSpace API key}
 }
+\value{
+A tibble with the folder content as rows.
+}
 \description{
-List contents of a folder
+List contents of a folder, if no folder is specified the contents of the root folder will be listed.
 }

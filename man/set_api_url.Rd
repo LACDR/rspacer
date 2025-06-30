@@ -9,6 +9,9 @@ set_api_url(rspace_api_url)
 \arguments{
 \item{rspace_api_url}{The RSpace API URL}
 }
+\value{
+A logical indicating if setting the API URL succeeded.
+}
 \description{
 Sets the \code{RSPACE_API_URL} environment variable to the provided RSpace API URL.
 The RSpace API URL is likely the URL of your RSpace instance followed by \code{api/v1}.

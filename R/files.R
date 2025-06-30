@@ -3,6 +3,7 @@
 #'
 #' @param path file to be uploaded
 #' @inheritParams api_status
+#' @returns Parsed JSON response from the API.
 #' @export
 file_upload <- function(path, api_key = get_api_key()) {
   request() |>
@@ -25,7 +26,7 @@ file_upload <- function(path, api_key = get_api_key()) {
 #' @inheritParams api_status
 #' @returns The file path of the downloaded file. If the file already exists,
 #'          the user is asked whether the function should overwrite the pre-existing file.
-#'          If not, the download is canceled and `FALSE` is returned.
+#'          If not, the download is canceled and `FALSE` is returned invisibly.
 #' @export
 file_download <- function(file_id, path = ".", api_key = get_api_key()) {
   if (fs::is_dir(path)) {
@@ -40,7 +41,7 @@ file_download <- function(file_id, path = ".", api_key = get_api_key()) {
   }
 
   if (!can_overwrite(path)) {
-    cli::cli_inform(" Cancelling download")
+    cli::cli_inform("Download cancelled")
     return(invisible(FALSE))
   }
 
@@ -50,7 +51,7 @@ file_download <- function(file_id, path = ".", api_key = get_api_key()) {
     httr2::req_perform(path = path) |>
     httr2::resp_check_status() -> resp
   cli::cli_inform("Downloaded to {.path {resp$body}} ({file.size(resp$body)} bytes)")
-  return(invisible(path))
+  return(path)
 }
 
 attachment_upload <- function(doc_body, attachments, api_key) {

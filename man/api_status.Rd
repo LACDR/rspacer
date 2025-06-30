@@ -9,6 +9,9 @@ api_status(api_key = get_api_key())
 \arguments{
 \item{api_key}{RSpace API key}
 }
+\value{
+If the request succeeds, a list with the status message and the RSpace version of the API.
+}
 \description{
 Function to check availability of the API service
 }

@@ -6,6 +6,9 @@
 \usage{
 get_api_key()
 }
+\value{
+An API key
+}
 \description{
 Gets the RSpace API key from the \code{RSPACE_API_KEY} environment variable.
 See \code{\link[=set_api_key]{set_api_key()}} on how to set it.

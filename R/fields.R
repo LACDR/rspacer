@@ -22,20 +22,16 @@ doc_get_fields <- function(doc_id, api_key = get_api_key()) {
   fields_to_data_frame(doc$fields)
 }
 
-#' put_all_fields_in_one_field
+#' Put a list of all fields into one field.
 #'
-#' Put a list of fields into one field. This can be needed when no Structured
-#' Document template is specified and a Basic Document is used, but the
-#' html/excel/other input has multiple subheaders or fields.
+#' This can be needed when no Structured Document template is specified and a
+#' Basic Document is used, but the html/excel/other input has multiple
+#' subheaders or fields.
+#'
 #' @keywords internal
 #' @param doc_body_fields multiple fields in a list
 #' @param use_html_sep If `TRUE`, each field is placed in a html paragraph
 #' @returns a list with one field, with only content, all contents from other fields, separated by `\n`.
-#' @examples
-#' \dontrun{
-#' doc_body$fields <- put_all_fields_in_one_field(doc_body$fields)
-#' }
-#'
 put_all_fields_in_one_field <- function(doc_body_fields, use_html_sep = TRUE) {
   text_content <- fields_to_data_frame(doc_body_fields)
 

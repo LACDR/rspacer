@@ -3,6 +3,7 @@
 #' @param doc_id Unique identifier of the document
 #' @inheritParams api_status
 #'
+#' @returns An RSpace document as parsed JSON.
 #' @export
 #'
 document_retrieve <- function(doc_id, api_key = get_api_key()) {
@@ -64,6 +65,7 @@ document_put <- function(body, existing_document_id, api_key = get_api_key()) {
 #' <https://community.researchspace.com/public/apiDocs> \[GET /documents\]
 #' @inheritParams api_status
 #'
+#' @returns A tibble with search results, one result per row.
 #' @export
 document_search <- function(query, ..., api_key = get_api_key()) {
   request() |>
@@ -82,6 +84,7 @@ document_search <- function(query, ..., api_key = get_api_key()) {
 #'
 #' @param verbose whether to print the matching document/form
 #' @inheritParams document_retrieve
+#' @returns A form id.
 #' @export
 doc_to_form_id <- function(doc_id, verbose = TRUE, api_key = get_api_key()) {
   json <- document_retrieve(doc_id, api_key)
@@ -106,7 +109,7 @@ doc_to_form_id <- function(doc_id, verbose = TRUE, api_key = get_api_key()) {
 #' @param field_name Specify either `field_id` or `field_name`. The field name
 #' for which attachments need to be listed.
 #' @inheritParams api_status
-#' @return A data frame with identifiers and information on attachments.
+#' @returns description A tibble with identifiers and information on attachments, one attachment per row.
 #' Returns `FALSE` if no files are attached to the field.
 #' @export
 document_list_attachments <- function(doc_id, field_id = NULL, field_name = NULL, api_key = get_api_key()) {

@@ -9,6 +9,7 @@
 #' get_api_url()
 #' }
 #'
+#' @returns A url.
 #' @seealso [set_api_url()]
 #' @export
 get_api_url <- function() {
@@ -34,6 +35,7 @@ get_api_url <- function() {
 #'
 #' @param rspace_api_url The RSpace API URL
 #'
+#' @returns A logical indicating if setting the API URL succeeded.
 #' @examples
 #' \dontrun{
 #' set_api_url("https://leiden.researchspace.com/api/v1")
@@ -49,6 +51,7 @@ set_api_url <- function(rspace_api_url) {
 #' Gets the RSpace API key from the `RSPACE_API_KEY` environment variable.
 #' See [set_api_key()] on how to set it.
 #'
+#' @returns An API key
 #' @examples
 #' \dontrun{
 #' get_api_key()
@@ -78,6 +81,7 @@ get_api_key <- function() {
 #' for example, using [usethis::edit_r_environ()].
 #'
 #' @param rspace_api_key Your RSpace API key
+#' @returns A logical indicating if setting the API key succeeded
 #'
 #' @export
 set_api_key <- function(rspace_api_key) {
@@ -106,6 +110,7 @@ request <- function() {
 #'
 #' @param api_key RSpace API key
 #'
+#' @returns If the request succeeds, a list with the status message and the RSpace version of the API.
 #' @examples
 #' \dontrun{
 #' api_status()

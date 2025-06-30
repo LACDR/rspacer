@@ -9,6 +9,9 @@ set_api_key(rspace_api_key)
 \arguments{
 \item{rspace_api_key}{Your RSpace API key}
 }
+\value{
+A logical indicating if setting the API key succeeded
+}
 \description{
 Sets the \code{RSPACE_API_KEY} environment variable to the provided RSpace API key.
 To create an API key go to 'Manage API Key' section of your profile page (MyRSpace -> Profile).

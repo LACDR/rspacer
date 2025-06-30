@@ -39,6 +39,9 @@ A basic document is created if no template is specified.}
 
 \item{api_key}{RSpace API key}
 }
+\value{
+Invisible JSON response from the API.
+}
 \description{
 This function can upload tabular files to RSpace structured documents.
 The file needs to have exactly two columns, one with the RSpace structured document fields and one with the content.

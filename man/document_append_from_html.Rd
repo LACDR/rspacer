@@ -28,6 +28,9 @@ If it is \code{TRUE}, only fields with the same name as in the template will be 
 
 \item{api_key}{RSpace API key}
 }
+\value{
+Invisible JSON response from the API.
+}
 \description{
 Append a html document (e.g., generated from quarto) to an RSpace structured document.
 This function retrieves the current document, and adds text to fields specified by
