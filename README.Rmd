@@ -16,8 +16,10 @@ knitr::opts_chunk$set(
 # rspacer
 
 <!-- badges: start -->
-[![Project Status: WIP – Initial development is in progress, but there has not yet been a stable, usable release suitable for the public.](https://www.repostatus.org/badges/latest/wip.svg)](https://www.repostatus.org/#wip)
+[![CRAN status](https://www.r-pkg.org/badges/version/rspacer)](https://CRAN.R-project.org/package=rspacer)
 [![R-CMD-check](https://github.com/LACDR/rspacer/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/LACDR/rspacer/actions/workflows/R-CMD-check.yaml)
+[![Project Status: Active – The project has reached a stable, usable state and is being actively developed.](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active)
+[![FAIR checklist badge](https://fairsoftwarechecklist.net/badge.svg)](https://fairsoftwarechecklist.net/v0.2?f=31&a=31113&i=32300&r=133)
 <!-- badges: end -->
 
 The goal of rspacer is to wrap the [RSpace API](https://community.researchspace.com/public/apiDocs), that is, allow you to use the API directly from R using convenience functions.
