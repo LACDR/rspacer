@@ -58,24 +58,27 @@ document_put <- function(body, existing_document_id, api_key = get_api_key()) {
 #' Global search for a term
 #'
 #' Global search for a term, works identically to the simple "All" search in RSpace Workspace.
-#' Must be >= 3 characters long.
+#' Query term must be >= 3 characters long.
 #'
-#' @param query  description
+#' @param query description
 #' @param ... query parameters as documented in
 #' <https://community.researchspace.com/public/apiDocs> \[GET /documents\]
+#' @param max_results Maximum number of results to return.
+#' Use `Inf` to return all results (may take a while).
 #' @inheritParams api_status
 #'
 #' @returns A tibble with search results, one result per row.
 #' @export
-document_search <- function(query, ..., api_key = get_api_key()) {
-  request() |>
+document_search <- function(query, ..., max_results = 50, api_key = get_api_key()) {
+
+  req <- request() |>
     httr2::req_url_path_append("documents") |>
     httr2::req_url_query(query = query, ...) |>
-    httr2::req_headers(`apiKey` = get_api_key()) |>
-    httr2::req_perform() |>
-    httr2::resp_body_json() -> json
+    httr2::req_headers(`apiKey` = get_api_key())
 
-  tibble::tibble(documents = json$documents) |>
+  documents <- retrieve_results(req, "documents", max_results)
+
+  tibble::tibble(documents = documents) |>
     tidyr::unnest_wider("documents")
 }
 

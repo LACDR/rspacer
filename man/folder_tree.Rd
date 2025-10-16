@@ -4,11 +4,16 @@
 \alias{folder_tree}
 \title{List contents of a folder, if no folder is specified the contents of the root folder will be listed.}
 \usage{
-folder_tree(folder_id = NULL, api_key = get_api_key())
+folder_tree(folder_id = NULL, ..., max_results = Inf, api_key = get_api_key())
 }
 \arguments{
 \item{folder_id}{Unique identifier of the folder,
 if NULL will return contents of the Workspace Home folder}
+
+\item{...}{query parameters as documented in
+\url{https://community.researchspace.com/public/apiDocs} [GET /folders/tree]}
+
+\item{max_results}{Maximum number of results to return.}
 
 \item{api_key}{RSpace API key}
 }

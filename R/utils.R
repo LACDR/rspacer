@@ -76,3 +76,78 @@ add_information_to_doc_body <- function(doc_body, template_id = NULL, folder_id 
   names(doc_body$fields) <- NULL
   return(doc_body)
 }
+
+retrieve_results <- function(...) {
+  # retrieve_results_hateoas(...)
+  retrieve_results_parallel(...)
+}
+
+retrieve_results_parallel <- function(req, key, max_results) {
+
+  req <- req |> httr2::req_url_query(pageSize = 50)
+  all_results = list()
+
+  # Fetch first page to check total number of results
+  json <- req |>
+    httr2::req_perform() |>
+    httr2::resp_body_json()
+  all_results <- c(all_results, json[[key]])
+
+  total_hits <- json$totalHits
+  total_pages <- ceiling(min(total_hits,max_results) / 50)
+  if(total_pages > 1) {
+    cli::cli_inform("Total hits: {total_hits}. Fetching additional pages...")
+    # Fetch remaining pages in parallel with throttling (10 requests every 2 seconds)
+    req_base <- req |> httr2::req_throttle(capacity = 10, fill_time_s = 2)
+    reqs = as.list(1:(total_pages-1)) |>
+      purrr::map(~ req_base |> httr2::req_url_query(pageNumber = .x))
+    resps <- httr2::req_perform_parallel(reqs, progress = TRUE)
+    all_results <- c(all_results, resps |>
+                       purrr::map(~ httr2::resp_body_json(.x)[[key]]) |>
+                       unlist(recursive = FALSE))
+  }
+
+  utils::head(all_results, max_results)
+}
+
+# Broken because of https://github.com/rspace-os/rspace-web/issues/521
+retrieve_results_hateoas <- function(req, key, max_results) {
+
+  # helper: fetch results using HATEOAS pagination
+  fetch_page <- function(req) {
+    json <- req |>
+      httr2::req_perform() |>
+      httr2::resp_body_json()
+
+    # Extract "next" link
+    next_link <- NULL
+    if (!is.null(json$`_links`)) {
+      for (l in json$`_links`) {
+        if (l$rel == "next") {
+          next_link <- l$link
+          break
+        }
+      }
+    }
+
+    list(res = json[[key]], `next` = next_link)
+  }
+
+  # Page size: up to 50
+  page_size <- if (is.finite(max_results) && max_results < 50) max_results else 50
+  req <- req |> httr2::req_url_query(pageSize = page_size)
+
+  # Fetch pages until we have enough results or there are no more pages
+  all_results = list()
+  repeat {
+    page <- fetch_page(req)
+    all_results <- c(all_results, page$res)
+
+    if (is.null(page$`next`) || length(all_results) >= max_results) {
+      break
+    }
+    req <- req |> httr2::req_url(page$`next`)
+  }
+
+  utils::head(all_results, max_results)
+}
