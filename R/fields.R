@@ -17,7 +17,22 @@ fields_to_data_frame <- function(fields) {
   tibble::tibble(fields = fields) |> tidyr::unnest_wider("fields")
 }
 
-doc_get_fields <- function(doc_id, api_key = get_api_key()) {
+#' Get the fields of a structured document as a tibble
+#'
+#' This function retrieves the fields of a structured document and returns them
+#' as a tibble, one row per field. As fields can contain HTML, the tibble can be
+#' displayed prettier with, for example, the `gt` package (see the Examples).
+#'
+#' @param doc_id Unique identifier of the document
+#' @inheritParams api_status
+#' @returns A tibble with the fields as rows.
+#' @export
+#' @examples
+#' \dontrun{
+#' library(gt)
+#' document_get_fields("SD123456") |> gt() |> fmt_markdown(columns = c(content))
+#' }
+document_get_fields <- function(doc_id, api_key = get_api_key()) {
   doc <- document_retrieve(doc_id, api_key)
   fields_to_data_frame(doc$fields)
 }

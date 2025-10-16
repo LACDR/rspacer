@@ -110,7 +110,7 @@ doc_to_form_id <- function(doc_id, verbose = TRUE, api_key = get_api_key()) {
 document_list_attachments <- function(doc_id, api_key = get_api_key()) {
   if (is.null(doc_id)) cli::cli_abort("Specify the document identifier `doc_id`")
 
-  attachments <- doc_get_fields(doc_id) |>
+  attachments <- document_get_fields(doc_id) |>
     tibble::rowid_to_column(var = "field_id") |>
     dplyr::select("field_id", field_name = "name", "files") |>
     tidyr::drop_na("files")

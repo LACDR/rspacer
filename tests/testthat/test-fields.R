@@ -21,7 +21,7 @@ test_that("fields_to_data_frame creates a tibble", {
   expect_error(fields_to_data_frame(c("this is not a fields list")))
 })
 
-test_that("doc_get_fields creates a fields data frame", {
+test_that("document_get_fields creates a fields data frame", {
   local_mocked_bindings(
     get_api_key = function() {
       return("API key used for testing")
@@ -31,7 +31,7 @@ test_that("doc_get_fields creates a fields data frame", {
     }
   )
   expect_equal(
-    doc_get_fields("some incorrect id"),
+    document_get_fields("some incorrect id"),
     fields_to_data_frame(helper_larger_SD()$fields)
   )
 })

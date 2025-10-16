@@ -95,7 +95,7 @@ document_create_from_html <- function(path, template_id = NULL, folder_id = NULL
   }
 
   if (!is.null(template_id)) {
-    template_fields <- doc_get_fields(template_id)
+    template_fields <- document_get_fields(template_id)
 
     if (length(doc_body$fields) != nrow(template_fields)) {
       cli::cli_abort("Document has different number of fields ({length(doc_body$fields)}) than template ({nrow(template_fields)})")
@@ -141,7 +141,7 @@ document_create_from_html <- function(path, template_id = NULL, folder_id = NULL
 document_append_from_html <- function(path, existing_document_id, tags = NULL, attachments = NULL,
                                       allow_missing_fields = FALSE, api_key = get_api_key()) {
   # Get the current fields
-  current_fields <- doc_get_fields(existing_document_id)
+  current_fields <- document_get_fields(existing_document_id)
 
   # Create a doc_body from the html file and process the fields to be put in a tibble
   doc_body <- html_to_doc_body(path, verbose = FALSE)
@@ -234,7 +234,7 @@ document_create_from_tabfile <- function(path, file_type = NULL, document_name =
     template_id <- existing_document_id
   }
   if (!is.null(template_id)) {
-    template_fields <- doc_get_fields(template_id)
+    template_fields <- document_get_fields(template_id)
 
     if (length(doc_body$fields) != nrow(template_fields)) {
       cli::cli_abort("Document has different number of fields ({length(doc_body$fields)}) than template ({nrow(template_fields)})")

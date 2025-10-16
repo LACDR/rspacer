@@ -3,7 +3,7 @@ test_that("document_list_attachments", {
     get_api_key = function() {
       return("API key used for testing")
     },
-    doc_get_fields = function(doc_id) {
+    document_get_fields = function(doc_id) {
       helper_get_fields_df()
     }
   )
