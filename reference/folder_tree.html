@@ -45,7 +45,7 @@
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">folder_tree</span><span class="op">(</span>folder_id <span class="op">=</span> <span class="cn">NULL</span>, api_key <span class="op">=</span> <span class="fu"><a href="get_api_key.html">get_api_key</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">folder_tree</span><span class="op">(</span>folder_id <span class="op">=</span> <span class="cn">NULL</span>, <span class="va">...</span>, max_results <span class="op">=</span> <span class="cn">Inf</span>, api_key <span class="op">=</span> <span class="fu"><a href="get_api_key.html">get_api_key</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -55,6 +55,15 @@
 <dl><dt id="arg-folder-id">folder_id<a class="anchor" aria-label="anchor" href="#arg-folder-id"></a></dt>
 <dd><p>Unique identifier of the folder,
 if NULL will return contents of the Workspace Home folder</p></dd>
+
+
+<dt id="arg--">...<a class="anchor" aria-label="anchor" href="#arg--"></a></dt>
+<dd><p>query parameters as documented in
+<a href="https://community.researchspace.com/public/apiDocs" class="external-link">https://community.researchspace.com/public/apiDocs</a> [GET /folders/tree]</p></dd>
+
+
+<dt id="arg-max-results">max_results<a class="anchor" aria-label="anchor" href="#arg-max-results"></a></dt>
+<dd><p>Maximum number of results to return.</p></dd>
 
 
 <dt id="arg-api-key">api_key<a class="anchor" aria-label="anchor" href="#arg-api-key"></a></dt>
