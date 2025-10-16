@@ -3,7 +3,6 @@ test_that("add_information_to_doc_body can add information to a list", {
   expect_equal(add_information_to_doc_body(list()), list())
   # template_id
   expect_error(add_information_to_doc_body(list(), template_id = "incorrect ID"))
-  # TODO: how to test an API?
   # TODO below how to check a correct but non-existing template and think about the attachments
   # expect_error(add_information_to_doc_body(list(), template_id = "SD001"))
   # expect_equal(add_information_to_doc_body(list(), folder_id = "SD123", tags = "test", attachment = list("7" = "hoi.txt")))

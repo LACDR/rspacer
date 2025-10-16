@@ -16,7 +16,7 @@ test_that("fields_to_data_frame creates a tibble", {
   fields <- helper_get_fields()
 
   expect_equal(fields_to_data_frame(fields), sections)
-  # error with incorrect input. TODO raise this error in the function itself?
+  # error with incorrect input.
   expect_error(fields_to_data_frame("this is not a fields list"))
   expect_error(fields_to_data_frame(c("this is not a fields list")))
 })
