@@ -4,28 +4,16 @@
 \alias{document_list_attachments}
 \title{List attachments of a structured document}
 \usage{
-document_list_attachments(
-  doc_id,
-  field_id = NULL,
-  field_name = NULL,
-  api_key = get_api_key()
-)
+document_list_attachments(doc_id, api_key = get_api_key())
 }
 \arguments{
 \item{doc_id}{Unique identifier of the document}
-
-\item{field_id}{Specify either \code{field_id} or \code{field_name}. Identifier for the
-fields where attachments are listed. This identifier is relative, for example 1
-for the top field, 2 for the second field, etc. It is not the unique field identifier.}
-
-\item{field_name}{Specify either \code{field_id} or \code{field_name}. The field name
-for which attachments need to be listed.}
 
 \item{api_key}{RSpace API key}
 }
 \value{
 description A tibble with identifiers and information on attachments, one attachment per row.
-Returns \code{FALSE} if no files are attached to the field.
+Returns an empty tibble if no files are attached to the field.
 }
 \description{
 This function lists all attachments of a field in a structured document.
