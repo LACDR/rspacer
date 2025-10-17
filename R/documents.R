@@ -63,6 +63,7 @@ document_put <- function(body, existing_document_id, api_key = get_api_key()) {
 #' @param query description
 #' @param ... query parameters as documented in
 #' <https://community.researchspace.com/public/apiDocs> \[GET /documents\]
+#' Can be used to order/filter the results.
 #' @param max_results Maximum number of results to return.
 #' @param simplify Whether to simplify the returned tibble by converting/removing columns
 #' Use `Inf` to return all results (may take a while).

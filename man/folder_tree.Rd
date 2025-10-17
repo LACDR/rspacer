@@ -17,7 +17,8 @@ folder_tree(
 if NULL will return contents of the Workspace Home folder}
 
 \item{...}{query parameters as documented in
-\url{https://community.researchspace.com/public/apiDocs} [GET /folders/tree]}
+\url{https://community.researchspace.com/public/apiDocs} [GET /folders/tree].
+Can be used to order/filter the results.}
 
 \item{max_results}{Maximum number of results to return.}
 

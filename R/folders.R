@@ -3,7 +3,8 @@
 #' @param folder_id Unique identifier of the folder,
 #' if NULL will return contents of the Workspace Home folder
 #' @param ... query parameters as documented in
-#' <https://community.researchspace.com/public/apiDocs> \[GET /folders/tree\]
+#' <https://community.researchspace.com/public/apiDocs> \[GET /folders/tree\].
+#' Can be used to order/filter the results.
 #' @param max_results Maximum number of results to return.
 #' @param simplify Whether to simplify the returned tibble by converting/removing columns
 #' @inheritParams api_status

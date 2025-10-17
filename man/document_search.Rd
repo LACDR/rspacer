@@ -16,7 +16,8 @@ document_search(
 \item{query}{description}
 
 \item{...}{query parameters as documented in
-\url{https://community.researchspace.com/public/apiDocs} [GET /documents]}
+\url{https://community.researchspace.com/public/apiDocs} [GET /documents]
+Can be used to order/filter the results.}
 
 \item{max_results}{Maximum number of results to return.}
 
