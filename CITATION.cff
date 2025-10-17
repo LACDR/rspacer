@@ -8,7 +8,7 @@ message: 'To cite package "rspacer" in publications use:'
 type: software
 license: MIT
 title: 'rspacer: ''RSpace'' API Wrapper'
-version: 0.2.0
+version: 0.3.0
 doi: 10.32614/CRAN.package.rspacer
 abstract: Wrapper for the 'RSpace' Electronic Lab Notebook (<https://www.researchspace.com/>)
   API. This packages provides convenience functions to browse, search, create, and
