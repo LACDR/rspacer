@@ -17,8 +17,22 @@ data_frame_to_fields <- function(fields_df) {
   return(fields)
 }
 
-fields_to_data_frame <- function(fields) {
-  tibble::tibble(fields = fields) |> tidyr::unnest_wider("fields")
+#' Convert fields list to a tibble
+#'
+#' @param fields fields list as retrieved from RSpace API
+#' @param simplify Whether to simplify the returned tibble by converting/removing columns
+#' @returns A tibble with the fields as rows.
+#' @export
+fields_to_data_frame <- function(fields, simplify = T) {
+  res <- tibble::tibble(fields = fields) |>
+    tidyr::unnest_wider("fields")
+  if(nrow(res) > 0 && simplify) {
+    if("lastModified" %in% colnames(res)) {
+      res <- res |>
+        dplyr::mutate(lastModified = lubridate::as_datetime(.data$lastModified))
+    }
+  }
+  res
 }
 
 #' Get the fields of a structured document as a tibble
