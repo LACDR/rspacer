@@ -4,15 +4,13 @@
 \alias{put_all_fields_in_one_field}
 \title{Put a list of all fields into one field.}
 \usage{
-put_all_fields_in_one_field(doc_body_fields, use_html_sep = TRUE)
+put_all_fields_in_one_field(doc_body_fields)
 }
 \arguments{
 \item{doc_body_fields}{multiple fields in a list}
-
-\item{use_html_sep}{If \code{TRUE}, each field is placed in a html paragraph}
 }
 \value{
-a list with one field, with only content, all contents from other fields, separated by \verb{\\n}.
+a list with one field containing all content from all fields
 }
 \description{
 This can be needed when no Structured Document template is specified and a
