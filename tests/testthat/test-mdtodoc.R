@@ -17,41 +17,40 @@ test_that("create_rspace_document_name can process a document name", {
   sections <- helper_get_sections()
   # Check document name
   expect_equal(create_rspace_document_name(
-    path = "minimal_excel.xlsx",
-    sections = NULL, document_name = "thisone"
+    df = NULL, document_name = "thisone"
   ), "thisone")
-  expect_error(create_rspace_document_name(path = "minimal_excel.xlsx", sections = NULL, document_name = NA))
-  expect_error(create_rspace_document_name(path = "minimal_excel.xlsx", sections = NULL, document_name = 123))
+  # document_name should be character string
+  expect_error(create_rspace_document_name(df = NULL, document_name = NA))
+  expect_error(create_rspace_document_name(df = NULL, document_name = 123))
   # Check to get name from sections in the order that is in the user manual
   expect_equal(create_rspace_document_name(
-    path = "minimal_excel.xlsx",
-    sections = sections, document_name = "thisone"
+    df = sections, document_name = "thisone"
   ), "thisone")
-  expect_equal(create_rspace_document_name(path = "minimal_excel.xlsx", sections = sections), "The title")
-  expect_equal(create_rspace_document_name(path = "minimal_excel.xlsx", sections = sections[2:6, ]), "test")
-  expect_equal(create_rspace_document_name(path = "minimal_excel.xlsx", sections = sections[3:6, ]), "small title")
-  expect_equal(create_rspace_document_name(path = "minimal_excel.xlsx", sections = sections[4:6, ]), "smaller name")
-  # Get the name from a file path
+  expect_equal(create_rspace_document_name(df = sections), "The title")
+  expect_equal(create_rspace_document_name(df = sections[2:6, ]), "test")
+  expect_equal(create_rspace_document_name(df = sections[3:6, ]), "small title")
+  expect_equal(create_rspace_document_name(df = sections[4:6, ]), "smaller name")
+  # No name in secions, return NULL
   expect_equal(
-    create_rspace_document_name(path = "some_path/minimal_excel.xlsx", sections = sections[5:6, ]),
-    "minimal_excel"
+    create_rspace_document_name(df = sections[5:6, ]),
+    NULL
   )
 })
 
-test_that("tabfile_to_doc_body can create a doc body", {
+test_that("tabfile_to_df can create a df", {
   # these should work
-  expect_type(tabfile_to_doc_body(path = testthat::test_path("minimal_excel.xlsx"), verbose = FALSE, file_type = "xlsx"), "list")
-  expect_type(tabfile_to_doc_body(path = testthat::test_path("minimal_csv1.csv"), verbose = FALSE, file_type = "csv"), "list")
-  expect_type(tabfile_to_doc_body(path = testthat::test_path("minimal_tsv.txt"), verbose = FALSE, file_type = "tsv"), "list")
+  expect_true(is.data.frame(tabfile_to_df(path = testthat::test_path("minimal_excel.xlsx"), file_type = "xlsx")))
+  expect_true(is.data.frame(tabfile_to_df(path = testthat::test_path("minimal_csv1.csv"), file_type = "csv")))
+  expect_true(is.data.frame(tabfile_to_df(path = testthat::test_path("minimal_tsv.txt"), file_type = "tsv")))
   # guess file format. should also work
-  expect_type(tabfile_to_doc_body(path = testthat::test_path("minimal_excel.xlsx"), verbose = FALSE), "list")
-  expect_type(tabfile_to_doc_body(path = testthat::test_path("minimal_csv1.csv"), verbose = FALSE), "list")
+  expect_true(is.data.frame(tabfile_to_df(path = testthat::test_path("minimal_excel.xlsx"))))
+  expect_true(is.data.frame(tabfile_to_df(path = testthat::test_path("minimal_csv1.csv"))))
   # this one should be too hard to guess because tsv file saved as .txt without specifying that it is tab-separated.
-  expect_error(tabfile_to_doc_body(path = testthat::test_path("minimal_tsv.txt"), verbose = FALSE))
+  expect_error(tabfile_to_df(path = testthat::test_path("minimal_tsv.txt")))
   # test verbose
-  expect_type(tabfile_to_doc_body(path = testthat::test_path("minimal_excel.xlsx"), verbose = FALSE, file_type = "xlsx"), "list")
+  expect_true(is.data.frame(tabfile_to_df(path = testthat::test_path("minimal_excel.xlsx"), file_type = "xlsx")))
   # not existing file
-  expect_error(tabfile_to_doc_body(path = "not_existing_file.xlsx", verbose = FALSE, file_type = ".xlsx"))
+  expect_error(tabfile_to_df(path = "not_existing_file.xlsx", file_type = ".xlsx"))
   # incorrect excel file type specified
-  expect_error(tabfile_to_doc_body(path = testthat::test_path("minimal_excel.xlsx"), verbose = FALSE, file_type = ".xlsx"))
+  expect_error(tabfile_to_df(path = testthat::test_path("minimal_excel.xlsx"), file_type = ".xlsx"))
 })

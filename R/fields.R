@@ -10,6 +10,10 @@ data_frame_to_fields <- function(fields_df) {
     row_list
   })
   fields <- as.list(fields)
+
+  # The API wants a plain array -> remove the names
+  names(fields) <- NULL
+
   return(fields)
 }
 

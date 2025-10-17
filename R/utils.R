@@ -72,8 +72,6 @@ add_information_to_doc_body <- function(doc_body, template_id = NULL, folder_id 
     doc_body <- attachment_upload(doc_body, attachments, api_key)
   }
 
-  # The API wants a plain array -> remove the names
-  names(doc_body$fields) <- NULL
   return(doc_body)
 }
 

@@ -18,7 +18,7 @@ html_to_doc_body <- function(path, verbose = TRUE) {
   fields <- purrr::imap(section_content, ~ list(
     name = .y,
     content = .x
-  ))
+  )) |> stats::setNames(NULL) # API doesn't want names for the fields
 
   list(
     name = title,
@@ -26,7 +26,24 @@ html_to_doc_body <- function(path, verbose = TRUE) {
   )
 }
 
-create_rspace_document_name <- function(path, sections, document_name = NULL) {
+tabular_to_doc_body <- function(df, verbose = TRUE) {
+  # Check if df is a data.frame/tibble with two columns: name, content
+  if (!is.data.frame(df))
+    cli::cli_abort(message = c("x" = "Input is not a data.frame or tibble"))
+  if (length(setdiff(c("name", "content"), names(df))) > 0)
+    cli::cli_abort(message = c("x" = "Input data.frame is missing the `name` or `content` column"))
+
+  if (verbose) {
+    purrr::iwalk(df[["name"]], ~ cli::cli_inform("{.field - Section {.y}}: {.x}"))
+  }
+
+  # Get a list with field contents as doc body
+  list(
+    fields = data_frame_to_fields(df |> dplyr::select("name", "content"))
+  )
+}
+
+create_rspace_document_name <- function(df, document_name = NULL) {
   # If a name is already supplied, just use that
   if (!is.null(document_name)) {
     if (!is.character(document_name)) cli::cli_abort(message = c("x" = "Document name should be a character string or NULL"))
@@ -34,39 +51,30 @@ create_rspace_document_name <- function(path, sections, document_name = NULL) {
   }
 
   # Otherwise, test if any sections are named title or name (case-insensitive)
-  detected <- stringr::str_detect(sections$name, stringr::regex("title|name", ignore_case = TRUE))
+  detected <- stringr::str_detect(df$name, stringr::regex("title|name", ignore_case = TRUE))
   if (any(detected)) {
     # Return first field that matches
-    return(sections$content[detected][1])
+    return(df$content[detected][1])
   }
 
-  # Otherwise just return the filename without extension
-  return(path |> fs::path_file() |> fs::path_ext_remove())
+  # Otherwise return NULL
+  return(NULL)
 }
 
-tabfile_to_doc_body <- function(path, document_name = NULL, verbose = TRUE, file_type = NULL) {
-  if (!file.exists(path)) cli::cli_abort(message = c("x" = glue::glue("File not found: {path}")))
+tabfile_to_df <- function(path, file_type = NULL){
+  if (!file.exists(path))
+    cli::cli_abort(message = c("x" = glue::glue("File not found: {path}")))
   if (is.null(file_type)) {
     file_type <- fs::path_ext(path)
   }
-  if (!file_type %in% c("xlsx", "csv", "tsv")) cli::cli_abort(message = c("x" = glue::glue("file_type is {file_type}. It should be xlsx, csv or tsv. Specify file_type manually or rename the input file.")))
-  sections <- switch(file_type,
-    "xlsx" = readxl::read_xlsx(path, col_names = c("name", "content"), col_types = "text"),
-    "csv" = readr::read_csv(path, col_names = c("name", "content"), col_types = "cc", show_col_types = FALSE),
-    "tsv" = readr::read_tsv(path, col_names = c("name", "content"), col_types = "cc", show_col_types = FALSE)
-  )
-  # Set the RSpace entry title
-  title <- create_rspace_document_name(path, sections, document_name)
-
-  if (verbose) {
-    cli::cli_inform("{.field Title}: {title}")
-    purrr::iwalk(sections[["name"]], ~ cli::cli_inform("{.field - Section {.y}}: {.x}"))
-  }
-  # Get a list as required by RSpace
-  fields <- data_frame_to_fields(sections)
-  list(
-    name = title,
-    fields = fields
+  if (!file_type %in% c("xlsx", "csv", "tsv"))
+    cli::cli_abort(message = c("x" = glue::glue("file_type is {file_type}.
+                                                It should be xlsx, csv or tsv.
+                                                Specify file_type manually or rename the input file.")))
+  switch(file_type,
+         "xlsx" = readxl::read_xlsx(path, col_names = c("name", "content"), col_types = "text"),
+         "csv" = readr::read_csv(path, col_names = c("name", "content"), col_types = "cc", show_col_types = FALSE),
+         "tsv" = readr::read_tsv(path, col_names = c("name", "content"), col_types = "cc", show_col_types = FALSE)
   )
 }
 
@@ -228,7 +236,43 @@ document_append_from_html <- function(path, existing_document_id, tags = NULL, a
 #' @export
 document_create_from_tabfile <- function(path, file_type = NULL, document_name = NULL, template_id = NULL, folder_id = NULL,
                                        tags = NULL, attachments = NULL, existing_document_id = NULL, api_key = get_api_key()) {
-  doc_body <- tabfile_to_doc_body(path, document_name = document_name, verbose = FALSE, file_type = file_type)
+  # get file contents as sections df
+  sections <- tabfile_to_df(path, file_type = file_type)
+
+  # set RSpace document name
+  name <- create_rspace_document_name(sections, document_name)
+  if(is.null(name)) {
+    # If no title is found, use the file name
+    name <- path |> fs::path_file() |> fs::path_ext_remove()
+  }
+
+  document_create_from_tabular(sections, document_name = name, template_id = template_id,
+                             folder_id = folder_id, tags = tags, attachments = attachments,
+                             existing_document_id = existing_document_id, api_key = api_key)
+
+}
+
+#' Upload tabular data to RSpace
+#'
+#' This function can upload tabular data (data.frame/tibble) to an RSpace structured document.
+#' The tabular needs to have exactly two columns, one with the RSpace structured document fields and one with the content.
+#'
+#' @param df tabular data to upload.
+#' @param document_name specify the name of the RSpace entry. If not specified,
+#' it will be the value in Title, Name, title, or name if that is one of the fields in the Excel document.
+#' If that does not exist, it will be the file name.
+#' @inheritParams api_status
+#' @inheritParams document_create_from_html
+#' @returns Invisible JSON response from the API.
+#' @export
+document_create_from_tabular <- function(df, document_name = NULL, template_id = NULL, folder_id = NULL,
+                                       tags = NULL, attachments = NULL, existing_document_id = NULL, api_key = get_api_key()) {
+  doc_body <- tabular_to_doc_body(df, verbose = FALSE)
+
+  title <- create_rspace_document_name(df, document_name)
+  if(!is.null(title)) {
+    doc_body$name <- title
+  }
 
   if (!is.null(existing_document_id)) {
     template_id <- existing_document_id
