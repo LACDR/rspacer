@@ -64,12 +64,13 @@ document_put <- function(body, existing_document_id, api_key = get_api_key()) {
 #' @param ... query parameters as documented in
 #' <https://community.researchspace.com/public/apiDocs> \[GET /documents\]
 #' @param max_results Maximum number of results to return.
+#' @param simplify Whether to simplify the returned tibble by converting/removing columns
 #' Use `Inf` to return all results (may take a while).
 #' @inheritParams api_status
 #'
 #' @returns A tibble with search results, one result per row.
 #' @export
-document_search <- function(query, ..., max_results = 50, api_key = get_api_key()) {
+document_search <- function(query, ..., max_results = 50, simplify = T, api_key = get_api_key()) {
 
   req <- request() |>
     httr2::req_url_path_append("documents") |>
@@ -78,8 +79,21 @@ document_search <- function(query, ..., max_results = 50, api_key = get_api_key(
 
   documents <- retrieve_results(req, "documents", max_results)
 
-  tibble::tibble(documents = documents) |>
+  doc_tibble <- tibble::tibble(documents = documents) |>
     tidyr::unnest_wider("documents")
+
+  if(nrow(doc_tibble) > 0 && simplify) {
+    doc_tibble <- doc_tibble |>
+      dplyr::select(-"signed", -"_links") |>
+      dplyr::mutate(
+        form = purrr::map_chr(.data$form, ~ .x$name),
+        owner = purrr::map_chr(.data$owner, ~ paste(.x$firstName, .x$lastName)),
+        created = lubridate::as_datetime(.data$created),
+        lastModified = lubridate::as_datetime(.data$lastModified)
+      )
+  }
+
+  doc_tibble
 }
 
 #'

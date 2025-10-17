@@ -5,12 +5,13 @@
 #' @param ... query parameters as documented in
 #' <https://community.researchspace.com/public/apiDocs> \[GET /folders/tree\]
 #' @param max_results Maximum number of results to return.
+#' @param simplify Whether to simplify the returned tibble by converting/removing columns
 #' @inheritParams api_status
 #'
 #' @returns A tibble with the folder content as rows.
 #' @export
 #'
-folder_tree <- function(folder_id = NULL, ..., max_results = Inf, api_key = get_api_key()) {
+folder_tree <- function(folder_id = NULL, ..., max_results = Inf, simplify = T, api_key = get_api_key()) {
   path <- list("folders", "tree")
   if (!is.null(folder_id)) path <- c(path, parse_rspace_id(folder_id))
 
@@ -20,6 +21,18 @@ folder_tree <- function(folder_id = NULL, ..., max_results = Inf, api_key = get_
 
   records <- retrieve_results(req, "records", max_results)
 
-  tibble::tibble(records = records) |>
+  rec_tibble <- tibble::tibble(records = records) |>
     tidyr::unnest_wider("records")
+
+  if(nrow(rec_tibble) > 0 && simplify) {
+    rec_tibble <- rec_tibble |>
+      dplyr::select(-"parentFolderId", -"_links") |>
+      dplyr::mutate(
+        owner = purrr::map_chr(.data$owner, ~ paste(.x$firstName, .x$lastName)),
+        created = lubridate::as_datetime(.data$created),
+        lastModified = lubridate::as_datetime(.data$lastModified)
+      )
+  }
+
+  rec_tibble
 }

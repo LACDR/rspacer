@@ -36,7 +36,8 @@ Imports:
     stringr,
     tibble,
     tidyr,
-    xml2
+    xml2,
+    lubridate
 Suggests:
     knitr,
     rmarkdown,

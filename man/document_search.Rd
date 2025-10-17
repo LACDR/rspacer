@@ -4,7 +4,13 @@
 \alias{document_search}
 \title{Global search for a term}
 \usage{
-document_search(query, ..., max_results = 50, api_key = get_api_key())
+document_search(
+  query,
+  ...,
+  max_results = 50,
+  simplify = T,
+  api_key = get_api_key()
+)
 }
 \arguments{
 \item{query}{description}
@@ -12,7 +18,9 @@ document_search(query, ..., max_results = 50, api_key = get_api_key())
 \item{...}{query parameters as documented in
 \url{https://community.researchspace.com/public/apiDocs} [GET /documents]}
 
-\item{max_results}{Maximum number of results to return.
+\item{max_results}{Maximum number of results to return.}
+
+\item{simplify}{Whether to simplify the returned tibble by converting/removing columns
 Use \code{Inf} to return all results (may take a while).}
 
 \item{api_key}{RSpace API key}
