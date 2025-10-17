@@ -7,10 +7,14 @@ cff-version: 1.2.0
 message: 'To cite package "rspacer" in publications use:'
 type: software
 license: MIT
-title: 'rspacer: RSpace API Wrapper'
-version: 0.1.0.9001
-abstract: Wrapper for the RSpace ELN (<https://www.researchspace.com/>) API. This
-  R package is not developed or endorsed by Research Space.
+title: 'rspacer: ''RSpace'' API Wrapper'
+version: 0.2.0
+doi: 10.32614/CRAN.package.rspacer
+abstract: Wrapper for the 'RSpace' Electronic Lab Notebook (<https://www.researchspace.com/>)
+  API. This packages provides convenience functions to browse, search, create, and
+  edit your 'RSpace' documents. In addition, it enables filling 'RSpace' templates
+  from R Markdown/Quarto templates or tabular data (e.g., 'Excel' files). This R package
+  is not developed or endorsed by 'Research Space'.
 authors:
 - family-names: Burger
   given-names: Gerhard
@@ -20,6 +24,7 @@ authors:
   given-names: Hanneke
   email: h.leegwater@lacdr.leidenuniv.nl
   orcid: https://orcid.org/0000-0001-6003-1544
+repository: https://CRAN.R-project.org/package=rspacer
 repository-code: https://github.com/lacdr/rspacer
 url: https://lacdr.github.io/rspacer/
 contact:
