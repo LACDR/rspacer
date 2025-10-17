@@ -51,7 +51,7 @@ subheaders or fields.</p>
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">put_all_fields_in_one_field</span><span class="op">(</span><span class="va">doc_body_fields</span>, use_html_sep <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">put_all_fields_in_one_field</span><span class="op">(</span><span class="va">doc_body_fields</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -61,14 +61,10 @@ subheaders or fields.</p>
 <dl><dt id="arg-doc-body-fields">doc_body_fields<a class="anchor" aria-label="anchor" href="#arg-doc-body-fields"></a></dt>
 <dd><p>multiple fields in a list</p></dd>
 
-
-<dt id="arg-use-html-sep">use_html_sep<a class="anchor" aria-label="anchor" href="#arg-use-html-sep"></a></dt>
-<dd><p>If <code>TRUE</code>, each field is placed in a html paragraph</p></dd>
-
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
-    <p>a list with one field, with only content, all contents from other fields, separated by <code>\n</code>.</p>
+    <p>a list with one field containing all content from all fields</p>
     </div>
 
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
