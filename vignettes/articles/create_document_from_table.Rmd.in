@@ -1,5 +1,5 @@
 ---
-title: "Tutorial: creating a document from a tabular file"
+title: "Tutorial: creating a document from a table"
 ---
 
 ```{r, include = FALSE}
@@ -45,43 +45,28 @@ The second column should have the content of each field in the correct format.
 If you use Excel, make sure that dates are saved as a string in the format dd-mm-yyyy.
 
 ```{r}
-(file_name <- "Template_example.csv")
-data.frame(
-  name = c("Title", "Date", "Main part", "Conclusion"),
-  content = c("example title", "23-12-2024", "This is example text.",
-              "ready for uploading.")
-) |>
-  write_csv(file_name, col_names = FALSE)
+df_to_upload <- data.frame(
+    name = c("Title", "Date", "Main part", "Conclusion"),
+    content = c("example title", "23-12-2024", "This is example text.",
+                "ready for uploading.")
+  )
 ```
 
-## Specify the file name of the file to upload
+## Upload the data
 
-You need to define which file you want to upload.
-In this tutorial, we want to create a structured document from the file `Template_example.csv` that we created before.
-The path is defined in the `file_name` variable in the previous chunk.
-Here, we check that the file exists before we start the upload.
-We recommend to work with relative paths from within an R project, for example using the [`here` package](https://here.r-lib.org/).
-If this is not what you want, you need to specify the absolute file path.
-
-```{r}
-stopifnot(file.exists(file_name))
-```
-
-### Upload the file
-
-To upload the document to the API inbox, this code chunk is sufficient and returns the created document.
+To upload the data to the API inbox, this code chunk is sufficient and returns the created document.
 It creates a document from your Template_example.csv.
 The function works with CSV, TSV and XLSX file formats.
 Make sure that the template_id is the identifier of the template that you previously made in RSpace.
 
 ```{r}
-document_create_from_tabfile(
-    path = file_name,
+document_create_from_tabular(
+    df = df_to_upload,
     template_id = "SD377682"
 )
 ```
 
-The function `document_create_from_tabfile()` has more parameters, for example to upload the document to the specified notebook or folder (click the function above to learn more).
+The function `document_create_from_tabular()` has more parameters, for example, to upload the document to a specified notebook or folder (click the function above to learn more).
 
 How to find the values for these parameters?
 Browse your RSpace folders using `folder_tree()` and use either the `id` or the `globalID`.
@@ -107,10 +92,28 @@ We also place the file in a specific folder, and add the "tutorial" tag.
 attachment_file <- system.file("Template_example.html", package = "rspacer")
 (matching_code_file <- fs::path_ext_set(attachment_file, ".qmd"))
 
-document_create_from_tabfile(
-  path = file_name,
+document_create_from_tabular(
+  df = df_to_upload,
   template_id = "SD377682",
   tags = c("tutorial"),
   attachments = tibble(field = c(4, 4), path = c(attachment_file, matching_code_file))
 )
 ```
+
+## Uploading directly from file
+
+You can also directly upload tabular data from files using the `document_create_from_tabfile()` function.
+A small example, with the example data from before:
+
+```{r}
+file_name <- "Template_example.csv"
+df_to_upload |>
+  write_csv(file_name, col_names = FALSE) # the csv should not contain the column names
+
+# now we upload
+document_create_from_tabfile(
+    path = file_name,
+    template_id = "SD377682"
+)
+```
+

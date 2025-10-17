@@ -41,7 +41,7 @@ api_status()
 ## [1] "OK"
 ## 
 ## $rspaceVersion
-## [1] "1.109.2"
+## [1] "1.114.0"
 ```
 
 ## Functionality
@@ -57,19 +57,19 @@ folder_tree()
 ```
 
 ```
-## # A tibble: 10 × 9
-##        id globalId name                   created          lastModified parentFolderId type  `_links` owner       
-##     <int> <chr>    <chr>                  <chr>            <chr>                 <int> <chr> <list>   <list>      
-##  1 356307 SD356307 Gerhard Burger         2024-01-17T14:5… 2024-01-17T…           7813 DOCU… <list>   <named list>
-##  2 260004 FL260004 LACDR RDM              2023-11-06T10:1… 2023-11-06T…           7813 FOLD… <list>   <named list>
-##  3 242175 FL242175 GABi001_EMP_regulation 2023-05-30T10:1… 2023-06-14T…           7813 FOLD… <list>   <named list>
-##  4 242400 FL242400 Ontologies             2023-06-01T07:2… 2023-06-01T…           7813 FOLD… <list>   <named list>
-##  5 242398 FL242398 Api Inbox              2023-06-01T07:2… 2023-06-01T…           7813 FOLD… <list>   <named list>
-##  6 242182 FL242182 Publications           2023-05-30T11:0… 2023-05-30T…           7813 FOLD… <list>   <named list>
-##  7  21961 FL21961  DDS2 Data management   2023-03-16T09:5… 2023-03-16T…           7813 FOLD… <list>   <named list>
-##  8   7833 FL7833   Templates              2022-12-22T12:3… 2022-12-22T…           7813 FOLD… <list>   <named list>
-##  9   7819 GF7819   Gallery                2022-12-22T12:3… 2022-12-22T…           7813 FOLD… <list>   <named list>
-## 10   7814 FL7814   Shared                 2022-12-22T12:3… 2022-12-22T…           7813 FOLD… <list>   <named list>
+## # A tibble: 10 × 7
+##        id globalId name                   created             lastModified        type     owner         
+##     <int> <chr>    <chr>                  <dttm>              <dttm>              <chr>    <chr>         
+##  1 356307 SD356307 Gerhard Burger         2024-01-17 14:56:22 2024-01-17 15:04:39 DOCUMENT Gerhard Burger
+##  2 260004 FL260004 LACDR RDM              2023-11-06 10:19:59 2023-11-06 10:19:59 FOLDER   Gerhard Burger
+##  3 242175 FL242175 GABi001_EMP_regulation 2023-05-30 10:14:51 2023-06-14 12:30:47 FOLDER   Gerhard Burger
+##  4 242400 FL242400 Ontologies             2023-06-01 07:23:10 2023-06-01 07:23:10 FOLDER   Gerhard Burger
+##  5 242398 FL242398 Api Inbox              2023-06-01 07:23:08 2023-06-01 07:23:08 FOLDER   Gerhard Burger
+##  6 242182 FL242182 Publications           2023-05-30 11:07:25 2023-05-30 11:07:25 FOLDER   Gerhard Burger
+##  7  21961 FL21961  DDS2 Data management   2023-03-16 09:50:33 2023-03-16 09:50:33 FOLDER   Gerhard Burger
+##  8   7833 FL7833   Templates              2022-12-22 12:32:22 2022-12-22 12:32:22 FOLDER   Gerhard Burger
+##  9   7819 GF7819   Gallery                2022-12-22 12:32:22 2022-12-22 12:32:22 FOLDER   Gerhard Burger
+## 10   7814 FL7814   Shared                 2022-12-22 12:32:22 2022-12-22 12:32:22 FOLDER   Gerhard Burger
 ```
 
 You can also specify an id or Unique ID (`globalId`) to show the contents of a specific folder:
@@ -80,20 +80,46 @@ folder_tree(7819)
 ```
 
 ```
-## # A tibble: 8 × 9
-##      id globalId name          created                  lastModified    parentFolderId type  `_links` owner       
-##   <int> <chr>    <chr>         <chr>                    <chr>                    <int> <chr> <list>   <list>      
-## 1  7828 GF7828   Snippets      2022-12-22T12:32:22.318Z 2022-12-22T12:…           7819 FOLD… <list>   <named list>
-## 2  7827 GF7827   PdfDocuments  2022-12-22T12:32:22.315Z 2022-12-22T12:…           7819 FOLD… <list>   <named list>
-## 3  7826 GF7826   Miscellaneous 2022-12-22T12:32:22.311Z 2022-12-22T12:…           7819 FOLD… <list>   <named list>
-## 4  7825 GF7825   Documents     2022-12-22T12:32:22.308Z 2022-12-22T12:…           7819 FOLD… <list>   <named list>
-## 5  7824 GF7824   Chemistry     2022-12-22T12:32:22.304Z 2022-12-22T12:…           7819 FOLD… <list>   <named list>
-## 6  7823 GF7823   Videos        2022-12-22T12:32:22.301Z 2022-12-22T12:…           7819 FOLD… <list>   <named list>
-## 7  7822 GF7822   Audios        2022-12-22T12:32:22.297Z 2022-12-22T12:…           7819 FOLD… <list>   <named list>
-## 8  7820 GF7820   Images        2022-12-22T12:32:22.290Z 2022-12-22T12:…           7819 FOLD… <list>   <named list>
+## # A tibble: 8 × 7
+##      id globalId name          created             lastModified        type   owner         
+##   <int> <chr>    <chr>         <dttm>              <dttm>              <chr>  <chr>         
+## 1  7828 GF7828   Snippets      2022-12-22 12:32:22 2022-12-22 12:32:22 FOLDER Gerhard Burger
+## 2  7827 GF7827   PdfDocuments  2022-12-22 12:32:22 2022-12-22 12:32:22 FOLDER Gerhard Burger
+## 3  7826 GF7826   Miscellaneous 2022-12-22 12:32:22 2022-12-22 12:32:22 FOLDER Gerhard Burger
+## 4  7825 GF7825   Documents     2022-12-22 12:32:22 2022-12-22 12:32:22 FOLDER Gerhard Burger
+## 5  7824 GF7824   Chemistry     2022-12-22 12:32:22 2022-12-22 12:32:22 FOLDER Gerhard Burger
+## 6  7823 GF7823   Videos        2022-12-22 12:32:22 2022-12-22 12:32:22 FOLDER Gerhard Burger
+## 7  7822 GF7822   Audios        2022-12-22 12:32:22 2022-12-22 12:32:22 FOLDER Gerhard Burger
+## 8  7820 GF7820   Images        2022-12-22 12:32:22 2022-12-22 12:32:22 FOLDER Gerhard Burger
 ```
 
 ### Documents
+
+#### Search
+
+You can search for documents using the `document_search()` function:
+
+
+``` r
+document_search("test")
+```
+
+```
+## # A tibble: 50 × 10
+##        id globalId name             created             lastModified        parentFolderId tags  tagMetaData form  owner
+##     <int> <chr>    <chr>            <dttm>              <dttm>                       <int> <chr> <chr>       <chr> <chr>
+##  1 424078 SD424078 test             2025-10-17 10:21:21 2025-10-17 10:21:27         242398 rspa… rspacer     Basi… Gerh…
+##  2 424072 SD424072 test             2025-10-17 09:21:55 2025-10-17 09:22:01         242398 rspa… rspacer     Basi… Gerh…
+##  3 422915 SD422915 251001_test_Sir… 2025-09-30 08:33:22 2025-10-07 11:51:30             NA <NA>  <NA>        Basi… Max …
+##  4 421333 SD421333 250901_compare_… 2025-09-01 09:06:12 2025-09-10 13:16:24             NA <NA>  <NA>        Basi… Max …
+##  5 420651 SD420651 250820_Surival_… 2025-08-19 14:34:17 2025-09-09 12:37:52             NA <NA>  <NA>        Basi… Max …
+##  6 421114 SD421114 250829_test_cel… 2025-08-28 12:47:23 2025-09-09 12:06:32             NA <NA>  <NA>        Basi… Max …
+##  7 421016 SD421016 250827_SAS_Kolf… 2025-08-27 07:29:23 2025-08-29 11:06:20             NA <NA>  <NA>        Basi… Max …
+##  8 421238 SD421238 2025_08_25_SA00… 2025-08-29 08:59:39 2025-08-29 09:10:11             NA <NA>  <NA>        Basi… Serk…
+##  9 419599 SD419599 250805_Surival_… 2025-08-05 11:25:24 2025-08-19 09:47:40             NA <NA>  <NA>        Basi… Max …
+## 10 419593 SD419593 250805_Compare_… 2025-08-05 09:24:31 2025-08-19 09:37:45             NA <NA>  <NA>        Basi… Max …
+## # ℹ 40 more rows
+```
 
 #### Retrieve
 
@@ -127,25 +153,564 @@ The result is json converted to an R list, to get the field information you coul
 
 ``` r
 library(tidyverse)
-tibble(fields = res$fields) |>
-  unnest_wider(fields) |>
-  select(name, type, content)
+library(gt)
+res$fields |>
+  fields_to_data_frame() |>
+  gt() |>
+  fmt_markdown(columns = c(content))
 ```
 
-```
-## # A tibble: 8 × 3
-##   name          type   content                                                                                    
-##   <chr>         <chr>  <chr>                                                                                      
-## 1 Template Used string "LACDR-ISA - Contact v0.2.0"                                                               
-## 2 Name          string "Gerhard A. Burger"                                                                        
-## 3 Email         string "g.a.burger@lacdr.leidenuniv.nl"                                                           
-## 4 Phone         string ""                                                                                         
-## 5 ORCID         string "0000-0003-1062-5576"                                                                      
-## 6 Address       text   "<p><a href=\"https://www.universiteitleiden.nl/en/locations/gorlaeus-building\">Gorlaeus …
-## 7 Affiliation   string "Leiden University"                                                                        
-## 8 Roles         text   ""
-```
+<!--html_preserve--><div id="gojmxnmrim" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#gojmxnmrim table {
+  font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+#gojmxnmrim thead, #gojmxnmrim tbody, #gojmxnmrim tfoot, #gojmxnmrim tr, #gojmxnmrim td, #gojmxnmrim th {
+  border-style: none;
+}
+
+#gojmxnmrim p {
+  margin: 0;
+  padding: 0;
+}
+
+#gojmxnmrim .gt_table {
+  display: table;
+  border-collapse: collapse;
+  line-height: normal;
+  margin-left: auto;
+  margin-right: auto;
+  color: #333333;
+  font-size: 16px;
+  font-weight: normal;
+  font-style: normal;
+  background-color: #FFFFFF;
+  width: auto;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #A8A8A8;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #A8A8A8;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+}
+
+#gojmxnmrim .gt_caption {
+  padding-top: 4px;
+  padding-bottom: 4px;
+}
+
+#gojmxnmrim .gt_title {
+  color: #333333;
+  font-size: 125%;
+  font-weight: initial;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-color: #FFFFFF;
+  border-bottom-width: 0;
+}
+
+#gojmxnmrim .gt_subtitle {
+  color: #333333;
+  font-size: 85%;
+  font-weight: initial;
+  padding-top: 3px;
+  padding-bottom: 5px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-color: #FFFFFF;
+  border-top-width: 0;
+}
+
+#gojmxnmrim .gt_heading {
+  background-color: #FFFFFF;
+  text-align: center;
+  border-bottom-color: #FFFFFF;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#gojmxnmrim .gt_bottom_border {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#gojmxnmrim .gt_col_headings {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+}
+
+#gojmxnmrim .gt_col_heading {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 6px;
+  padding-left: 5px;
+  padding-right: 5px;
+  overflow-x: hidden;
+}
+
+#gojmxnmrim .gt_column_spanner_outer {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: normal;
+  text-transform: inherit;
+  padding-top: 0;
+  padding-bottom: 0;
+  padding-left: 4px;
+  padding-right: 4px;
+}
+
+#gojmxnmrim .gt_column_spanner_outer:first-child {
+  padding-left: 0;
+}
+
+#gojmxnmrim .gt_column_spanner_outer:last-child {
+  padding-right: 0;
+}
+
+#gojmxnmrim .gt_column_spanner {
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: bottom;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  overflow-x: hidden;
+  display: inline-block;
+  width: 100%;
+}
+
+#gojmxnmrim .gt_spanner_row {
+  border-bottom-style: hidden;
+}
+
+#gojmxnmrim .gt_group_heading {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  text-align: left;
+}
+
+#gojmxnmrim .gt_empty_group_heading {
+  padding: 0.5px;
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  vertical-align: middle;
+}
+
+#gojmxnmrim .gt_from_md > :first-child {
+  margin-top: 0;
+}
+
+#gojmxnmrim .gt_from_md > :last-child {
+  margin-bottom: 0;
+}
+
+#gojmxnmrim .gt_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  margin: 10px;
+  border-top-style: solid;
+  border-top-width: 1px;
+  border-top-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 1px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 1px;
+  border-right-color: #D3D3D3;
+  vertical-align: middle;
+  overflow-x: hidden;
+}
+
+#gojmxnmrim .gt_stub {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#gojmxnmrim .gt_stub_row_group {
+  color: #333333;
+  background-color: #FFFFFF;
+  font-size: 100%;
+  font-weight: initial;
+  text-transform: inherit;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+  padding-left: 5px;
+  padding-right: 5px;
+  vertical-align: top;
+}
+
+#gojmxnmrim .gt_row_group_first td {
+  border-top-width: 2px;
+}
+
+#gojmxnmrim .gt_row_group_first th {
+  border-top-width: 2px;
+}
+
+#gojmxnmrim .gt_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#gojmxnmrim .gt_first_summary_row {
+  border-top-style: solid;
+  border-top-color: #D3D3D3;
+}
+
+#gojmxnmrim .gt_first_summary_row.thick {
+  border-top-width: 2px;
+}
+
+#gojmxnmrim .gt_last_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#gojmxnmrim .gt_grand_summary_row {
+  color: #333333;
+  background-color: #FFFFFF;
+  text-transform: inherit;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#gojmxnmrim .gt_first_grand_summary_row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-top-style: double;
+  border-top-width: 6px;
+  border-top-color: #D3D3D3;
+}
+
+#gojmxnmrim .gt_last_grand_summary_row_top {
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 5px;
+  padding-right: 5px;
+  border-bottom-style: double;
+  border-bottom-width: 6px;
+  border-bottom-color: #D3D3D3;
+}
+
+#gojmxnmrim .gt_striped {
+  background-color: rgba(128, 128, 128, 0.05);
+}
+
+#gojmxnmrim .gt_table_body {
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #D3D3D3;
+  border-bottom-style: solid;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+}
+
+#gojmxnmrim .gt_footnotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#gojmxnmrim .gt_footnote {
+  margin: 0px;
+  font-size: 90%;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#gojmxnmrim .gt_sourcenotes {
+  color: #333333;
+  background-color: #FFFFFF;
+  border-bottom-style: none;
+  border-bottom-width: 2px;
+  border-bottom-color: #D3D3D3;
+  border-left-style: none;
+  border-left-width: 2px;
+  border-left-color: #D3D3D3;
+  border-right-style: none;
+  border-right-width: 2px;
+  border-right-color: #D3D3D3;
+}
+
+#gojmxnmrim .gt_sourcenote {
+  font-size: 90%;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+#gojmxnmrim .gt_left {
+  text-align: left;
+}
+
+#gojmxnmrim .gt_center {
+  text-align: center;
+}
+
+#gojmxnmrim .gt_right {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+#gojmxnmrim .gt_font_normal {
+  font-weight: normal;
+}
+
+#gojmxnmrim .gt_font_bold {
+  font-weight: bold;
+}
+
+#gojmxnmrim .gt_font_italic {
+  font-style: italic;
+}
+
+#gojmxnmrim .gt_super {
+  font-size: 65%;
+}
+
+#gojmxnmrim .gt_footnote_marks {
+  font-size: 75%;
+  vertical-align: 0.4em;
+  position: initial;
+}
+
+#gojmxnmrim .gt_asterisk {
+  font-size: 100%;
+  vertical-align: 0;
+}
+
+#gojmxnmrim .gt_indent_1 {
+  text-indent: 5px;
+}
+
+#gojmxnmrim .gt_indent_2 {
+  text-indent: 10px;
+}
+
+#gojmxnmrim .gt_indent_3 {
+  text-indent: 15px;
+}
+
+#gojmxnmrim .gt_indent_4 {
+  text-indent: 20px;
+}
+
+#gojmxnmrim .gt_indent_5 {
+  text-indent: 25px;
+}
+
+#gojmxnmrim .katex-display {
+  display: inline-flex !important;
+  margin-bottom: 0.75em !important;
+}
+
+#gojmxnmrim div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+  height: 0px !important;
+}
+</style>
+<table class="gt_table" data-quarto-disable-processing="false" data-quarto-bootstrap="false">
+  <thead>
+    <tr class="gt_col_headings">
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="id">id</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1" scope="col" id="globalId">globalId</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1" scope="col" id="name">name</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1" scope="col" id="type">type</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1" scope="col" id="content">content</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="lastModified">lastModified</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="columnIndex">columnIndex</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1" scope="col" id="files">files</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1" scope="col" id="listOfMaterials">listOfMaterials</th>
+      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1" scope="col" id="_links">_links</th>
+    </tr>
+  </thead>
+  <tbody class="gt_table_body">
+    <tr><td headers="id" class="gt_row gt_right">1873444</td>
+<td headers="globalId" class="gt_row gt_left">FD1873444</td>
+<td headers="name" class="gt_row gt_left">Template Used</td>
+<td headers="type" class="gt_row gt_left">string</td>
+<td headers="content" class="gt_row gt_left"><span class='gt_from_md'>LACDR-ISA - Contact v0.2.0</span></td>
+<td headers="lastModified" class="gt_row gt_right">2024-01-17 14:56:22.625</td>
+<td headers="columnIndex" class="gt_row gt_right">0</td>
+<td headers="files" class="gt_row gt_center">NA</td>
+<td headers="listOfMaterials" class="gt_row gt_center">NA</td>
+<td headers="_links" class="gt_row gt_center">NA</td></tr>
+    <tr><td headers="id" class="gt_row gt_right">1873445</td>
+<td headers="globalId" class="gt_row gt_left">FD1873445</td>
+<td headers="name" class="gt_row gt_left">Name</td>
+<td headers="type" class="gt_row gt_left">string</td>
+<td headers="content" class="gt_row gt_left"><span class='gt_from_md'>Gerhard A. Burger</span></td>
+<td headers="lastModified" class="gt_row gt_right">2024-01-17 14:56:39.641</td>
+<td headers="columnIndex" class="gt_row gt_right">1</td>
+<td headers="files" class="gt_row gt_center">NA</td>
+<td headers="listOfMaterials" class="gt_row gt_center">NA</td>
+<td headers="_links" class="gt_row gt_center">NA</td></tr>
+    <tr><td headers="id" class="gt_row gt_right">1873446</td>
+<td headers="globalId" class="gt_row gt_left">FD1873446</td>
+<td headers="name" class="gt_row gt_left">Email</td>
+<td headers="type" class="gt_row gt_left">string</td>
+<td headers="content" class="gt_row gt_left"><span class='gt_from_md'><a href="mailto:g.a.burger@lacdr.leidenuniv.nl">g.a.burger@lacdr.leidenuniv.nl</a></span></td>
+<td headers="lastModified" class="gt_row gt_right">2024-01-17 14:57:02.811</td>
+<td headers="columnIndex" class="gt_row gt_right">2</td>
+<td headers="files" class="gt_row gt_center">NA</td>
+<td headers="listOfMaterials" class="gt_row gt_center">NA</td>
+<td headers="_links" class="gt_row gt_center">NA</td></tr>
+    <tr><td headers="id" class="gt_row gt_right">1873447</td>
+<td headers="globalId" class="gt_row gt_left">FD1873447</td>
+<td headers="name" class="gt_row gt_left">Phone</td>
+<td headers="type" class="gt_row gt_left">string</td>
+<td headers="content" class="gt_row gt_left"><span class='gt_from_md'></span></td>
+<td headers="lastModified" class="gt_row gt_right">2024-01-17 14:56:22.625</td>
+<td headers="columnIndex" class="gt_row gt_right">3</td>
+<td headers="files" class="gt_row gt_center">NA</td>
+<td headers="listOfMaterials" class="gt_row gt_center">NA</td>
+<td headers="_links" class="gt_row gt_center">NA</td></tr>
+    <tr><td headers="id" class="gt_row gt_right">1873448</td>
+<td headers="globalId" class="gt_row gt_left">FD1873448</td>
+<td headers="name" class="gt_row gt_left">ORCID</td>
+<td headers="type" class="gt_row gt_left">string</td>
+<td headers="content" class="gt_row gt_left"><span class='gt_from_md'>0000-0003-1062-5576</span></td>
+<td headers="lastModified" class="gt_row gt_right">2024-01-17 14:59:29.511</td>
+<td headers="columnIndex" class="gt_row gt_right">4</td>
+<td headers="files" class="gt_row gt_center">NA</td>
+<td headers="listOfMaterials" class="gt_row gt_center">NA</td>
+<td headers="_links" class="gt_row gt_center">NA</td></tr>
+    <tr><td headers="id" class="gt_row gt_right">1873449</td>
+<td headers="globalId" class="gt_row gt_left">FD1873449</td>
+<td headers="name" class="gt_row gt_left">Address</td>
+<td headers="type" class="gt_row gt_left">text</td>
+<td headers="content" class="gt_row gt_left"><span class='gt_from_md'><a href="https://www.universiteitleiden.nl/en/locations/gorlaeus-building">Gorlaeus Building</a><br />Einsteinweg&nbsp;55<br />2333 CC&nbsp;Leiden<br />Room number&nbsp;GE2.05</span></td>
+<td headers="lastModified" class="gt_row gt_right">2024-01-17 14:57:49.379</td>
+<td headers="columnIndex" class="gt_row gt_right">5</td>
+<td headers="files" class="gt_row gt_center">NA</td>
+<td headers="listOfMaterials" class="gt_row gt_center">NA</td>
+<td headers="_links" class="gt_row gt_center">NA</td></tr>
+    <tr><td headers="id" class="gt_row gt_right">1873450</td>
+<td headers="globalId" class="gt_row gt_left">FD1873450</td>
+<td headers="name" class="gt_row gt_left">Affiliation</td>
+<td headers="type" class="gt_row gt_left">string</td>
+<td headers="content" class="gt_row gt_left"><span class='gt_from_md'>Leiden University</span></td>
+<td headers="lastModified" class="gt_row gt_right">2024-01-17 14:59:13.433</td>
+<td headers="columnIndex" class="gt_row gt_right">6</td>
+<td headers="files" class="gt_row gt_center">NA</td>
+<td headers="listOfMaterials" class="gt_row gt_center">NA</td>
+<td headers="_links" class="gt_row gt_center">NA</td></tr>
+    <tr><td headers="id" class="gt_row gt_right">1873451</td>
+<td headers="globalId" class="gt_row gt_left">FD1873451</td>
+<td headers="name" class="gt_row gt_left">Roles</td>
+<td headers="type" class="gt_row gt_left">text</td>
+<td headers="content" class="gt_row gt_left"><span class='gt_from_md'></span></td>
+<td headers="lastModified" class="gt_row gt_right">2024-01-17 14:56:22.625</td>
+<td headers="columnIndex" class="gt_row gt_right">7</td>
+<td headers="files" class="gt_row gt_center">NA</td>
+<td headers="listOfMaterials" class="gt_row gt_center">NA</td>
+<td headers="_links" class="gt_row gt_center">NA</td></tr>
+  </tbody>
+  
+  
+</table>
+</div><!--/html_preserve-->
 
 #### Create
 
-Creating (structured) documents is slightly more involved, see the Articles tab for more info.
+Creating (structured) documents is slightly more involved, see the Articles tab for detailed instructions.

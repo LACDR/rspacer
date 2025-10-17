@@ -56,6 +56,14 @@ folder_tree(7819)
 
 ### Documents
 
+#### Search
+
+You can search for documents using the `document_search()` function:
+
+```{r}
+document_search("test")
+```
+
 #### Retrieve
 
 You can retrieve documents using
@@ -69,11 +77,13 @@ The result is json converted to an R list, to get the field information you coul
 
 ```{r}
 library(tidyverse)
-tibble(fields = res$fields) |>
-  unnest_wider(fields) |>
-  select(name, type, content)
+library(gt)
+res$fields |>
+  fields_to_data_frame() |>
+  gt() |>
+  fmt_markdown(columns = c(content))
 ```
 
 #### Create
 
-Creating (structured) documents is slightly more involved, see the Articles tab for more info.
+Creating (structured) documents is slightly more involved, see the Articles tab for detailed instructions.
