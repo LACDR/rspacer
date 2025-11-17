@@ -1,4 +1,4 @@
-# Tutorial: creating a document from a tabular file
+# Tutorial: creating a document from a table
 
 ## Before you start
 
@@ -29,7 +29,7 @@ This code checks if the API is available. The API status should be OK.
     ## [1] "OK"
     ## 
     ## $rspaceVersion
-    ## [1] "1.109.2"
+    ## [1] "1.114.0"
 
 ``` r
 stopifnot(res$message == "OK")
@@ -53,55 +53,33 @@ Excel, make sure that dates are saved as a string in the format
 dd-mm-yyyy.
 
 ``` r
-(file_name <- "Template_example.csv")
+df_to_upload <- data.frame(
+    name = c("Title", "Date", "Main part", "Conclusion"),
+    content = c("example title", "23-12-2024", "This is example text.",
+                "ready for uploading.")
+  )
 ```
 
-    ## [1] "Template_example.csv"
+## Upload the data
 
-``` r
-data.frame(
-  name = c("Title", "Date", "Main part", "Conclusion"),
-  content = c("example title", "23-12-2024", "This is example text.",
-              "ready for uploading.")
-) |>
-  write_csv(file_name, col_names = FALSE)
-```
-
-## Specify the file name of the file to upload
-
-You need to define which file you want to upload. In this tutorial, we
-want to create a structured document from the file
-`Template_example.csv` that we created before. The path is defined in
-the `file_name` variable in the previous chunk. Here, we check that the
-file exists before we start the upload. We recommend to work with
-relative paths from within an R project, for example using the [`here`
-package](https://here.r-lib.org/). If this is not what you want, you
-need to specify the absolute file path.
-
-``` r
-stopifnot(file.exists(file_name))
-```
-
-### Upload the file
-
-To upload the document to the API inbox, this code chunk is sufficient
-and returns the created document. It creates a document from your
+To upload the data to the API inbox, this code chunk is sufficient and
+returns the created document. It creates a document from your
 Template_example.csv. The function works with CSV, TSV and XLSX file
 formats. Make sure that the template_id is the identifier of the
 template that you previously made in RSpace.
 
 ``` r
-document_create_from_tabfile(
-    path = file_name,
+document_create_from_tabular(
+    df = df_to_upload,
     template_id = "SD377682"
 )
 ```
 
-    ## Document created: <https://leiden.researchspace.com/globalId/SD412229>
+    ## Document created: <https://leiden.researchspace.com/globalId/SD424114>
 
 The function
-[`document_create_from_tabfile()`](https://lacdr.github.io/rspacer/reference/document_create_from_tabfile.md)
-has more parameters, for example to upload the document to the specified
+[`document_create_from_tabular()`](https://lacdr.github.io/rspacer/reference/document_create_from_tabular.md)
+has more parameters, for example, to upload the document to a specified
 notebook or folder (click the function above to learn more).
 
 How to find the values for these parameters? Browse your RSpace folders
@@ -115,31 +93,31 @@ identifiers start with `SD`. For example:
 folder_tree()
 ```
 
-    ## # A tibble: 10 × 9
-    ##        id globalId name                   created          lastModified parentFolderId type  `_links` owner       
-    ##     <int> <chr>    <chr>                  <chr>            <chr>                 <int> <chr> <list>   <list>      
-    ##  1 356307 SD356307 Gerhard Burger         2024-01-17T14:5… 2024-01-17T…           7813 DOCU… <list>   <named list>
-    ##  2 260004 FL260004 LACDR RDM              2023-11-06T10:1… 2023-11-06T…           7813 FOLD… <list>   <named list>
-    ##  3 242175 FL242175 GABi001_EMP_regulation 2023-05-30T10:1… 2023-06-14T…           7813 FOLD… <list>   <named list>
-    ##  4 242400 FL242400 Ontologies             2023-06-01T07:2… 2023-06-01T…           7813 FOLD… <list>   <named list>
-    ##  5 242398 FL242398 Api Inbox              2023-06-01T07:2… 2023-06-01T…           7813 FOLD… <list>   <named list>
-    ##  6 242182 FL242182 Publications           2023-05-30T11:0… 2023-05-30T…           7813 FOLD… <list>   <named list>
-    ##  7  21961 FL21961  DDS2 Data management   2023-03-16T09:5… 2023-03-16T…           7813 FOLD… <list>   <named list>
-    ##  8   7833 FL7833   Templates              2022-12-22T12:3… 2022-12-22T…           7813 FOLD… <list>   <named list>
-    ##  9   7819 GF7819   Gallery                2022-12-22T12:3… 2022-12-22T…           7813 FOLD… <list>   <named list>
-    ## 10   7814 FL7814   Shared                 2022-12-22T12:3… 2022-12-22T…           7813 FOLD… <list>   <named list>
+    ## # A tibble: 10 × 7
+    ##        id globalId name                   created             lastModified        type     owner         
+    ##     <int> <chr>    <chr>                  <dttm>              <dttm>              <chr>    <chr>         
+    ##  1 356307 SD356307 Gerhard Burger         2024-01-17 14:56:22 2024-01-17 15:04:39 DOCUMENT Gerhard Burger
+    ##  2 260004 FL260004 LACDR RDM              2023-11-06 10:19:59 2023-11-06 10:19:59 FOLDER   Gerhard Burger
+    ##  3 242175 FL242175 GABi001_EMP_regulation 2023-05-30 10:14:51 2023-06-14 12:30:47 FOLDER   Gerhard Burger
+    ##  4 242400 FL242400 Ontologies             2023-06-01 07:23:10 2023-06-01 07:23:10 FOLDER   Gerhard Burger
+    ##  5 242398 FL242398 Api Inbox              2023-06-01 07:23:08 2023-06-01 07:23:08 FOLDER   Gerhard Burger
+    ##  6 242182 FL242182 Publications           2023-05-30 11:07:25 2023-05-30 11:07:25 FOLDER   Gerhard Burger
+    ##  7  21961 FL21961  DDS2 Data management   2023-03-16 09:50:33 2023-03-16 09:50:33 FOLDER   Gerhard Burger
+    ##  8   7833 FL7833   Templates              2022-12-22 12:32:22 2022-12-22 12:32:22 FOLDER   Gerhard Burger
+    ##  9   7819 GF7819   Gallery                2022-12-22 12:32:22 2022-12-22 12:32:22 FOLDER   Gerhard Burger
+    ## 10   7814 FL7814   Shared                 2022-12-22 12:32:22 2022-12-22 12:32:22 FOLDER   Gerhard Burger
 
 ``` r
 folder_tree("FL409926")
 ```
 
-    ## # A tibble: 4 × 9
-    ##       id globalId name                      created        lastModified parentFolderId type  `_links` owner       
-    ##    <int> <chr>    <chr>                     <chr>          <chr>        <lgl>          <chr> <list>   <list>      
-    ## 1 409948 SD409948 example title             2025-04-24T10… 2025-04-24T… NA             DOCU… <list>   <named list>
-    ## 2 409942 SD409942 example title             2025-04-24T10… 2025-04-24T… NA             DOCU… <list>   <named list>
-    ## 3 409929 SD409929 a002_normalize_lipidomics 2025-04-24T10… 2025-04-24T… NA             DOCU… <list>   <named list>
-    ## 4 409928 SD409928 a001_preprocess_data      2025-04-24T10… 2025-04-24T… NA             DOCU… <list>   <named list>
+    ## # A tibble: 4 × 7
+    ##       id globalId name                      created             lastModified        type     owner            
+    ##    <int> <chr>    <chr>                     <dttm>              <dttm>              <chr>    <chr>            
+    ## 1 409948 SD409948 example title             2025-04-24 10:12:56 2025-04-24 10:13:06 DOCUMENT Hanneke Leegwater
+    ## 2 409942 SD409942 example title             2025-04-24 10:11:01 2025-04-24 10:11:10 DOCUMENT Hanneke Leegwater
+    ## 3 409929 SD409929 a002_normalize_lipidomics 2025-04-24 10:01:59 2025-04-24 10:02:14 DOCUMENT Hanneke Leegwater
+    ## 4 409928 SD409928 a001_preprocess_data      2025-04-24 10:01:34 2025-04-24 10:01:52 DOCUMENT Hanneke Leegwater
 
 Of course you can also find these by going to the web interface of your
 RSpace instance. You can also tag your documents using a `tags` vector,
@@ -162,14 +140,34 @@ attachment_file <- system.file("Template_example.html", package = "rspacer")
     ## /Users/gerhard/GitHub/rspacer/inst/Template_example.qmd
 
 ``` r
-document_create_from_tabfile(
-  path = file_name,
+document_create_from_tabular(
+  df = df_to_upload,
   template_id = "SD377682",
   tags = c("tutorial"),
   attachments = tibble(field = c(4, 4), path = c(attachment_file, matching_code_file))
 )
 ```
 
-    ## File uploaded to <https://leiden.researchspace.com/globalId/GL412231>
-    ## File uploaded to <https://leiden.researchspace.com/globalId/GL412232>
-    ## Document created: <https://leiden.researchspace.com/globalId/SD412233>
+    ## File uploaded to <https://leiden.researchspace.com/globalId/GL424116>
+    ## File uploaded to <https://leiden.researchspace.com/globalId/GL424117>
+    ## Document created: <https://leiden.researchspace.com/globalId/SD424118>
+
+## Uploading directly from file
+
+You can also directly upload tabular data from files using the
+[`document_create_from_tabfile()`](https://lacdr.github.io/rspacer/reference/document_create_from_tabfile.md)
+function. A small example, with the example data from before:
+
+``` r
+file_name <- "Template_example.csv"
+df_to_upload |>
+  write_csv(file_name, col_names = FALSE) # the csv should not contain the column names
+
+# now we upload
+document_create_from_tabfile(
+    path = file_name,
+    template_id = "SD377682"
+)
+```
+
+    ## Document created: <https://leiden.researchspace.com/globalId/SD424120>

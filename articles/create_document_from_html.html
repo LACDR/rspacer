@@ -20,7 +20,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">rspacer</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.2.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.3.0.9000</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -35,7 +35,7 @@
   <button class="nav-link dropdown-toggle" type="button" id="dropdown-articles" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Articles</button>
   <ul class="dropdown-menu" aria-labelledby="dropdown-articles">
 <li><a class="dropdown-item" href="../articles/create_document_from_html.html">Tutorial: creating a document from html</a></li>
-    <li><a class="dropdown-item" href="../articles/create_document_from_table.html">Tutorial: creating a document from a tabular file</a></li>
+    <li><a class="dropdown-item" href="../articles/create_document_from_table.html">Tutorial: creating a document from a table</a></li>
   </ul>
 </li>
 <li class="nav-item"><a class="nav-link" href="../news/index.html">Changelog</a></li>
@@ -61,7 +61,7 @@
       <h1>Tutorial: creating a document from html</h1>
             
       
-      <small class="dont-index">Source: <a href="https://github.com/lacdr/rspacer/blob/v0.2.0/vignettes/articles/create_document_from_html.Rmd" class="external-link"><code>vignettes/articles/create_document_from_html.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/lacdr/rspacer/blob/main/vignettes/articles/create_document_from_html.Rmd" class="external-link"><code>vignettes/articles/create_document_from_html.Rmd</code></a></small>
       <div class="d-none name"><code>create_document_from_html.Rmd</code></div>
     </div>
 
@@ -95,7 +95,7 @@ OK.</p>
 <span><span class="co">## [1] "OK"</span></span>
 <span><span class="co">## </span></span>
 <span><span class="co">## $rspaceVersion</span></span>
-<span><span class="co">## [1] "1.107.1"</span></span></code></pre>
+<span><span class="co">## [1] "1.114.0"</span></span></code></pre>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/stopifnot.html" class="external-link">stopifnot</a></span><span class="op">(</span><span class="va">res</span><span class="op">$</span><span class="va">message</span> <span class="op">==</span> <span class="st">"OK"</span><span class="op">)</span></span></code></pre></div>
 </div>
@@ -160,7 +160,7 @@ chunk is sufficient:</p>
 <span>    path <span class="op">=</span> <span class="va">file_name</span>,</span>
 <span>    template_id <span class="op">=</span> <span class="va">template_id</span></span>
 <span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">## Document created: &lt;https://leiden.researchspace.com/globalId/SD402050&gt;</span></span></code></pre>
+<pre><code><span><span class="co">## Document created: &lt;https://leiden.researchspace.com/globalId/SD424103&gt;</span></span></code></pre>
 <p>However, <code><a href="../reference/document_create_from_html.html">document_create_from_html()</a></code> has more
 parameters, in case you want to, for example, upload the file to a
 specific folder or replace an existing document (click the function
@@ -173,30 +173,30 @@ structured document identifiers start with <code>SD</code>. For
 example:</p>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/folder_tree.html">folder_tree</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">## # A tibble: 10 × 9</span></span>
-<span><span class="co">##        id globalId name                   created          lastModified parentFolderId type  `_links` owner       </span></span>
-<span><span class="co">##     &lt;int&gt; &lt;chr&gt;    &lt;chr&gt;                  &lt;chr&gt;            &lt;chr&gt;                 &lt;int&gt; &lt;chr&gt; &lt;list&gt;   &lt;list&gt;      </span></span>
-<span><span class="co">##  1 356307 SD356307 Gerhard Burger         2024-01-17T14:5… 2024-01-17T…           7813 DOCU… &lt;list&gt;   &lt;named list&gt;</span></span>
-<span><span class="co">##  2 260004 FL260004 LACDR RDM              2023-11-06T10:1… 2023-11-06T…           7813 FOLD… &lt;list&gt;   &lt;named list&gt;</span></span>
-<span><span class="co">##  3 242175 FL242175 GABi001_EMP_regulation 2023-05-30T10:1… 2023-06-14T…           7813 FOLD… &lt;list&gt;   &lt;named list&gt;</span></span>
-<span><span class="co">##  4 242400 FL242400 Ontologies             2023-06-01T07:2… 2023-06-01T…           7813 FOLD… &lt;list&gt;   &lt;named list&gt;</span></span>
-<span><span class="co">##  5 242398 FL242398 Api Inbox              2023-06-01T07:2… 2023-06-01T…           7813 FOLD… &lt;list&gt;   &lt;named list&gt;</span></span>
-<span><span class="co">##  6 242182 FL242182 Publications           2023-05-30T11:0… 2023-05-30T…           7813 FOLD… &lt;list&gt;   &lt;named list&gt;</span></span>
-<span><span class="co">##  7  21961 FL21961  DDS2 Data management   2023-03-16T09:5… 2023-03-16T…           7813 FOLD… &lt;list&gt;   &lt;named list&gt;</span></span>
-<span><span class="co">##  8   7833 FL7833   Templates              2022-12-22T12:3… 2022-12-22T…           7813 FOLD… &lt;list&gt;   &lt;named list&gt;</span></span>
-<span><span class="co">##  9   7819 GF7819   Gallery                2022-12-22T12:3… 2022-12-22T…           7813 FOLD… &lt;list&gt;   &lt;named list&gt;</span></span>
-<span><span class="co">## 10   7814 FL7814   Shared                 2022-12-22T12:3… 2022-12-22T…           7813 FOLD… &lt;list&gt;   &lt;named list&gt;</span></span></code></pre>
+<pre><code><span><span class="co">## # A tibble: 10 × 7</span></span>
+<span><span class="co">##        id globalId name                   created             lastModified        type     owner         </span></span>
+<span><span class="co">##     &lt;int&gt; &lt;chr&gt;    &lt;chr&gt;                  &lt;dttm&gt;              &lt;dttm&gt;              &lt;chr&gt;    &lt;chr&gt;         </span></span>
+<span><span class="co">##  1 356307 SD356307 Gerhard Burger         2024-01-17 14:56:22 2024-01-17 15:04:39 DOCUMENT Gerhard Burger</span></span>
+<span><span class="co">##  2 260004 FL260004 LACDR RDM              2023-11-06 10:19:59 2023-11-06 10:19:59 FOLDER   Gerhard Burger</span></span>
+<span><span class="co">##  3 242175 FL242175 GABi001_EMP_regulation 2023-05-30 10:14:51 2023-06-14 12:30:47 FOLDER   Gerhard Burger</span></span>
+<span><span class="co">##  4 242400 FL242400 Ontologies             2023-06-01 07:23:10 2023-06-01 07:23:10 FOLDER   Gerhard Burger</span></span>
+<span><span class="co">##  5 242398 FL242398 Api Inbox              2023-06-01 07:23:08 2023-06-01 07:23:08 FOLDER   Gerhard Burger</span></span>
+<span><span class="co">##  6 242182 FL242182 Publications           2023-05-30 11:07:25 2023-05-30 11:07:25 FOLDER   Gerhard Burger</span></span>
+<span><span class="co">##  7  21961 FL21961  DDS2 Data management   2023-03-16 09:50:33 2023-03-16 09:50:33 FOLDER   Gerhard Burger</span></span>
+<span><span class="co">##  8   7833 FL7833   Templates              2022-12-22 12:32:22 2022-12-22 12:32:22 FOLDER   Gerhard Burger</span></span>
+<span><span class="co">##  9   7819 GF7819   Gallery                2022-12-22 12:32:22 2022-12-22 12:32:22 FOLDER   Gerhard Burger</span></span>
+<span><span class="co">## 10   7814 FL7814   Shared                 2022-12-22 12:32:22 2022-12-22 12:32:22 FOLDER   Gerhard Burger</span></span></code></pre>
 <div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/folder_tree.html">folder_tree</a></span><span class="op">(</span><span class="st">"FL7833"</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">## # A tibble: 6 × 9</span></span>
-<span><span class="co">##       id globalId name                             created lastModified parentFolderId type  `_links` owner       </span></span>
-<span><span class="co">##    &lt;int&gt; &lt;chr&gt;    &lt;chr&gt;                            &lt;chr&gt;   &lt;chr&gt;                 &lt;int&gt; &lt;chr&gt; &lt;list&gt;   &lt;list&gt;      </span></span>
-<span><span class="co">## 1 242238 SD242238 LACDR-ISA - Contact v0.2.0       2023-0… 2023-11-06T…           7833 DOCU… &lt;list&gt;   &lt;named list&gt;</span></span>
-<span><span class="co">## 2 242213 SD242213 LACDR-ISA - Publication v0.1.0   2023-0… 2023-11-06T…           7833 DOCU… &lt;list&gt;   &lt;named list&gt;</span></span>
-<span><span class="co">## 3 260025 SD260025 LACDR-ISA - Assay (General) v1.… 2023-1… 2023-11-06T…           7833 DOCU… &lt;list&gt;   &lt;named list&gt;</span></span>
-<span><span class="co">## 4 260008 SD260008 LACDR-ISA - Study v1.0.0         2023-1… 2023-11-06T…           7833 DOCU… &lt;list&gt;   &lt;named list&gt;</span></span>
-<span><span class="co">## 5 260005 SD260005 LACDR-ISA - Investigation v1.0.0 2023-1… 2023-11-06T…           7833 DOCU… &lt;list&gt;   &lt;named list&gt;</span></span>
-<span><span class="co">## 6 242170 SD242170 DDS Beltman - In Silico Assay v… 2023-0… 2023-05-30T…           7833 DOCU… &lt;list&gt;   &lt;named list&gt;</span></span></code></pre>
+<pre><code><span><span class="co">## # A tibble: 6 × 7</span></span>
+<span><span class="co">##       id globalId name                                 created             lastModified        type     owner         </span></span>
+<span><span class="co">##    &lt;int&gt; &lt;chr&gt;    &lt;chr&gt;                                &lt;dttm&gt;              &lt;dttm&gt;              &lt;chr&gt;    &lt;chr&gt;         </span></span>
+<span><span class="co">## 1 242238 SD242238 LACDR-ISA - Contact v0.2.0           2023-05-30 12:21:36 2023-11-06 11:07:03 DOCUMENT Gerhard Burger</span></span>
+<span><span class="co">## 2 242213 SD242213 LACDR-ISA - Publication v0.1.0       2023-05-30 11:57:26 2023-11-06 11:05:57 DOCUMENT Gerhard Burger</span></span>
+<span><span class="co">## 3 260025 SD260025 LACDR-ISA - Assay (General) v1.0.0   2023-11-06 11:03:29 2023-11-06 11:03:29 DOCUMENT Gerhard Burger</span></span>
+<span><span class="co">## 4 260008 SD260008 LACDR-ISA - Study v1.0.0             2023-11-06 10:23:41 2023-11-06 10:23:41 DOCUMENT Gerhard Burger</span></span>
+<span><span class="co">## 5 260005 SD260005 LACDR-ISA - Investigation v1.0.0     2023-11-06 10:21:19 2023-11-06 10:21:19 DOCUMENT Gerhard Burger</span></span>
+<span><span class="co">## 6 242170 SD242170 DDS Beltman - In Silico Assay v1.0.0 2023-05-30 09:57:49 2023-05-30 10:01:47 DOCUMENT Gerhard Burger</span></span></code></pre>
 <p>Of course you can also find these by going to the web interface of
 your RSpace instance. You can also tag your documents using a
 <code>tags</code> vector, for example a status like “finished” or “in
@@ -213,8 +213,8 @@ also upload the source <code>.qmd</code> file is provided below.</p>
 <span>  attachments <span class="op">=</span> <span class="fu">tibble</span><span class="op">(</span>field <span class="op">=</span> <span class="fl">3</span>, path <span class="op">=</span> <span class="va">matching_code_file</span><span class="op">)</span>,</span>
 <span>  existing_document_id <span class="op">=</span> <span class="cn">NULL</span></span>
 <span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">## File uploaded to &lt;https://leiden.researchspace.com/globalId/GL402052&gt;</span></span>
-<span><span class="co">## Document created: &lt;https://leiden.researchspace.com/globalId/SD402053&gt;</span></span></code></pre>
+<pre><code><span><span class="co">## File uploaded to &lt;https://leiden.researchspace.com/globalId/GL424105&gt;</span></span>
+<span><span class="co">## Document created: &lt;https://leiden.researchspace.com/globalId/SD424106&gt;</span></span></code></pre>
 </div>
 </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>

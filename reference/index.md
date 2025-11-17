@@ -10,6 +10,10 @@
   : Upload a html document to RSpace
 - [`document_create_from_tabfile()`](https://lacdr.github.io/rspacer/reference/document_create_from_tabfile.md)
   : Upload a tabular document to RSpace
+- [`document_create_from_tabular()`](https://lacdr.github.io/rspacer/reference/document_create_from_tabular.md)
+  : Upload tabular data to RSpace
+- [`document_get_fields()`](https://lacdr.github.io/rspacer/reference/document_get_fields.md)
+  : Get the fields of a structured document as a tibble
 - [`document_list_attachments()`](https://lacdr.github.io/rspacer/reference/document_list_attachments.md)
   : List attachments of a structured document
 - [`document_retrieve()`](https://lacdr.github.io/rspacer/reference/document_retrieve.md)
@@ -55,3 +59,6 @@
   :
 
   Set the `RSPACE_API_URL` environment variable
+
+- [`fields_to_data_frame()`](https://lacdr.github.io/rspacer/reference/fields_to_data_frame.md)
+  : Convert fields list to a tibble
