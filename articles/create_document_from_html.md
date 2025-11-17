@@ -1,0 +1,173 @@
+# Tutorial: creating a document from html
+
+## Before you start
+
+In this tutorial, we describe how to create an RSpace structured
+document from a Quarto file using
+[`document_create_from_html()`](https://lacdr.github.io/rspacer/reference/document_create_from_html.md).
+We advice you to read
+[`vignette("rspacer")`](https://lacdr.github.io/rspacer/articles/rspacer.md)
+to make sure that you are ready to use this upload document. You need to
+install rspacer and set up your API url and API key before the start of
+this tutorial.
+
+## Load R libraries
+
+``` r
+library(tidyverse)
+library(rspacer)
+```
+
+## Check if the API is available
+
+This code checks if the API is available. The API status should be OK.
+
+``` r
+(res <- api_status())
+```
+
+    ## $message
+    ## [1] "OK"
+    ## 
+    ## $rspaceVersion
+    ## [1] "1.114.0"
+
+``` r
+stopifnot(res$message == "OK")
+```
+
+## Create a structured document in RSpace
+
+Create a Template from a Form with four text Fields named “Title”,
+“Date”, “Main part” and “Conclusion”. Write down the unique Structured
+Document identifier, you will need it later. Instructions to design a
+Template in RSpace can be found
+[here](https://documentation.researchspace.com/article/wxfk9gf0a0-templates).
+
+## Create a small example document
+
+1.  The rspacer package has an example file. In RStudio, go to File \>
+    New File \> R Markdown. At the moment (2025-02-06) there is not yet
+    an option to create Quarto files from template, which is why we
+    chose to provide the file as an R Markdown template.
+2.  On the left, click From Template.
+3.  Choose the rspacer Template example. Save the file as a Quarto file
+    (`.qmd`).
+4.  Render the file to a html report.
+
+Alternatively, you can create a new Quarto document. Include the same
+headers as the RSpace Template that you previously created, and make
+sure that these headers all have two hashtags (h2 headers, with `##`).
+You can write any code, or use h3 or h4 headers (with three or four
+hashtags), as long the h2 headers are identical to your structured
+document template.
+
+## Specify the file name of the file to upload
+
+rspacer needs to know which file you want to upload. In this tutorial,
+we want to create a structured document from the file
+`Template_example.html` that we created before, and we want to upload
+the `.qmd` file as an attachment. We recommend to work with relative
+paths from within an R project (you can specify these using the [`here`
+package](https://here.r-lib.org/). If this is not what you want, you
+need to specify the absolute file path. The code below assumes that the
+html file and qmd file have the same filename. If this is not the case,
+change both the `file_name` and the `matching_code_file` variables.
+
+``` r
+(file_name <- system.file("Template_example.html", package = "rspacer"))
+```
+
+    ## [1] "/Users/gerhard/GitHub/rspacer/inst/Template_example.html"
+
+``` r
+(matching_code_file <- fs::path_ext_set(file_name, ".qmd"))
+```
+
+    ## /Users/gerhard/GitHub/rspacer/inst/Template_example.qmd
+
+``` r
+stopifnot(file.exists(file_name))
+stopifnot(file.exists(matching_code_file))
+```
+
+### Upload the file
+
+To upload the document and attachment to the API inbox, this code chunk
+is sufficient:
+
+``` r
+document_create_from_html(
+    path = file_name,
+    template_id = template_id
+)
+```
+
+    ## Document created: <https://leiden.researchspace.com/globalId/SD424103>
+
+However,
+[`document_create_from_html()`](https://lacdr.github.io/rspacer/reference/document_create_from_html.md)
+has more parameters, in case you want to, for example, upload the file
+to a specific folder or replace an existing document (click the function
+above to learn more).
+
+How to find the values for these parameters? Browse your RSpace folders
+using
+[`folder_tree()`](https://lacdr.github.io/rspacer/reference/folder_tree.md)
+and use either the `id` or the `globalID`. Folder identifiers start with
+`FL`, notebook identifiers start with `NB`, structured document
+identifiers start with `SD`. For example:
+
+``` r
+folder_tree()
+```
+
+    ## # A tibble: 10 × 7
+    ##        id globalId name                   created             lastModified        type     owner         
+    ##     <int> <chr>    <chr>                  <dttm>              <dttm>              <chr>    <chr>         
+    ##  1 356307 SD356307 Gerhard Burger         2024-01-17 14:56:22 2024-01-17 15:04:39 DOCUMENT Gerhard Burger
+    ##  2 260004 FL260004 LACDR RDM              2023-11-06 10:19:59 2023-11-06 10:19:59 FOLDER   Gerhard Burger
+    ##  3 242175 FL242175 GABi001_EMP_regulation 2023-05-30 10:14:51 2023-06-14 12:30:47 FOLDER   Gerhard Burger
+    ##  4 242400 FL242400 Ontologies             2023-06-01 07:23:10 2023-06-01 07:23:10 FOLDER   Gerhard Burger
+    ##  5 242398 FL242398 Api Inbox              2023-06-01 07:23:08 2023-06-01 07:23:08 FOLDER   Gerhard Burger
+    ##  6 242182 FL242182 Publications           2023-05-30 11:07:25 2023-05-30 11:07:25 FOLDER   Gerhard Burger
+    ##  7  21961 FL21961  DDS2 Data management   2023-03-16 09:50:33 2023-03-16 09:50:33 FOLDER   Gerhard Burger
+    ##  8   7833 FL7833   Templates              2022-12-22 12:32:22 2022-12-22 12:32:22 FOLDER   Gerhard Burger
+    ##  9   7819 GF7819   Gallery                2022-12-22 12:32:22 2022-12-22 12:32:22 FOLDER   Gerhard Burger
+    ## 10   7814 FL7814   Shared                 2022-12-22 12:32:22 2022-12-22 12:32:22 FOLDER   Gerhard Burger
+
+``` r
+folder_tree("FL7833")
+```
+
+    ## # A tibble: 6 × 7
+    ##       id globalId name                                 created             lastModified        type     owner         
+    ##    <int> <chr>    <chr>                                <dttm>              <dttm>              <chr>    <chr>         
+    ## 1 242238 SD242238 LACDR-ISA - Contact v0.2.0           2023-05-30 12:21:36 2023-11-06 11:07:03 DOCUMENT Gerhard Burger
+    ## 2 242213 SD242213 LACDR-ISA - Publication v0.1.0       2023-05-30 11:57:26 2023-11-06 11:05:57 DOCUMENT Gerhard Burger
+    ## 3 260025 SD260025 LACDR-ISA - Assay (General) v1.0.0   2023-11-06 11:03:29 2023-11-06 11:03:29 DOCUMENT Gerhard Burger
+    ## 4 260008 SD260008 LACDR-ISA - Study v1.0.0             2023-11-06 10:23:41 2023-11-06 10:23:41 DOCUMENT Gerhard Burger
+    ## 5 260005 SD260005 LACDR-ISA - Investigation v1.0.0     2023-11-06 10:21:19 2023-11-06 10:21:19 DOCUMENT Gerhard Burger
+    ## 6 242170 SD242170 DDS Beltman - In Silico Assay v1.0.0 2023-05-30 09:57:49 2023-05-30 10:01:47 DOCUMENT Gerhard Burger
+
+Of course you can also find these by going to the web interface of your
+RSpace instance. You can also tag your documents using a `tags` vector,
+for example a status like “finished” or “in progress” or “failed”.
+Finally, you can upload attachments, these need to be specified using
+list of lists, with the field number and the path of the file that needs
+to be attached to that field. An example where we also upload the source
+`.qmd` file is provided below.
+
+``` r
+document_create_from_html(
+  path = file_name,
+  template_id = "SD377682",
+  folder_id = "FL242398",
+  tags = c("tutorial"),
+  attachments = tibble(field = 3, path = matching_code_file),
+  existing_document_id = NULL
+)
+```
+
+    ## File uploaded to <https://leiden.researchspace.com/globalId/GL424105>
+    ## Document created: <https://leiden.researchspace.com/globalId/SD424106>
