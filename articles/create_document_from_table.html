@@ -5,12 +5,12 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<title>Tutorial: creating a document from a table • rspacer</title>
+<title>Tutorial: creating a document from a tabular file • rspacer</title>
 <script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="../deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet">
 <script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="../deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
 <link href="../deps/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet">
-<script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Tutorial: creating a document from a table">
+<script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Tutorial: creating a document from a tabular file">
 </head>
 <body>
     <a href="#main" class="visually-hidden-focusable">Skip to contents</a>
@@ -20,7 +20,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">rspacer</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.3.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.2.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -35,7 +35,7 @@
   <button class="nav-link dropdown-toggle" type="button" id="dropdown-articles" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Articles</button>
   <ul class="dropdown-menu" aria-labelledby="dropdown-articles">
 <li><a class="dropdown-item" href="../articles/create_document_from_html.html">Tutorial: creating a document from html</a></li>
-    <li><a class="dropdown-item" href="../articles/create_document_from_table.html">Tutorial: creating a document from a table</a></li>
+    <li><a class="dropdown-item" href="../articles/create_document_from_table.html">Tutorial: creating a document from a tabular file</a></li>
   </ul>
 </li>
 <li class="nav-item"><a class="nav-link" href="../news/index.html">Changelog</a></li>
@@ -58,10 +58,10 @@
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
 
-      <h1>Tutorial: creating a document from a table</h1>
+      <h1>Tutorial: creating a document from a tabular file</h1>
             
       
-      <small class="dont-index">Source: <a href="https://github.com/lacdr/rspacer/blob/v0.3.0/vignettes/articles/create_document_from_table.Rmd" class="external-link"><code>vignettes/articles/create_document_from_table.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/lacdr/rspacer/blob/v0.2.0/vignettes/articles/create_document_from_table.Rmd" class="external-link"><code>vignettes/articles/create_document_from_table.Rmd</code></a></small>
       <div class="d-none name"><code>create_document_from_table.Rmd</code></div>
     </div>
 
@@ -95,7 +95,7 @@ OK.</p>
 <span><span class="co">## [1] "OK"</span></span>
 <span><span class="co">## </span></span>
 <span><span class="co">## $rspaceVersion</span></span>
-<span><span class="co">## [1] "1.114.0"</span></span></code></pre>
+<span><span class="co">## [1] "1.109.2"</span></span></code></pre>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/stopifnot.html" class="external-link">stopifnot</a></span><span class="op">(</span><span class="va">res</span><span class="op">$</span><span class="va">message</span> <span class="op">==</span> <span class="st">"OK"</span><span class="op">)</span></span></code></pre></div>
 </div>
@@ -118,28 +118,46 @@ column should have the content of each field in the correct format. If
 you use Excel, make sure that dates are saved as a string in the format
 dd-mm-yyyy.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">df_to_upload</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span></span>
-<span>    name <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Title"</span>, <span class="st">"Date"</span>, <span class="st">"Main part"</span>, <span class="st">"Conclusion"</span><span class="op">)</span>,</span>
-<span>    content <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"example title"</span>, <span class="st">"23-12-2024"</span>, <span class="st">"This is example text."</span>,</span>
-<span>                <span class="st">"ready for uploading."</span><span class="op">)</span></span>
-<span>  <span class="op">)</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="op">(</span><span class="va">file_name</span> <span class="op">&lt;-</span> <span class="st">"Template_example.csv"</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">## [1] "Template_example.csv"</span></span></code></pre>
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span></span>
+<span>  name <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Title"</span>, <span class="st">"Date"</span>, <span class="st">"Main part"</span>, <span class="st">"Conclusion"</span><span class="op">)</span>,</span>
+<span>  content <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"example title"</span>, <span class="st">"23-12-2024"</span>, <span class="st">"This is example text."</span>,</span>
+<span>              <span class="st">"ready for uploading."</span><span class="op">)</span></span>
+<span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">write_csv</span><span class="op">(</span><span class="va">file_name</span>, col_names <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level2">
-<h2 id="upload-the-data">Upload the data<a class="anchor" aria-label="anchor" href="#upload-the-data"></a>
+<h2 id="specify-the-file-name-of-the-file-to-upload">Specify the file name of the file to upload<a class="anchor" aria-label="anchor" href="#specify-the-file-name-of-the-file-to-upload"></a>
 </h2>
-<p>To upload the data to the API inbox, this code chunk is sufficient
-and returns the created document. It creates a document from your
-Template_example.csv. The function works with CSV, TSV and XLSX file
-formats. Make sure that the template_id is the identifier of the
+<p>You need to define which file you want to upload. In this tutorial,
+we want to create a structured document from the file
+<code>Template_example.csv</code> that we created before. The path is
+defined in the <code>file_name</code> variable in the previous chunk.
+Here, we check that the file exists before we start the upload. We
+recommend to work with relative paths from within an R project, for
+example using the <a href="https://here.r-lib.org/" class="external-link"><code>here</code>
+package</a>. If this is not what you want, you need to specify the
+absolute file path.</p>
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/stopifnot.html" class="external-link">stopifnot</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/files.html" class="external-link">file.exists</a></span><span class="op">(</span><span class="va">file_name</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<div class="section level3">
+<h3 id="upload-the-file">Upload the file<a class="anchor" aria-label="anchor" href="#upload-the-file"></a>
+</h3>
+<p>To upload the document to the API inbox, this code chunk is
+sufficient and returns the created document. It creates a document from
+your Template_example.csv. The function works with CSV, TSV and XLSX
+file formats. Make sure that the template_id is the identifier of the
 template that you previously made in RSpace.</p>
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="../reference/document_create_from_tabular.html">document_create_from_tabular</a></span><span class="op">(</span></span>
-<span>    df <span class="op">=</span> <span class="va">df_to_upload</span>,</span>
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/document_create_from_tabfile.html">document_create_from_tabfile</a></span><span class="op">(</span></span>
+<span>    path <span class="op">=</span> <span class="va">file_name</span>,</span>
 <span>    template_id <span class="op">=</span> <span class="st">"SD377682"</span></span>
 <span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">## Document created: &lt;https://leiden.researchspace.com/globalId/SD424114&gt;</span></span></code></pre>
-<p>The function <code><a href="../reference/document_create_from_tabular.html">document_create_from_tabular()</a></code> has more
-parameters, for example, to upload the document to a specified notebook
+<pre><code><span><span class="co">## Document created: &lt;https://leiden.researchspace.com/globalId/SD412229&gt;</span></span></code></pre>
+<p>The function <code><a href="../reference/document_create_from_tabfile.html">document_create_from_tabfile()</a></code> has more
+parameters, for example to upload the document to the specified notebook
 or folder (click the function above to learn more).</p>
 <p>How to find the values for these parameters? Browse your RSpace
 folders using <code><a href="../reference/folder_tree.html">folder_tree()</a></code> and use either the
@@ -147,30 +165,30 @@ folders using <code><a href="../reference/folder_tree.html">folder_tree()</a></c
 with <code>FL</code>, notebook identifiers start with <code>NB</code>,
 structured document identifiers start with <code>SD</code>. For
 example:</p>
-<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/folder_tree.html">folder_tree</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">## # A tibble: 10 × 7</span></span>
-<span><span class="co">##        id globalId name                   created             lastModified        type     owner         </span></span>
-<span><span class="co">##     &lt;int&gt; &lt;chr&gt;    &lt;chr&gt;                  &lt;dttm&gt;              &lt;dttm&gt;              &lt;chr&gt;    &lt;chr&gt;         </span></span>
-<span><span class="co">##  1 356307 SD356307 Gerhard Burger         2024-01-17 14:56:22 2024-01-17 15:04:39 DOCUMENT Gerhard Burger</span></span>
-<span><span class="co">##  2 260004 FL260004 LACDR RDM              2023-11-06 10:19:59 2023-11-06 10:19:59 FOLDER   Gerhard Burger</span></span>
-<span><span class="co">##  3 242175 FL242175 GABi001_EMP_regulation 2023-05-30 10:14:51 2023-06-14 12:30:47 FOLDER   Gerhard Burger</span></span>
-<span><span class="co">##  4 242400 FL242400 Ontologies             2023-06-01 07:23:10 2023-06-01 07:23:10 FOLDER   Gerhard Burger</span></span>
-<span><span class="co">##  5 242398 FL242398 Api Inbox              2023-06-01 07:23:08 2023-06-01 07:23:08 FOLDER   Gerhard Burger</span></span>
-<span><span class="co">##  6 242182 FL242182 Publications           2023-05-30 11:07:25 2023-05-30 11:07:25 FOLDER   Gerhard Burger</span></span>
-<span><span class="co">##  7  21961 FL21961  DDS2 Data management   2023-03-16 09:50:33 2023-03-16 09:50:33 FOLDER   Gerhard Burger</span></span>
-<span><span class="co">##  8   7833 FL7833   Templates              2022-12-22 12:32:22 2022-12-22 12:32:22 FOLDER   Gerhard Burger</span></span>
-<span><span class="co">##  9   7819 GF7819   Gallery                2022-12-22 12:32:22 2022-12-22 12:32:22 FOLDER   Gerhard Burger</span></span>
-<span><span class="co">## 10   7814 FL7814   Shared                 2022-12-22 12:32:22 2022-12-22 12:32:22 FOLDER   Gerhard Burger</span></span></code></pre>
-<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<pre><code><span><span class="co">## # A tibble: 10 × 9</span></span>
+<span><span class="co">##        id globalId name                   created          lastModified parentFolderId type  `_links` owner       </span></span>
+<span><span class="co">##     &lt;int&gt; &lt;chr&gt;    &lt;chr&gt;                  &lt;chr&gt;            &lt;chr&gt;                 &lt;int&gt; &lt;chr&gt; &lt;list&gt;   &lt;list&gt;      </span></span>
+<span><span class="co">##  1 356307 SD356307 Gerhard Burger         2024-01-17T14:5… 2024-01-17T…           7813 DOCU… &lt;list&gt;   &lt;named list&gt;</span></span>
+<span><span class="co">##  2 260004 FL260004 LACDR RDM              2023-11-06T10:1… 2023-11-06T…           7813 FOLD… &lt;list&gt;   &lt;named list&gt;</span></span>
+<span><span class="co">##  3 242175 FL242175 GABi001_EMP_regulation 2023-05-30T10:1… 2023-06-14T…           7813 FOLD… &lt;list&gt;   &lt;named list&gt;</span></span>
+<span><span class="co">##  4 242400 FL242400 Ontologies             2023-06-01T07:2… 2023-06-01T…           7813 FOLD… &lt;list&gt;   &lt;named list&gt;</span></span>
+<span><span class="co">##  5 242398 FL242398 Api Inbox              2023-06-01T07:2… 2023-06-01T…           7813 FOLD… &lt;list&gt;   &lt;named list&gt;</span></span>
+<span><span class="co">##  6 242182 FL242182 Publications           2023-05-30T11:0… 2023-05-30T…           7813 FOLD… &lt;list&gt;   &lt;named list&gt;</span></span>
+<span><span class="co">##  7  21961 FL21961  DDS2 Data management   2023-03-16T09:5… 2023-03-16T…           7813 FOLD… &lt;list&gt;   &lt;named list&gt;</span></span>
+<span><span class="co">##  8   7833 FL7833   Templates              2022-12-22T12:3… 2022-12-22T…           7813 FOLD… &lt;list&gt;   &lt;named list&gt;</span></span>
+<span><span class="co">##  9   7819 GF7819   Gallery                2022-12-22T12:3… 2022-12-22T…           7813 FOLD… &lt;list&gt;   &lt;named list&gt;</span></span>
+<span><span class="co">## 10   7814 FL7814   Shared                 2022-12-22T12:3… 2022-12-22T…           7813 FOLD… &lt;list&gt;   &lt;named list&gt;</span></span></code></pre>
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/folder_tree.html">folder_tree</a></span><span class="op">(</span><span class="st">"FL409926"</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">## # A tibble: 4 × 7</span></span>
-<span><span class="co">##       id globalId name                      created             lastModified        type     owner            </span></span>
-<span><span class="co">##    &lt;int&gt; &lt;chr&gt;    &lt;chr&gt;                     &lt;dttm&gt;              &lt;dttm&gt;              &lt;chr&gt;    &lt;chr&gt;            </span></span>
-<span><span class="co">## 1 409948 SD409948 example title             2025-04-24 10:12:56 2025-04-24 10:13:06 DOCUMENT Hanneke Leegwater</span></span>
-<span><span class="co">## 2 409942 SD409942 example title             2025-04-24 10:11:01 2025-04-24 10:11:10 DOCUMENT Hanneke Leegwater</span></span>
-<span><span class="co">## 3 409929 SD409929 a002_normalize_lipidomics 2025-04-24 10:01:59 2025-04-24 10:02:14 DOCUMENT Hanneke Leegwater</span></span>
-<span><span class="co">## 4 409928 SD409928 a001_preprocess_data      2025-04-24 10:01:34 2025-04-24 10:01:52 DOCUMENT Hanneke Leegwater</span></span></code></pre>
+<pre><code><span><span class="co">## # A tibble: 4 × 9</span></span>
+<span><span class="co">##       id globalId name                      created        lastModified parentFolderId type  `_links` owner       </span></span>
+<span><span class="co">##    &lt;int&gt; &lt;chr&gt;    &lt;chr&gt;                     &lt;chr&gt;          &lt;chr&gt;        &lt;lgl&gt;          &lt;chr&gt; &lt;list&gt;   &lt;list&gt;      </span></span>
+<span><span class="co">## 1 409948 SD409948 example title             2025-04-24T10… 2025-04-24T… NA             DOCU… &lt;list&gt;   &lt;named list&gt;</span></span>
+<span><span class="co">## 2 409942 SD409942 example title             2025-04-24T10… 2025-04-24T… NA             DOCU… &lt;list&gt;   &lt;named list&gt;</span></span>
+<span><span class="co">## 3 409929 SD409929 a002_normalize_lipidomics 2025-04-24T10… 2025-04-24T… NA             DOCU… &lt;list&gt;   &lt;named list&gt;</span></span>
+<span><span class="co">## 4 409928 SD409928 a001_preprocess_data      2025-04-24T10… 2025-04-24T… NA             DOCU… &lt;list&gt;   &lt;named list&gt;</span></span></code></pre>
 <p>Of course you can also find these by going to the web interface of
 your RSpace instance. You can also tag your documents using a
 <code>tags</code> vector, for example a status like “finished” or “in
@@ -183,38 +201,21 @@ if a file needs to be replaced instead of created.</p>
 Template_example.html as an attachment to the field with number 4. We
 also place the file in a specific folder, and add the “tutorial”
 tag.</p>
-<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">attachment_file</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"Template_example.html"</span>, package <span class="op">=</span> <span class="st">"rspacer"</span><span class="op">)</span></span>
 <span><span class="op">(</span><span class="va">matching_code_file</span> <span class="op">&lt;-</span> <span class="fu">fs</span><span class="fu">::</span><span class="fu"><a href="https://fs.r-lib.org/reference/path_file.html" class="external-link">path_ext_set</a></span><span class="op">(</span><span class="va">attachment_file</span>, <span class="st">".qmd"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## /Users/gerhard/GitHub/rspacer/inst/Template_example.qmd</span></span></code></pre>
-<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="../reference/document_create_from_tabular.html">document_create_from_tabular</a></span><span class="op">(</span></span>
-<span>  df <span class="op">=</span> <span class="va">df_to_upload</span>,</span>
+<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/document_create_from_tabfile.html">document_create_from_tabfile</a></span><span class="op">(</span></span>
+<span>  path <span class="op">=</span> <span class="va">file_name</span>,</span>
 <span>  template_id <span class="op">=</span> <span class="st">"SD377682"</span>,</span>
 <span>  tags <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"tutorial"</span><span class="op">)</span>,</span>
 <span>  attachments <span class="op">=</span> <span class="fu">tibble</span><span class="op">(</span>field <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">4</span>, <span class="fl">4</span><span class="op">)</span>, path <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">attachment_file</span>, <span class="va">matching_code_file</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">## File uploaded to &lt;https://leiden.researchspace.com/globalId/GL424116&gt;</span></span>
-<span><span class="co">## File uploaded to &lt;https://leiden.researchspace.com/globalId/GL424117&gt;</span></span>
-<span><span class="co">## Document created: &lt;https://leiden.researchspace.com/globalId/SD424118&gt;</span></span></code></pre>
+<pre><code><span><span class="co">## File uploaded to &lt;https://leiden.researchspace.com/globalId/GL412231&gt;</span></span>
+<span><span class="co">## File uploaded to &lt;https://leiden.researchspace.com/globalId/GL412232&gt;</span></span>
+<span><span class="co">## Document created: &lt;https://leiden.researchspace.com/globalId/SD412233&gt;</span></span></code></pre>
 </div>
-<div class="section level2">
-<h2 id="uploading-directly-from-file">Uploading directly from file<a class="anchor" aria-label="anchor" href="#uploading-directly-from-file"></a>
-</h2>
-<p>You can also directly upload tabular data from files using the
-<code><a href="../reference/document_create_from_tabfile.html">document_create_from_tabfile()</a></code> function. A small example,
-with the example data from before:</p>
-<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">file_name</span> <span class="op">&lt;-</span> <span class="st">"Template_example.csv"</span></span>
-<span><span class="va">df_to_upload</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu">write_csv</span><span class="op">(</span><span class="va">file_name</span>, col_names <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span> <span class="co"># the csv should not contain the column names</span></span>
-<span></span>
-<span><span class="co"># now we upload</span></span>
-<span><span class="fu"><a href="../reference/document_create_from_tabfile.html">document_create_from_tabfile</a></span><span class="op">(</span></span>
-<span>    path <span class="op">=</span> <span class="va">file_name</span>,</span>
-<span>    template_id <span class="op">=</span> <span class="st">"SD377682"</span></span>
-<span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">## Document created: &lt;https://leiden.researchspace.com/globalId/SD424120&gt;</span></span></code></pre>
 </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
     </nav></aside>

@@ -11,17 +11,15 @@
 ## Citation
 
 Source:
-[`inst/CITATION`](https://github.com/lacdr/rspacer/blob/v0.3.0/inst/CITATION)
+[`DESCRIPTION`](https://github.com/lacdr/rspacer/blob/v0.2.0/DESCRIPTION)
 
-Burger G, Leegwater H (????). “rspacer: 'RSpace' API Wrapper.”
-[doi:10.32614/CRAN.package.rspacer](https://doi.org/10.32614/CRAN.package.rspacer),
-<https://lacdr.github.io/rspacer/>.
+Burger G, Leegwater H (2025). *rspacer: 'RSpace' API Wrapper*. R package
+version 0.2.0, <https://github.com/lacdr/rspacer>.
 
-    @Misc{burger_etall,
+    @Manual{,
       title = {rspacer: 'RSpace' API Wrapper},
       author = {Gerhard Burger and Hanneke Leegwater},
-      doi = {10.32614/CRAN.package.rspacer},
-      url = {https://lacdr.github.io/rspacer/},
-      abstract = {Wrapper for the 'RSpace' Electronic Lab Notebook (<https://www.researchspace.com/>) API. This packages provides convenience functions to browse, search, create, and edit your 'RSpace' documents. In addition, it enables filling 'RSpace' templates from R Markdown/Quarto templates or tabular data (e.g., 'Excel' files). This R package is not developed or endorsed by 'Research Space'.},
-      version = {0.3.0},
+      year = {2025},
+      note = {R package version 0.2.0},
+      url = {https://github.com/lacdr/rspacer},
     }

@@ -46,7 +46,7 @@ api_status()
     ## [1] "OK"
     ## 
     ## $rspaceVersion
-    ## [1] "1.114.0"
+    ## [1] "1.109.2"
 
 ## Functionality
 
@@ -61,19 +61,19 @@ will show you the content of your Workspace as a tibble:
 folder_tree()
 ```
 
-    ## # A tibble: 10 × 7
-    ##        id globalId name                   created             lastModified        type     owner         
-    ##     <int> <chr>    <chr>                  <dttm>              <dttm>              <chr>    <chr>         
-    ##  1 356307 SD356307 Gerhard Burger         2024-01-17 14:56:22 2024-01-17 15:04:39 DOCUMENT Gerhard Burger
-    ##  2 260004 FL260004 LACDR RDM              2023-11-06 10:19:59 2023-11-06 10:19:59 FOLDER   Gerhard Burger
-    ##  3 242175 FL242175 GABi001_EMP_regulation 2023-05-30 10:14:51 2023-06-14 12:30:47 FOLDER   Gerhard Burger
-    ##  4 242400 FL242400 Ontologies             2023-06-01 07:23:10 2023-06-01 07:23:10 FOLDER   Gerhard Burger
-    ##  5 242398 FL242398 Api Inbox              2023-06-01 07:23:08 2023-06-01 07:23:08 FOLDER   Gerhard Burger
-    ##  6 242182 FL242182 Publications           2023-05-30 11:07:25 2023-05-30 11:07:25 FOLDER   Gerhard Burger
-    ##  7  21961 FL21961  DDS2 Data management   2023-03-16 09:50:33 2023-03-16 09:50:33 FOLDER   Gerhard Burger
-    ##  8   7833 FL7833   Templates              2022-12-22 12:32:22 2022-12-22 12:32:22 FOLDER   Gerhard Burger
-    ##  9   7819 GF7819   Gallery                2022-12-22 12:32:22 2022-12-22 12:32:22 FOLDER   Gerhard Burger
-    ## 10   7814 FL7814   Shared                 2022-12-22 12:32:22 2022-12-22 12:32:22 FOLDER   Gerhard Burger
+    ## # A tibble: 10 × 9
+    ##        id globalId name                   created          lastModified parentFolderId type  `_links` owner       
+    ##     <int> <chr>    <chr>                  <chr>            <chr>                 <int> <chr> <list>   <list>      
+    ##  1 356307 SD356307 Gerhard Burger         2024-01-17T14:5… 2024-01-17T…           7813 DOCU… <list>   <named list>
+    ##  2 260004 FL260004 LACDR RDM              2023-11-06T10:1… 2023-11-06T…           7813 FOLD… <list>   <named list>
+    ##  3 242175 FL242175 GABi001_EMP_regulation 2023-05-30T10:1… 2023-06-14T…           7813 FOLD… <list>   <named list>
+    ##  4 242400 FL242400 Ontologies             2023-06-01T07:2… 2023-06-01T…           7813 FOLD… <list>   <named list>
+    ##  5 242398 FL242398 Api Inbox              2023-06-01T07:2… 2023-06-01T…           7813 FOLD… <list>   <named list>
+    ##  6 242182 FL242182 Publications           2023-05-30T11:0… 2023-05-30T…           7813 FOLD… <list>   <named list>
+    ##  7  21961 FL21961  DDS2 Data management   2023-03-16T09:5… 2023-03-16T…           7813 FOLD… <list>   <named list>
+    ##  8   7833 FL7833   Templates              2022-12-22T12:3… 2022-12-22T…           7813 FOLD… <list>   <named list>
+    ##  9   7819 GF7819   Gallery                2022-12-22T12:3… 2022-12-22T…           7813 FOLD… <list>   <named list>
+    ## 10   7814 FL7814   Shared                 2022-12-22T12:3… 2022-12-22T…           7813 FOLD… <list>   <named list>
 
 You can also specify an id or Unique ID (`globalId`) to show the
 contents of a specific folder:
@@ -82,44 +82,19 @@ contents of a specific folder:
 folder_tree(7819)
 ```
 
-    ## # A tibble: 8 × 7
-    ##      id globalId name          created             lastModified        type   owner         
-    ##   <int> <chr>    <chr>         <dttm>              <dttm>              <chr>  <chr>         
-    ## 1  7828 GF7828   Snippets      2022-12-22 12:32:22 2022-12-22 12:32:22 FOLDER Gerhard Burger
-    ## 2  7827 GF7827   PdfDocuments  2022-12-22 12:32:22 2022-12-22 12:32:22 FOLDER Gerhard Burger
-    ## 3  7826 GF7826   Miscellaneous 2022-12-22 12:32:22 2022-12-22 12:32:22 FOLDER Gerhard Burger
-    ## 4  7825 GF7825   Documents     2022-12-22 12:32:22 2022-12-22 12:32:22 FOLDER Gerhard Burger
-    ## 5  7824 GF7824   Chemistry     2022-12-22 12:32:22 2022-12-22 12:32:22 FOLDER Gerhard Burger
-    ## 6  7823 GF7823   Videos        2022-12-22 12:32:22 2022-12-22 12:32:22 FOLDER Gerhard Burger
-    ## 7  7822 GF7822   Audios        2022-12-22 12:32:22 2022-12-22 12:32:22 FOLDER Gerhard Burger
-    ## 8  7820 GF7820   Images        2022-12-22 12:32:22 2022-12-22 12:32:22 FOLDER Gerhard Burger
+    ## # A tibble: 8 × 9
+    ##      id globalId name          created                  lastModified    parentFolderId type  `_links` owner       
+    ##   <int> <chr>    <chr>         <chr>                    <chr>                    <int> <chr> <list>   <list>      
+    ## 1  7828 GF7828   Snippets      2022-12-22T12:32:22.318Z 2022-12-22T12:…           7819 FOLD… <list>   <named list>
+    ## 2  7827 GF7827   PdfDocuments  2022-12-22T12:32:22.315Z 2022-12-22T12:…           7819 FOLD… <list>   <named list>
+    ## 3  7826 GF7826   Miscellaneous 2022-12-22T12:32:22.311Z 2022-12-22T12:…           7819 FOLD… <list>   <named list>
+    ## 4  7825 GF7825   Documents     2022-12-22T12:32:22.308Z 2022-12-22T12:…           7819 FOLD… <list>   <named list>
+    ## 5  7824 GF7824   Chemistry     2022-12-22T12:32:22.304Z 2022-12-22T12:…           7819 FOLD… <list>   <named list>
+    ## 6  7823 GF7823   Videos        2022-12-22T12:32:22.301Z 2022-12-22T12:…           7819 FOLD… <list>   <named list>
+    ## 7  7822 GF7822   Audios        2022-12-22T12:32:22.297Z 2022-12-22T12:…           7819 FOLD… <list>   <named list>
+    ## 8  7820 GF7820   Images        2022-12-22T12:32:22.290Z 2022-12-22T12:…           7819 FOLD… <list>   <named list>
 
 ### Documents
-
-#### Search
-
-You can search for documents using the
-[`document_search()`](https://lacdr.github.io/rspacer/reference/document_search.md)
-function:
-
-``` r
-document_search("test")
-```
-
-    ## # A tibble: 50 × 10
-    ##        id globalId name             created             lastModified        parentFolderId tags  tagMetaData form  owner
-    ##     <int> <chr>    <chr>            <dttm>              <dttm>                       <int> <chr> <chr>       <chr> <chr>
-    ##  1 424078 SD424078 test             2025-10-17 10:21:21 2025-10-17 10:21:27         242398 rspa… rspacer     Basi… Gerh…
-    ##  2 424072 SD424072 test             2025-10-17 09:21:55 2025-10-17 09:22:01         242398 rspa… rspacer     Basi… Gerh…
-    ##  3 422915 SD422915 251001_test_Sir… 2025-09-30 08:33:22 2025-10-07 11:51:30             NA <NA>  <NA>        Basi… Max …
-    ##  4 421333 SD421333 250901_compare_… 2025-09-01 09:06:12 2025-09-10 13:16:24             NA <NA>  <NA>        Basi… Max …
-    ##  5 420651 SD420651 250820_Surival_… 2025-08-19 14:34:17 2025-09-09 12:37:52             NA <NA>  <NA>        Basi… Max …
-    ##  6 421114 SD421114 250829_test_cel… 2025-08-28 12:47:23 2025-09-09 12:06:32             NA <NA>  <NA>        Basi… Max …
-    ##  7 421016 SD421016 250827_SAS_Kolf… 2025-08-27 07:29:23 2025-08-29 11:06:20             NA <NA>  <NA>        Basi… Max …
-    ##  8 421238 SD421238 2025_08_25_SA00… 2025-08-29 08:59:39 2025-08-29 09:10:11             NA <NA>  <NA>        Basi… Serk…
-    ##  9 419599 SD419599 250805_Surival_… 2025-08-05 11:25:24 2025-08-19 09:47:40             NA <NA>  <NA>        Basi… Max …
-    ## 10 419593 SD419593 250805_Compare_… 2025-08-05 09:24:31 2025-08-19 09:37:45             NA <NA>  <NA>        Basi… Max …
-    ## # ℹ 40 more rows
 
 #### Retrieve
 
@@ -150,16 +125,24 @@ you could use
 
 ``` r
 library(tidyverse)
-library(gt)
-res$fields |>
-  fields_to_data_frame() |>
-  gt() |>
-  fmt_markdown(columns = c(content))
+tibble(fields = res$fields) |>
+  unnest_wider(fields) |>
+  select(name, type, content)
 ```
 
-[TABLE]
+    ## # A tibble: 8 × 3
+    ##   name          type   content                                                                                    
+    ##   <chr>         <chr>  <chr>                                                                                      
+    ## 1 Template Used string "LACDR-ISA - Contact v0.2.0"                                                               
+    ## 2 Name          string "Gerhard A. Burger"                                                                        
+    ## 3 Email         string "g.a.burger@lacdr.leidenuniv.nl"                                                           
+    ## 4 Phone         string ""                                                                                         
+    ## 5 ORCID         string "0000-0003-1062-5576"                                                                      
+    ## 6 Address       text   "<p><a href=\"https://www.universiteitleiden.nl/en/locations/gorlaeus-building\">Gorlaeus …
+    ## 7 Affiliation   string "Leiden University"                                                                        
+    ## 8 Roles         text   ""
 
 #### Create
 
 Creating (structured) documents is slightly more involved, see the
-Articles tab for detailed instructions.
+Articles tab for more info.
