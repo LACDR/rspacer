@@ -41,6 +41,7 @@ Imports:
     xml2,
     lubridate
 Suggests:
+    quarto,
     knitr,
     rmarkdown,
     spelling,
@@ -53,4 +54,5 @@ Language: en-US
 URL: https://github.com/lacdr/rspacer, https://lacdr.github.io/rspacer/
 BugReports: https://github.com/lacdr/rspacer/issues
 Config/Needs/website: rmarkdown
-VignetteBuilder: knitr
+VignetteBuilder: 
+    quarto

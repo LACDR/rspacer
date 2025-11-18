@@ -33,7 +33,7 @@ The API status should be OK.
 ## [1] "OK"
 ## 
 ## $rspaceVersion
-## [1] "1.114.0"
+## [1] "1.115.2"
 ```
 
 ``` r
@@ -80,7 +80,7 @@ document_create_from_tabular(
 ```
 
 ```
-## Document created: <https://leiden.researchspace.com/globalId/SD424114>
+## Document created: <https://leiden.researchspace.com/globalId/SD426706>
 ```
 
 The function `document_create_from_tabular()` has more parameters, for example, to upload the document to a specified notebook or folder (click the function above to learn more).
@@ -117,12 +117,12 @@ folder_tree("FL409926")
 
 ```
 ## # A tibble: 4 × 7
-##       id globalId name                      created             lastModified        type     owner            
-##    <int> <chr>    <chr>                     <dttm>              <dttm>              <chr>    <chr>            
-## 1 409948 SD409948 example title             2025-04-24 10:12:56 2025-04-24 10:13:06 DOCUMENT Hanneke Leegwater
-## 2 409942 SD409942 example title             2025-04-24 10:11:01 2025-04-24 10:11:10 DOCUMENT Hanneke Leegwater
-## 3 409929 SD409929 a002_normalize_lipidomics 2025-04-24 10:01:59 2025-04-24 10:02:14 DOCUMENT Hanneke Leegwater
-## 4 409928 SD409928 a001_preprocess_data      2025-04-24 10:01:34 2025-04-24 10:01:52 DOCUMENT Hanneke Leegwater
+##       id globalId name                      created             lastModified        type     owner         
+##    <int> <chr>    <chr>                     <dttm>              <dttm>              <chr>    <chr>         
+## 1 409948 SD409948 example title             2025-04-24 10:12:56 2025-04-24 10:13:06 DOCUMENT Hanneke Leegw…
+## 2 409942 SD409942 example title             2025-04-24 10:11:01 2025-04-24 10:11:10 DOCUMENT Hanneke Leegw…
+## 3 409929 SD409929 a002_normalize_lipidomics 2025-04-24 10:01:59 2025-04-24 10:02:14 DOCUMENT Hanneke Leegw…
+## 4 409928 SD409928 a001_preprocess_data      2025-04-24 10:01:34 2025-04-24 10:01:52 DOCUMENT Hanneke Leegw…
 ```
 
 Of course you can also find these by going to the web interface of your RSpace instance.
@@ -155,9 +155,9 @@ document_create_from_tabular(
 ```
 
 ```
-## File uploaded to <https://leiden.researchspace.com/globalId/GL424116>
-## File uploaded to <https://leiden.researchspace.com/globalId/GL424117>
-## Document created: <https://leiden.researchspace.com/globalId/SD424118>
+## File uploaded to <https://leiden.researchspace.com/globalId/GL426708>
+## File uploaded to <https://leiden.researchspace.com/globalId/GL426709>
+## Document created: <https://leiden.researchspace.com/globalId/SD426710>
 ```
 
 ## Uploading directly from file
@@ -179,6 +179,6 @@ document_create_from_tabfile(
 ```
 
 ```
-## Document created: <https://leiden.researchspace.com/globalId/SD424120>
+## Document created: <https://leiden.researchspace.com/globalId/SD426712>
 ```
 

@@ -10,3 +10,5 @@
 ^CITATION\.cff$
 ^cran-comments\.md$
 ^CRAN-SUBMISSION$
+^vignettes/*_files$
+^vignettes/.quarto$
