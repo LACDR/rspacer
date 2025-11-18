@@ -1,6 +1,7 @@
 url: https://lacdr.github.io/rspacer/
 template:
   bootstrap: 5
+  light-switch: true
 
 reference:
 - title: Documents
