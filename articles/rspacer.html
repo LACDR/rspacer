@@ -78,13 +78,14 @@
 
 
 
-    <p>The goal of rspacer is to “wrap” the <a href="https://community.researchspace.com/public/apiDocs" class="external-link">RSpace API</a>, that is, allow you to use the API directly from R using convenience functions.</p>
-<p><strong>This package (and its documentation) is a work-in-progress. Contributions are welcome!</strong></p>
+    <p>The rspacer package is a wrapper for the RSpace Electronic Lab Notebook (<a href="https://www.researchspace.com/" class="external-link uri">https://www.researchspace.com/</a>) API (<a href="https://community.researchspace.com/public/apiDocs" class="external-link uri">https://community.researchspace.com/public/apiDocs</a>), and packages provides convenience functions to browse, search, create, and edit your RSpace documents. In addition, it enables filling RSpace templates from R Markdown/Quarto reports or from tabular data (e.g., R data.frames/tibbles, but also Excel/CSV files).</p>
+<p>This vignette will show you how to get started with rspacer.</p>
 <section class="level2"><h2 id="setting-up-rspacer">Setting up rspacer<a class="anchor" aria-label="anchor" href="#setting-up-rspacer"></a>
 </h2>
-<p>To use rspacer it needs to know two things:</p>
+<p>To use rspacer it needs two things:</p>
 <ol type="1">
-<li>The API URL for your RSpace instance (this is typically the URL of your RSpace instance followed by <code>api/v1</code>, e.g., <code>https://leiden.researchspace.com/api/v1</code>)</li>
+<li>The API URL for your RSpace instance (this is typically the URL of your RSpace instance followed by <code>api/v1</code>, e.g., <code>https://leiden.researchspace.com/api/v1</code>)<a class="footnote-ref" role="doc-noteref" tabindex="0" data-bs-toggle="popover" data-bs-content='&lt;p&gt;If you don’t have an RSpace instance yet, you can use the &lt;a href="https://community.researchspace.com/" class="external-link uri"&gt;https://community.researchspace.com/&lt;/a&gt; instance.&lt;/p&gt;'><sup>1</sup></a>
+</li>
 <li>Your API key, which is an authentication token you can use instead of your username and password. To create an API key go to ‘Manage API Key’ section of your RSpace profile page (MyRSpace -&gt; My Profile). <strong>You should keep your API key private.</strong> You can regenerate an API key at any time, which will invalidate the old key.</li>
 </ol>
 <p>You can use the <code><a href="../reference/set_api_url.html">set_api_url()</a></code> and <code><a href="../reference/set_api_key.html">set_api_key()</a></code> functions to make these available to rspacer in the current session. To make this information persistent you can store it in environment variables. An easy way to do this is with <code><a href="https://usethis.r-lib.org/reference/edit.html" class="external-link">usethis::edit_r_environ()</a></code>; in the file that opens, you should add the following lines (insert your own URL and key):</p>
@@ -143,16 +144,16 @@
 <pre><code><span><span class="co">## # A tibble: 50 × 11</span></span>
 <span><span class="co">##        id globalId name          created             lastModified        parentFolderId grandParentId tags</span></span>
 <span><span class="co">##     &lt;int&gt; &lt;chr&gt;    &lt;chr&gt;         &lt;dttm&gt;              &lt;dttm&gt;                       &lt;int&gt;         &lt;int&gt; &lt;chr&gt;</span></span>
-<span><span class="co">##  1 426660 SD426660 251117_colle… 2025-11-17 16:13:27 2025-11-18 09:24:17             NA            NA &lt;NA&gt;</span></span>
-<span><span class="co">##  2 426662 SD426662 251120_test_… 2025-11-17 16:17:44 2025-11-17 16:23:49             NA            NA &lt;NA&gt;</span></span>
-<span><span class="co">##  3 424078 SD424078 test          2025-10-17 10:21:21 2025-10-17 10:21:27         242398          7813 rspa…</span></span>
-<span><span class="co">##  4 424072 SD424072 test          2025-10-17 09:21:55 2025-10-17 09:22:01         242398          7813 rspa…</span></span>
-<span><span class="co">##  5 422915 SD422915 251001_test_… 2025-09-30 08:33:22 2025-10-07 11:51:30             NA            NA &lt;NA&gt;</span></span>
-<span><span class="co">##  6 421333 SD421333 250901_compa… 2025-09-01 09:06:12 2025-09-10 13:16:24             NA            NA &lt;NA&gt;</span></span>
-<span><span class="co">##  7 420651 SD420651 250820_Suriv… 2025-08-19 14:34:17 2025-09-09 12:37:52             NA            NA &lt;NA&gt;</span></span>
-<span><span class="co">##  8 421114 SD421114 250829_test_… 2025-08-28 12:47:23 2025-09-09 12:06:32             NA            NA &lt;NA&gt;</span></span>
-<span><span class="co">##  9 421016 SD421016 250827_SAS_K… 2025-08-27 07:29:23 2025-08-29 11:06:20             NA            NA &lt;NA&gt;</span></span>
-<span><span class="co">## 10 421238 SD421238 2025_08_25_S… 2025-08-29 08:59:39 2025-08-29 09:10:11             NA            NA &lt;NA&gt;</span></span>
+<span><span class="co">##  1 426750 SD426750 Untitled doc… 2025-11-18 14:04:50 2025-11-18 14:04:56         242398          7813 rspa…</span></span>
+<span><span class="co">##  2 426748 SD426748 Untitled doc… 2025-11-18 13:55:13 2025-11-18 13:55:19         242398          7813 rspa…</span></span>
+<span><span class="co">##  3 426716 SD426716 Untitled doc… 2025-11-18 12:15:15 2025-11-18 12:15:20         242398          7813 rspa…</span></span>
+<span><span class="co">##  4 426660 SD426660 251117_colle… 2025-11-17 16:13:27 2025-11-18 09:24:17             NA            NA &lt;NA&gt;</span></span>
+<span><span class="co">##  5 426662 SD426662 251120_test_… 2025-11-17 16:17:44 2025-11-17 16:23:49             NA            NA &lt;NA&gt;</span></span>
+<span><span class="co">##  6 424078 SD424078 test          2025-10-17 10:21:21 2025-10-17 10:21:27         242398          7813 rspa…</span></span>
+<span><span class="co">##  7 424072 SD424072 test          2025-10-17 09:21:55 2025-10-17 09:22:01         242398          7813 rspa…</span></span>
+<span><span class="co">##  8 422915 SD422915 251001_test_… 2025-09-30 08:33:22 2025-10-07 11:51:30             NA            NA &lt;NA&gt;</span></span>
+<span><span class="co">##  9 421333 SD421333 250901_compa… 2025-09-01 09:06:12 2025-09-10 13:16:24             NA            NA &lt;NA&gt;</span></span>
+<span><span class="co">## 10 420651 SD420651 250820_Suriv… 2025-08-19 14:34:17 2025-09-09 12:37:52             NA            NA &lt;NA&gt;</span></span>
 <span><span class="co">## # ℹ 40 more rows</span></span>
 <span><span class="co">## # ℹ 3 more variables: tagMetaData &lt;chr&gt;, form &lt;chr&gt;, owner &lt;chr&gt;</span></span></code></pre>
 </section><section class="level4"><h4 id="retrieve">Retrieve<a class="anchor" aria-label="anchor" href="#retrieve"></a>
@@ -179,29 +180,43 @@
 <p>The result is json converted to an R list, to get the field information you could use</p>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyverse.tidyverse.org" class="external-link">tidyverse</a></span><span class="op">)</span></span>
-<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://gt.rstudio.com" class="external-link">gt</a></span><span class="op">)</span></span>
-<span><span class="va">res</span><span class="op">$</span><span class="va">fields</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu"><a href="../reference/fields_to_data_frame.html">fields_to_data_frame</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span><span class="op">(</span><span class="va">res</span><span class="op">$</span><span class="va">fields</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="../reference/fields_to_data_frame.html">fields_to_data_frame</a></span><span class="op">(</span><span class="op">)</span> <span class="op">-&gt;</span> <span class="va">res_df</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">## # A tibble: 8 × 10</span></span>
+<span><span class="co">##        id globalId  name       type  content lastModified        columnIndex files listOfMaterials `_links`</span></span>
+<span><span class="co">##     &lt;int&gt; &lt;chr&gt;     &lt;chr&gt;      &lt;chr&gt; &lt;chr&gt;   &lt;dttm&gt;                    &lt;int&gt; &lt;lgl&gt; &lt;lgl&gt;           &lt;lgl&gt;</span></span>
+<span><span class="co">## 1 1873444 FD1873444 Template … stri… "LACDR… 2024-01-17 14:56:22           0 NA    NA              NA</span></span>
+<span><span class="co">## 2 1873445 FD1873445 Name       stri… "Gerha… 2024-01-17 14:56:39           1 NA    NA              NA</span></span>
+<span><span class="co">## 3 1873446 FD1873446 Email      stri… "g.a.b… 2024-01-17 14:57:02           2 NA    NA              NA</span></span>
+<span><span class="co">## 4 1873447 FD1873447 Phone      stri… ""      2024-01-17 14:56:22           3 NA    NA              NA</span></span>
+<span><span class="co">## 5 1873448 FD1873448 ORCID      stri… "0000-… 2024-01-17 14:59:29           4 NA    NA              NA</span></span>
+<span><span class="co">## 6 1873449 FD1873449 Address    text  "&lt;p&gt;&lt;a… 2024-01-17 14:57:49           5 NA    NA              NA</span></span>
+<span><span class="co">## 7 1873450 FD1873450 Affiliati… stri… "Leide… 2024-01-17 14:59:13           6 NA    NA              NA</span></span>
+<span><span class="co">## 8 1873451 FD1873451 Roles      text  ""      2024-01-17 14:56:22           7 NA    NA              NA</span></span></code></pre>
+<p>Since the fields typically contain HTML formatted information, this can be better displayed using the <a href="https://gt.rstudio.com/" class="external-link"><code>gt</code></a> package:</p>
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://gt.rstudio.com" class="external-link">gt</a></span><span class="op">)</span></span>
+<span><span class="va">res_df</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">gt</span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">fmt_markdown</span><span class="op">(</span>columns <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">content</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <!--html_preserve-->
-<div id="ufvzveqnuz" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#ufvzveqnuz table {
+<div id="dfnmdhbquq" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#dfnmdhbquq table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#ufvzveqnuz thead, #ufvzveqnuz tbody, #ufvzveqnuz tfoot, #ufvzveqnuz tr, #ufvzveqnuz td, #ufvzveqnuz th {
+#dfnmdhbquq thead, #dfnmdhbquq tbody, #dfnmdhbquq tfoot, #dfnmdhbquq tr, #dfnmdhbquq td, #dfnmdhbquq th {
   border-style: none;
 }
 
-#ufvzveqnuz p {
+#dfnmdhbquq p {
   margin: 0;
   padding: 0;
 }
 
-#ufvzveqnuz .gt_table {
+#dfnmdhbquq .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -227,12 +242,12 @@
   border-left-color: #D3D3D3;
 }
 
-#ufvzveqnuz .gt_caption {
+#dfnmdhbquq .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#ufvzveqnuz .gt_title {
+#dfnmdhbquq .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -244,7 +259,7 @@
   border-bottom-width: 0;
 }
 
-#ufvzveqnuz .gt_subtitle {
+#dfnmdhbquq .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -256,7 +271,7 @@
   border-top-width: 0;
 }
 
-#ufvzveqnuz .gt_heading {
+#dfnmdhbquq .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -268,13 +283,13 @@
   border-right-color: #D3D3D3;
 }
 
-#ufvzveqnuz .gt_bottom_border {
+#dfnmdhbquq .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#ufvzveqnuz .gt_col_headings {
+#dfnmdhbquq .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -289,7 +304,7 @@
   border-right-color: #D3D3D3;
 }
 
-#ufvzveqnuz .gt_col_heading {
+#dfnmdhbquq .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -309,7 +324,7 @@
   overflow-x: hidden;
 }
 
-#ufvzveqnuz .gt_column_spanner_outer {
+#dfnmdhbquq .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -321,15 +336,15 @@
   padding-right: 4px;
 }
 
-#ufvzveqnuz .gt_column_spanner_outer:first-child {
+#dfnmdhbquq .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#ufvzveqnuz .gt_column_spanner_outer:last-child {
+#dfnmdhbquq .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#ufvzveqnuz .gt_column_spanner {
+#dfnmdhbquq .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -341,11 +356,11 @@
   width: 100%;
 }
 
-#ufvzveqnuz .gt_spanner_row {
+#dfnmdhbquq .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#ufvzveqnuz .gt_group_heading {
+#dfnmdhbquq .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -371,7 +386,7 @@
   text-align: left;
 }
 
-#ufvzveqnuz .gt_empty_group_heading {
+#dfnmdhbquq .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -386,15 +401,15 @@
   vertical-align: middle;
 }
 
-#ufvzveqnuz .gt_from_md > :first-child {
+#dfnmdhbquq .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#ufvzveqnuz .gt_from_md > :last-child {
+#dfnmdhbquq .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#ufvzveqnuz .gt_row {
+#dfnmdhbquq .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -413,7 +428,7 @@
   overflow-x: hidden;
 }
 
-#ufvzveqnuz .gt_stub {
+#dfnmdhbquq .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -426,7 +441,7 @@
   padding-right: 5px;
 }
 
-#ufvzveqnuz .gt_stub_row_group {
+#dfnmdhbquq .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -440,15 +455,15 @@
   vertical-align: top;
 }
 
-#ufvzveqnuz .gt_row_group_first td {
+#dfnmdhbquq .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#ufvzveqnuz .gt_row_group_first th {
+#dfnmdhbquq .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#ufvzveqnuz .gt_summary_row {
+#dfnmdhbquq .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -458,16 +473,16 @@
   padding-right: 5px;
 }
 
-#ufvzveqnuz .gt_first_summary_row {
+#dfnmdhbquq .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#ufvzveqnuz .gt_first_summary_row.thick {
+#dfnmdhbquq .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#ufvzveqnuz .gt_last_summary_row {
+#dfnmdhbquq .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -477,7 +492,7 @@
   border-bottom-color: #D3D3D3;
 }
 
-#ufvzveqnuz .gt_grand_summary_row {
+#dfnmdhbquq .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -487,7 +502,7 @@
   padding-right: 5px;
 }
 
-#ufvzveqnuz .gt_first_grand_summary_row {
+#dfnmdhbquq .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -497,7 +512,7 @@
   border-top-color: #D3D3D3;
 }
 
-#ufvzveqnuz .gt_last_grand_summary_row_top {
+#dfnmdhbquq .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -507,11 +522,11 @@
   border-bottom-color: #D3D3D3;
 }
 
-#ufvzveqnuz .gt_striped {
+#dfnmdhbquq .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#ufvzveqnuz .gt_table_body {
+#dfnmdhbquq .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -520,7 +535,7 @@
   border-bottom-color: #D3D3D3;
 }
 
-#ufvzveqnuz .gt_footnotes {
+#dfnmdhbquq .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -534,7 +549,7 @@
   border-right-color: #D3D3D3;
 }
 
-#ufvzveqnuz .gt_footnote {
+#dfnmdhbquq .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -543,7 +558,7 @@
   padding-right: 5px;
 }
 
-#ufvzveqnuz .gt_sourcenotes {
+#dfnmdhbquq .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -557,7 +572,7 @@
   border-right-color: #D3D3D3;
 }
 
-#ufvzveqnuz .gt_sourcenote {
+#dfnmdhbquq .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -565,72 +580,72 @@
   padding-right: 5px;
 }
 
-#ufvzveqnuz .gt_left {
+#dfnmdhbquq .gt_left {
   text-align: left;
 }
 
-#ufvzveqnuz .gt_center {
+#dfnmdhbquq .gt_center {
   text-align: center;
 }
 
-#ufvzveqnuz .gt_right {
+#dfnmdhbquq .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#ufvzveqnuz .gt_font_normal {
+#dfnmdhbquq .gt_font_normal {
   font-weight: normal;
 }
 
-#ufvzveqnuz .gt_font_bold {
+#dfnmdhbquq .gt_font_bold {
   font-weight: bold;
 }
 
-#ufvzveqnuz .gt_font_italic {
+#dfnmdhbquq .gt_font_italic {
   font-style: italic;
 }
 
-#ufvzveqnuz .gt_super {
+#dfnmdhbquq .gt_super {
   font-size: 65%;
 }
 
-#ufvzveqnuz .gt_footnote_marks {
+#dfnmdhbquq .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#ufvzveqnuz .gt_asterisk {
+#dfnmdhbquq .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#ufvzveqnuz .gt_indent_1 {
+#dfnmdhbquq .gt_indent_1 {
   text-indent: 5px;
 }
 
-#ufvzveqnuz .gt_indent_2 {
+#dfnmdhbquq .gt_indent_2 {
   text-indent: 10px;
 }
 
-#ufvzveqnuz .gt_indent_3 {
+#dfnmdhbquq .gt_indent_3 {
   text-indent: 15px;
 }
 
-#ufvzveqnuz .gt_indent_4 {
+#dfnmdhbquq .gt_indent_4 {
   text-indent: 20px;
 }
 
-#ufvzveqnuz .gt_indent_5 {
+#dfnmdhbquq .gt_indent_5 {
   text-indent: 25px;
 }
 
-#ufvzveqnuz .katex-display {
+#dfnmdhbquq .katex-display {
   display: inline-flex !important;
   margin-bottom: 0.75em !important;
 }
 
-#ufvzveqnuz div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+#dfnmdhbquq div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
   height: 0px !important;
 }
 </style>
@@ -930,8 +945,21 @@ NA
 <!--/html_preserve-->
 </section><section class="level4"><h4 id="create">Create<a class="anchor" aria-label="anchor" href="#create"></a>
 </h4>
-<p>Creating (structured) documents is slightly more involved, see the Articles tab for detailed instructions.</p>
-</section></section></section><script id="quarto-html-after-body" type="application/javascript">
+<p>To create a document you need to specify name and content of the fields to be created. The simplest way to do this is specify these in tabular form:</p>
+<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">doc_df_to_upload</span> <span class="op">&lt;-</span> <span class="fu">tribble</span><span class="op">(</span></span>
+<span><span class="op">~</span><span class="va">name</span>, <span class="op">~</span><span class="va">content</span>,</span>
+<span><span class="st">"Example field"</span>, <span class="st">"Example content"</span></span>
+<span><span class="op">)</span></span>
+<span><span class="fu"><a href="../reference/document_create_from_tabular.html">document_create_from_tabular</a></span><span class="op">(</span>df <span class="op">=</span> <span class="va">doc_df_to_upload</span>, document_name <span class="op">=</span> <span class="st">"Example document"</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">## Document created: &lt;https://leiden.researchspace.com/globalId/SD426761&gt;</span></span></code></pre>
+<p>Support for multiple fields is supported if a compatible RSpace template is provided with the <code>template_id</code> argument; if <code>template_id = NULL</code> all fields will be concatenated into a single field using the field names as section headers. The Articles tab contains more detailed instructions on how to create more structured documents in RSpace using the rspacer <code>document_create_*</code> functions and their arguments.</p>
+<section class="level5"><h5 id="the-rspacer-document-tag">The <code>rspacer</code> document tag<a class="anchor" aria-label="anchor" href="#the-rspacer-document-tag"></a>
+</h5>
+<p>By default rspacer tags all RSpace documents created/updated using rspacer functions with the <code>rspacer</code> tag. To disable this<a class="footnote-ref" role="doc-noteref" tabindex="0" data-bs-toggle="popover" data-bs-content="&lt;p&gt;this might be necessary on instances that enforce controlled vocabularies for tags&lt;/p&gt;"><sup>2</sup></a>, use the following code:</p>
+<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/options.html" class="external-link">options</a></span><span class="op">(</span>rspacer.set_rspacer_tag <span class="op">=</span> <span class="cn">F</span><span class="op">)</span></span></code></pre></div>
+</section></section></section></section><script id="quarto-html-after-body" type="application/javascript">
   window.document.addEventListener("DOMContentLoaded", function (event) {
       var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
       var mailtoRegex = new RegExp(/^mailto:/);

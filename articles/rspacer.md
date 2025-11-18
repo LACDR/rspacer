@@ -1,19 +1,22 @@
 # Introduction to rspacer
 
-The goal of rspacer is to “wrap” the [RSpace
-API](https://community.researchspace.com/public/apiDocs), that is, allow
-you to use the API directly from R using convenience functions.
+The rspacer package is a wrapper for the RSpace Electronic Lab Notebook
+(<https://www.researchspace.com/>) API
+(<https://community.researchspace.com/public/apiDocs>), and packages
+provides convenience functions to browse, search, create, and edit your
+RSpace documents. In addition, it enables filling RSpace templates from
+R Markdown/Quarto reports or from tabular data (e.g., R
+data.frames/tibbles, but also Excel/CSV files).
 
-**This package (and its documentation) is a work-in-progress.
-Contributions are welcome!**
+This vignette will show you how to get started with rspacer.
 
 ## Setting up rspacer
 
-To use rspacer it needs to know two things:
+To use rspacer it needs two things:
 
 1.  The API URL for your RSpace instance (this is typically the URL of
     your RSpace instance followed by `api/v1`, e.g.,
-    `https://leiden.researchspace.com/api/v1`)
+    `https://leiden.researchspace.com/api/v1`)[¹](#fn1)
 2.  Your API key, which is an authentication token you can use instead
     of your username and password. To create an API key go to ‘Manage
     API Key’ section of your RSpace profile page (MyRSpace -\> My
@@ -109,16 +112,16 @@ document_search("test")
     ## # A tibble: 50 × 11
     ##        id globalId name          created             lastModified        parentFolderId grandParentId tags
     ##     <int> <chr>    <chr>         <dttm>              <dttm>                       <int>         <int> <chr>
-    ##  1 426660 SD426660 251117_colle… 2025-11-17 16:13:27 2025-11-18 09:24:17             NA            NA <NA>
-    ##  2 426662 SD426662 251120_test_… 2025-11-17 16:17:44 2025-11-17 16:23:49             NA            NA <NA>
-    ##  3 424078 SD424078 test          2025-10-17 10:21:21 2025-10-17 10:21:27         242398          7813 rspa…
-    ##  4 424072 SD424072 test          2025-10-17 09:21:55 2025-10-17 09:22:01         242398          7813 rspa…
-    ##  5 422915 SD422915 251001_test_… 2025-09-30 08:33:22 2025-10-07 11:51:30             NA            NA <NA>
-    ##  6 421333 SD421333 250901_compa… 2025-09-01 09:06:12 2025-09-10 13:16:24             NA            NA <NA>
-    ##  7 420651 SD420651 250820_Suriv… 2025-08-19 14:34:17 2025-09-09 12:37:52             NA            NA <NA>
-    ##  8 421114 SD421114 250829_test_… 2025-08-28 12:47:23 2025-09-09 12:06:32             NA            NA <NA>
-    ##  9 421016 SD421016 250827_SAS_K… 2025-08-27 07:29:23 2025-08-29 11:06:20             NA            NA <NA>
-    ## 10 421238 SD421238 2025_08_25_S… 2025-08-29 08:59:39 2025-08-29 09:10:11             NA            NA <NA>
+    ##  1 426750 SD426750 Untitled doc… 2025-11-18 14:04:50 2025-11-18 14:04:56         242398          7813 rspa…
+    ##  2 426748 SD426748 Untitled doc… 2025-11-18 13:55:13 2025-11-18 13:55:19         242398          7813 rspa…
+    ##  3 426716 SD426716 Untitled doc… 2025-11-18 12:15:15 2025-11-18 12:15:20         242398          7813 rspa…
+    ##  4 426660 SD426660 251117_colle… 2025-11-17 16:13:27 2025-11-18 09:24:17             NA            NA <NA>
+    ##  5 426662 SD426662 251120_test_… 2025-11-17 16:17:44 2025-11-17 16:23:49             NA            NA <NA>
+    ##  6 424078 SD424078 test          2025-10-17 10:21:21 2025-10-17 10:21:27         242398          7813 rspa…
+    ##  7 424072 SD424072 test          2025-10-17 09:21:55 2025-10-17 09:22:01         242398          7813 rspa…
+    ##  8 422915 SD422915 251001_test_… 2025-09-30 08:33:22 2025-10-07 11:51:30             NA            NA <NA>
+    ##  9 421333 SD421333 250901_compa… 2025-09-01 09:06:12 2025-09-10 13:16:24             NA            NA <NA>
+    ## 10 420651 SD420651 250820_Suriv… 2025-08-19 14:34:17 2025-09-09 12:37:52             NA            NA <NA>
     ## # ℹ 40 more rows
     ## # ℹ 3 more variables: tagMetaData <chr>, form <chr>, owner <chr>
 
@@ -152,9 +155,28 @@ you could use
 
 ``` r
 library(tidyverse)
+(res$fields |>
+  fields_to_data_frame() -> res_df)
+```
+
+    ## # A tibble: 8 × 10
+    ##        id globalId  name       type  content lastModified        columnIndex files listOfMaterials `_links`
+    ##     <int> <chr>     <chr>      <chr> <chr>   <dttm>                    <int> <lgl> <lgl>           <lgl>
+    ## 1 1873444 FD1873444 Template … stri… "LACDR… 2024-01-17 14:56:22           0 NA    NA              NA
+    ## 2 1873445 FD1873445 Name       stri… "Gerha… 2024-01-17 14:56:39           1 NA    NA              NA
+    ## 3 1873446 FD1873446 Email      stri… "g.a.b… 2024-01-17 14:57:02           2 NA    NA              NA
+    ## 4 1873447 FD1873447 Phone      stri… ""      2024-01-17 14:56:22           3 NA    NA              NA
+    ## 5 1873448 FD1873448 ORCID      stri… "0000-… 2024-01-17 14:59:29           4 NA    NA              NA
+    ## 6 1873449 FD1873449 Address    text  "<p><a… 2024-01-17 14:57:49           5 NA    NA              NA
+    ## 7 1873450 FD1873450 Affiliati… stri… "Leide… 2024-01-17 14:59:13           6 NA    NA              NA
+    ## 8 1873451 FD1873451 Roles      text  ""      2024-01-17 14:56:22           7 NA    NA              NA
+
+Since the fields typically contain HTML formatted information, this can
+be better displayed using the [`gt`](https://gt.rstudio.com/) package:
+
+``` r
 library(gt)
-res$fields |>
-  fields_to_data_frame() |>
+res_df |>
   gt() |>
   fmt_markdown(columns = c(content))
 ```
@@ -163,5 +185,41 @@ res$fields |>
 
 #### Create
 
-Creating (structured) documents is slightly more involved, see the
-Articles tab for detailed instructions.
+To create a document you need to specify name and content of the fields
+to be created. The simplest way to do this is specify these in tabular
+form:
+
+``` r
+doc_df_to_upload <- tribble(
+~name, ~content,
+"Example field", "Example content"
+)
+document_create_from_tabular(df = doc_df_to_upload, document_name = "Example document")
+```
+
+    ## Document created: <https://leiden.researchspace.com/globalId/SD426761>
+
+Support for multiple fields is supported if a compatible RSpace template
+is provided with the `template_id` argument; if `template_id = NULL` all
+fields will be concatenated into a single field using the field names as
+section headers. The Articles tab contains more detailed instructions on
+how to create more structured documents in RSpace using the rspacer
+`document_create_*` functions and their arguments.
+
+##### The `rspacer` document tag
+
+By default rspacer tags all RSpace documents created/updated using
+rspacer functions with the `rspacer` tag. To disable this[²](#fn2), use
+the following code:
+
+``` r
+options(rspacer.set_rspacer_tag = F)
+```
+
+------------------------------------------------------------------------
+
+1.  If you don’t have an RSpace instance yet, you can use the
+    <https://community.researchspace.com/> instance.
+
+2.  this might be necessary on instances that enforce controlled
+    vocabularies for tags
