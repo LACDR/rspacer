@@ -8,6 +8,9 @@
 - **Hanneke Leegwater**. Author.
   [](https://orcid.org/0000-0001-6003-1544)
 
+- **Leiden University**. Copyright holder, funder.
+  [![ROR](https://raw.githubusercontent.com/ror-community/ror-logos/main/ror-icon-rgb.svg)](https://ror.org/027bh9e22)
+
 ## Citation
 
 Source:
