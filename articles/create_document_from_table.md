@@ -27,9 +27,9 @@ This code checks if the API is available. The API status should be OK.
 
     ## $message
     ## [1] "OK"
-    ## 
+    ##
     ## $rspaceVersion
-    ## [1] "1.114.0"
+    ## [1] "1.115.2"
 
 ``` r
 stopifnot(res$message == "OK")
@@ -75,7 +75,7 @@ document_create_from_tabular(
 )
 ```
 
-    ## Document created: <https://leiden.researchspace.com/globalId/SD424114>
+    ## Document created: <https://leiden.researchspace.com/globalId/SD426706>
 
 The function
 [`document_create_from_tabular()`](https://lacdr.github.io/rspacer/reference/document_create_from_tabular.md)
@@ -94,8 +94,8 @@ folder_tree()
 ```
 
     ## # A tibble: 10 × 7
-    ##        id globalId name                   created             lastModified        type     owner         
-    ##     <int> <chr>    <chr>                  <dttm>              <dttm>              <chr>    <chr>         
+    ##        id globalId name                   created             lastModified        type     owner
+    ##     <int> <chr>    <chr>                  <dttm>              <dttm>              <chr>    <chr>
     ##  1 356307 SD356307 Gerhard Burger         2024-01-17 14:56:22 2024-01-17 15:04:39 DOCUMENT Gerhard Burger
     ##  2 260004 FL260004 LACDR RDM              2023-11-06 10:19:59 2023-11-06 10:19:59 FOLDER   Gerhard Burger
     ##  3 242175 FL242175 GABi001_EMP_regulation 2023-05-30 10:14:51 2023-06-14 12:30:47 FOLDER   Gerhard Burger
@@ -112,12 +112,12 @@ folder_tree("FL409926")
 ```
 
     ## # A tibble: 4 × 7
-    ##       id globalId name                      created             lastModified        type     owner            
-    ##    <int> <chr>    <chr>                     <dttm>              <dttm>              <chr>    <chr>            
-    ## 1 409948 SD409948 example title             2025-04-24 10:12:56 2025-04-24 10:13:06 DOCUMENT Hanneke Leegwater
-    ## 2 409942 SD409942 example title             2025-04-24 10:11:01 2025-04-24 10:11:10 DOCUMENT Hanneke Leegwater
-    ## 3 409929 SD409929 a002_normalize_lipidomics 2025-04-24 10:01:59 2025-04-24 10:02:14 DOCUMENT Hanneke Leegwater
-    ## 4 409928 SD409928 a001_preprocess_data      2025-04-24 10:01:34 2025-04-24 10:01:52 DOCUMENT Hanneke Leegwater
+    ##       id globalId name                      created             lastModified        type     owner
+    ##    <int> <chr>    <chr>                     <dttm>              <dttm>              <chr>    <chr>
+    ## 1 409948 SD409948 example title             2025-04-24 10:12:56 2025-04-24 10:13:06 DOCUMENT Hanneke Leegw…
+    ## 2 409942 SD409942 example title             2025-04-24 10:11:01 2025-04-24 10:11:10 DOCUMENT Hanneke Leegw…
+    ## 3 409929 SD409929 a002_normalize_lipidomics 2025-04-24 10:01:59 2025-04-24 10:02:14 DOCUMENT Hanneke Leegw…
+    ## 4 409928 SD409928 a001_preprocess_data      2025-04-24 10:01:34 2025-04-24 10:01:52 DOCUMENT Hanneke Leegw…
 
 Of course you can also find these by going to the web interface of your
 RSpace instance. You can also tag your documents using a `tags` vector,
@@ -148,9 +148,9 @@ document_create_from_tabular(
 )
 ```
 
-    ## File uploaded to <https://leiden.researchspace.com/globalId/GL424116>
-    ## File uploaded to <https://leiden.researchspace.com/globalId/GL424117>
-    ## Document created: <https://leiden.researchspace.com/globalId/SD424118>
+    ## File uploaded to <https://leiden.researchspace.com/globalId/GL426708>
+    ## File uploaded to <https://leiden.researchspace.com/globalId/GL426709>
+    ## Document created: <https://leiden.researchspace.com/globalId/SD426710>
 
 ## Uploading directly from file
 
@@ -170,4 +170,4 @@ document_create_from_tabfile(
 )
 ```
 
-    ## Document created: <https://leiden.researchspace.com/globalId/SD424120>
+    ## Document created: <https://leiden.researchspace.com/globalId/SD426712>

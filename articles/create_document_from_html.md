@@ -28,9 +28,9 @@ This code checks if the API is available. The API status should be OK.
 
     ## $message
     ## [1] "OK"
-    ## 
+    ##
     ## $rspaceVersion
-    ## [1] "1.114.0"
+    ## [1] "1.115.2"
 
 ``` r
 stopifnot(res$message == "OK")
@@ -103,7 +103,7 @@ document_create_from_html(
 )
 ```
 
-    ## Document created: <https://leiden.researchspace.com/globalId/SD424103>
+    ## Document created: <https://leiden.researchspace.com/globalId/SD426701>
 
 However,
 [`document_create_from_html()`](https://lacdr.github.io/rspacer/reference/document_create_from_html.md)
@@ -123,8 +123,8 @@ folder_tree()
 ```
 
     ## # A tibble: 10 × 7
-    ##        id globalId name                   created             lastModified        type     owner         
-    ##     <int> <chr>    <chr>                  <dttm>              <dttm>              <chr>    <chr>         
+    ##        id globalId name                   created             lastModified        type     owner
+    ##     <int> <chr>    <chr>                  <dttm>              <dttm>              <chr>    <chr>
     ##  1 356307 SD356307 Gerhard Burger         2024-01-17 14:56:22 2024-01-17 15:04:39 DOCUMENT Gerhard Burger
     ##  2 260004 FL260004 LACDR RDM              2023-11-06 10:19:59 2023-11-06 10:19:59 FOLDER   Gerhard Burger
     ##  3 242175 FL242175 GABi001_EMP_regulation 2023-05-30 10:14:51 2023-06-14 12:30:47 FOLDER   Gerhard Burger
@@ -141,14 +141,14 @@ folder_tree("FL7833")
 ```
 
     ## # A tibble: 6 × 7
-    ##       id globalId name                                 created             lastModified        type     owner         
-    ##    <int> <chr>    <chr>                                <dttm>              <dttm>              <chr>    <chr>         
-    ## 1 242238 SD242238 LACDR-ISA - Contact v0.2.0           2023-05-30 12:21:36 2023-11-06 11:07:03 DOCUMENT Gerhard Burger
-    ## 2 242213 SD242213 LACDR-ISA - Publication v0.1.0       2023-05-30 11:57:26 2023-11-06 11:05:57 DOCUMENT Gerhard Burger
-    ## 3 260025 SD260025 LACDR-ISA - Assay (General) v1.0.0   2023-11-06 11:03:29 2023-11-06 11:03:29 DOCUMENT Gerhard Burger
-    ## 4 260008 SD260008 LACDR-ISA - Study v1.0.0             2023-11-06 10:23:41 2023-11-06 10:23:41 DOCUMENT Gerhard Burger
-    ## 5 260005 SD260005 LACDR-ISA - Investigation v1.0.0     2023-11-06 10:21:19 2023-11-06 10:21:19 DOCUMENT Gerhard Burger
-    ## 6 242170 SD242170 DDS Beltman - In Silico Assay v1.0.0 2023-05-30 09:57:49 2023-05-30 10:01:47 DOCUMENT Gerhard Burger
+    ##       id globalId name                                 created             lastModified        type   owner
+    ##    <int> <chr>    <chr>                                <dttm>              <dttm>              <chr>  <chr>
+    ## 1 242238 SD242238 LACDR-ISA - Contact v0.2.0           2023-05-30 12:21:36 2023-11-06 11:07:03 DOCUM… Gerh…
+    ## 2 242213 SD242213 LACDR-ISA - Publication v0.1.0       2023-05-30 11:57:26 2023-11-06 11:05:57 DOCUM… Gerh…
+    ## 3 260025 SD260025 LACDR-ISA - Assay (General) v1.0.0   2023-11-06 11:03:29 2023-11-06 11:03:29 DOCUM… Gerh…
+    ## 4 260008 SD260008 LACDR-ISA - Study v1.0.0             2023-11-06 10:23:41 2023-11-06 10:23:41 DOCUM… Gerh…
+    ## 5 260005 SD260005 LACDR-ISA - Investigation v1.0.0     2023-11-06 10:21:19 2023-11-06 10:21:19 DOCUM… Gerh…
+    ## 6 242170 SD242170 DDS Beltman - In Silico Assay v1.0.0 2023-05-30 09:57:49 2023-05-30 10:01:47 DOCUM… Gerh…
 
 Of course you can also find these by going to the web interface of your
 RSpace instance. You can also tag your documents using a `tags` vector,
@@ -169,5 +169,5 @@ document_create_from_html(
 )
 ```
 
-    ## File uploaded to <https://leiden.researchspace.com/globalId/GL424105>
-    ## Document created: <https://leiden.researchspace.com/globalId/SD424106>
+    ## File uploaded to <https://leiden.researchspace.com/globalId/GL426703>
+    ## Document created: <https://leiden.researchspace.com/globalId/SD426704>

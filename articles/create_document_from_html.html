@@ -6,17 +6,19 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <title>Tutorial: creating a document from html • rspacer</title>
-<script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<script src="../lightswitch.js"></script><script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="../deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet">
 <script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="../deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
 <link href="../deps/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet">
-<script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Tutorial: creating a document from html">
+<script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><script src="create_document_from_html_files/libs/quarto-html/popper.min.js"></script><script src="create_document_from_html_files/libs/quarto-html/tippy.umd.min.js"></script><link href="create_document_from_html_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="create_document_from_html_files/libs/quarto-html/light-border.css" rel="stylesheet">
+<!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Tutorial: creating a document from html">
 </head>
 <body>
     <a href="#main" class="visually-hidden-focusable">Skip to contents</a>
 
 
-    <nav class="navbar navbar-expand-lg fixed-top bg-light" data-bs-theme="light" aria-label="Site navigation"><div class="container">
+    <nav class="navbar navbar-expand-lg fixed-top " aria-label="Site navigation"><div class="container">
 
     <a class="navbar-brand me-2" href="../index.html">rspacer</a>
 
@@ -45,102 +47,72 @@
  <input class="form-control" type="search" name="search-input" id="search-input" autocomplete="off" aria-label="Search site" placeholder="Search for" data-search-index="../search.json">
 </form></li>
 <li class="nav-item"><a class="external-link nav-link" href="https://github.com/lacdr/rspacer/" aria-label="GitHub"><span class="fa fab fa-github fa-lg"></span></a></li>
+<li class="nav-item dropdown">
+  <button class="nav-link dropdown-toggle" type="button" id="dropdown-lightswitch" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true" aria-label="Light switch"><span class="fa fa-sun"></span></button>
+  <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdown-lightswitch">
+<li><button class="dropdown-item" data-bs-theme-value="light"><span class="fa fa-sun"></span> Light</button></li>
+    <li><button class="dropdown-item" data-bs-theme-value="dark"><span class="fa fa-moon"></span> Dark</button></li>
+    <li><button class="dropdown-item" data-bs-theme-value="auto"><span class="fa fa-adjust"></span> Auto</button></li>
+  </ul>
+</li>
       </ul>
 </div>
 
 
   </div>
-</nav><div class="container template-article">
-
-
-
-
+</nav><div class="container template-quarto">
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
 
       <h1>Tutorial: creating a document from html</h1>
-            
-      
-      <small class="dont-index">Source: <a href="https://github.com/lacdr/rspacer/blob/main/vignettes/articles/create_document_from_html.Rmd" class="external-link"><code>vignettes/articles/create_document_from_html.Rmd</code></a></small>
-      <div class="d-none name"><code>create_document_from_html.Rmd</code></div>
+
+
+
+
+      <small class="dont-index">Source: <a href="https://github.com/lacdr/rspacer/blob/main/vignettes/articles/create_document_from_html.qmd" class="external-link"><code>vignettes/articles/create_document_from_html.qmd</code></a></small>
+      <div class="d-none name"><code></code></div>
     </div>
 
-    
-    
-<div class="section level2">
-<h2 id="before-you-start">Before you start<a class="anchor" aria-label="anchor" href="#before-you-start"></a>
+
+
+
+
+
+    <section class="level2"><h2 id="before-you-start">Before you start<a class="anchor" aria-label="anchor" href="#before-you-start"></a>
 </h2>
-<p>In this tutorial, we describe how to create an RSpace structured
-document from a Quarto file using
-<code><a href="../reference/document_create_from_html.html">document_create_from_html()</a></code>. We advice you to read
-<code><a href="../articles/rspacer.html">vignette("rspacer")</a></code> to make sure that you are ready to use
-this upload document. You need to install rspacer and set up your API
-url and API key before the start of this tutorial.</p>
-</div>
-<div class="section level2">
-<h2 id="load-r-libraries">Load R libraries<a class="anchor" aria-label="anchor" href="#load-r-libraries"></a>
+<p>In this tutorial, we describe how to create an RSpace structured document from a Quarto file using <code><a href="../reference/document_create_from_html.html">document_create_from_html()</a></code>. We advice you to read <code><a href="../articles/rspacer.html">vignette("rspacer")</a></code> to make sure that you are ready to use this upload document. You need to install rspacer and set up your API url and API key before the start of this tutorial.</p>
+</section><section class="level2"><h2 id="load-r-libraries">Load R libraries<a class="anchor" aria-label="anchor" href="#load-r-libraries"></a>
 </h2>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyverse.tidyverse.org" class="external-link">tidyverse</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/lacdr/rspacer" class="external-link">rspacer</a></span><span class="op">)</span></span></code></pre></div>
-</div>
-<div class="section level2">
-<h2 id="check-if-the-api-is-available">Check if the API is available<a class="anchor" aria-label="anchor" href="#check-if-the-api-is-available"></a>
+</section><section class="level2"><h2 id="check-if-the-api-is-available">Check if the API is available<a class="anchor" aria-label="anchor" href="#check-if-the-api-is-available"></a>
 </h2>
-<p>This code checks if the API is available. The API status should be
-OK.</p>
+<p>This code checks if the API is available. The API status should be OK.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="op">(</span><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/api_status.html">api_status</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## $message</span></span>
 <span><span class="co">## [1] "OK"</span></span>
-<span><span class="co">## </span></span>
+<span><span class="co">##</span></span>
 <span><span class="co">## $rspaceVersion</span></span>
-<span><span class="co">## [1] "1.114.0"</span></span></code></pre>
+<span><span class="co">## [1] "1.115.2"</span></span></code></pre>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/stopifnot.html" class="external-link">stopifnot</a></span><span class="op">(</span><span class="va">res</span><span class="op">$</span><span class="va">message</span> <span class="op">==</span> <span class="st">"OK"</span><span class="op">)</span></span></code></pre></div>
-</div>
-<div class="section level2">
-<h2 id="create-a-structured-document-in-rspace">Create a structured document in RSpace<a class="anchor" aria-label="anchor" href="#create-a-structured-document-in-rspace"></a>
+</section><section class="level2"><h2 id="create-a-structured-document-in-rspace">Create a structured document in RSpace<a class="anchor" aria-label="anchor" href="#create-a-structured-document-in-rspace"></a>
 </h2>
-<p>Create a Template from a Form with four text Fields named “Title”,
-“Date”, “Main part” and “Conclusion”. Write down the unique Structured
-Document identifier, you will need it later. Instructions to design a
-Template in RSpace can be found <a href="https://documentation.researchspace.com/article/wxfk9gf0a0-templates" class="external-link">here</a>.</p>
-</div>
-<div class="section level2">
-<h2 id="create-a-small-example-document">Create a small example document<a class="anchor" aria-label="anchor" href="#create-a-small-example-document"></a>
+<p>Create a Template from a Form with four text Fields named “Title”, “Date”, “Main part” and “Conclusion”. Write down the unique Structured Document identifier, you will need it later. Instructions to design a Template in RSpace can be found <a href="https://documentation.researchspace.com/article/wxfk9gf0a0-templates" class="external-link">here</a>.</p>
+</section><section class="level2"><h2 id="create-a-small-example-document">Create a small example document<a class="anchor" aria-label="anchor" href="#create-a-small-example-document"></a>
 </h2>
-<ol style="list-style-type: decimal">
-<li>The rspacer package has an example file. In RStudio, go to File &gt;
-New File &gt; R Markdown. At the moment (2025-02-06) there is not yet an
-option to create Quarto files from template, which is why we chose to
-provide the file as an R Markdown template.</li>
+<ol type="1">
+<li>The rspacer package has an example file. In RStudio, go to File &gt; New File &gt; R Markdown. At the moment (2025-02-06) there is not yet an option to create Quarto files from template, which is why we chose to provide the file as an R Markdown template.</li>
 <li>On the left, click From Template.</li>
-<li>Choose the rspacer Template example. Save the file as a Quarto file
-(<code>.qmd</code>).</li>
+<li>Choose the rspacer Template example. Save the file as a Quarto file (<code>.qmd</code>).</li>
 <li>Render the file to a html report.</li>
 </ol>
-<p>Alternatively, you can create a new Quarto document. Include the same
-headers as the RSpace Template that you previously created, and make
-sure that these headers all have two hashtags (h2 headers, with
-<code>##</code>). You can write any code, or use h3 or h4 headers (with
-three or four hashtags), as long the h2 headers are identical to your
-structured document template.</p>
-</div>
-<div class="section level2">
-<h2 id="specify-the-file-name-of-the-file-to-upload">Specify the file name of the file to upload<a class="anchor" aria-label="anchor" href="#specify-the-file-name-of-the-file-to-upload"></a>
+<p>Alternatively, you can create a new Quarto document. Include the same headers as the RSpace Template that you previously created, and make sure that these headers all have two hashtags (h2 headers, with <code>##</code>). You can write any code, or use h3 or h4 headers (with three or four hashtags), as long the h2 headers are identical to your structured document template.</p>
+</section><section class="level2"><h2 id="specify-the-file-name-of-the-file-to-upload">Specify the file name of the file to upload<a class="anchor" aria-label="anchor" href="#specify-the-file-name-of-the-file-to-upload"></a>
 </h2>
-<p>rspacer needs to know which file you want to upload. In this
-tutorial, we want to create a structured document from the file
-<code>Template_example.html</code> that we created before, and we want
-to upload the <code>.qmd</code> file as an attachment. We recommend to
-work with relative paths from within an R project (you can specify these
-using the <a href="https://here.r-lib.org/" class="external-link"><code>here</code>
-package</a>. If this is not what you want, you need to specify the
-absolute file path. The code below assumes that the html file and qmd
-file have the same filename. If this is not the case, change both the
-<code>file_name</code> and the <code>matching_code_file</code>
-variables.</p>
+<p>rspacer needs to know which file you want to upload. In this tutorial, we want to create a structured document from the file <code>Template_example.html</code> that we created before, and we want to upload the <code>.qmd</code> file as an attachment. We recommend to work with relative paths from within an R project (you can specify these using the <a href="https://here.r-lib.org/" class="external-link"><code>here</code> package</a>. If this is not what you want, you need to specify the absolute file path. The code below assumes that the html file and qmd file have the same filename. If this is not the case, change both the <code>file_name</code> and the <code>matching_code_file</code> variables.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="op">(</span><span class="va">file_name</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"Template_example.html"</span>, package <span class="op">=</span> <span class="st">"rspacer"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## [1] "/Users/gerhard/GitHub/rspacer/inst/Template_example.html"</span></span></code></pre>
@@ -150,32 +122,22 @@ variables.</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/stopifnot.html" class="external-link">stopifnot</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/files.html" class="external-link">file.exists</a></span><span class="op">(</span><span class="va">file_name</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/stopifnot.html" class="external-link">stopifnot</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/files.html" class="external-link">file.exists</a></span><span class="op">(</span><span class="va">matching_code_file</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
-<div class="section level3">
-<h3 id="upload-the-file">Upload the file<a class="anchor" aria-label="anchor" href="#upload-the-file"></a>
+<section class="level3"><h3 id="upload-the-file">Upload the file<a class="anchor" aria-label="anchor" href="#upload-the-file"></a>
 </h3>
-<p>To upload the document and attachment to the API inbox, this code
-chunk is sufficient:</p>
+<p>To upload the document and attachment to the API inbox, this code chunk is sufficient:</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/document_create_from_html.html">document_create_from_html</a></span><span class="op">(</span></span>
 <span>    path <span class="op">=</span> <span class="va">file_name</span>,</span>
 <span>    template_id <span class="op">=</span> <span class="va">template_id</span></span>
 <span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">## Document created: &lt;https://leiden.researchspace.com/globalId/SD424103&gt;</span></span></code></pre>
-<p>However, <code><a href="../reference/document_create_from_html.html">document_create_from_html()</a></code> has more
-parameters, in case you want to, for example, upload the file to a
-specific folder or replace an existing document (click the function
-above to learn more).</p>
-<p>How to find the values for these parameters? Browse your RSpace
-folders using <code><a href="../reference/folder_tree.html">folder_tree()</a></code> and use either the
-<code>id</code> or the <code>globalID</code>. Folder identifiers start
-with <code>FL</code>, notebook identifiers start with <code>NB</code>,
-structured document identifiers start with <code>SD</code>. For
-example:</p>
+<pre><code><span><span class="co">## Document created: &lt;https://leiden.researchspace.com/globalId/SD426701&gt;</span></span></code></pre>
+<p>However, <code><a href="../reference/document_create_from_html.html">document_create_from_html()</a></code> has more parameters, in case you want to, for example, upload the file to a specific folder or replace an existing document (click the function above to learn more).</p>
+<p>How to find the values for these parameters? Browse your RSpace folders using <code><a href="../reference/folder_tree.html">folder_tree()</a></code> and use either the <code>id</code> or the <code>globalID</code>. Folder identifiers start with <code>FL</code>, notebook identifiers start with <code>NB</code>, structured document identifiers start with <code>SD</code>. For example:</p>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/folder_tree.html">folder_tree</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## # A tibble: 10 × 7</span></span>
-<span><span class="co">##        id globalId name                   created             lastModified        type     owner         </span></span>
-<span><span class="co">##     &lt;int&gt; &lt;chr&gt;    &lt;chr&gt;                  &lt;dttm&gt;              &lt;dttm&gt;              &lt;chr&gt;    &lt;chr&gt;         </span></span>
+<span><span class="co">##        id globalId name                   created             lastModified        type     owner</span></span>
+<span><span class="co">##     &lt;int&gt; &lt;chr&gt;    &lt;chr&gt;                  &lt;dttm&gt;              &lt;dttm&gt;              &lt;chr&gt;    &lt;chr&gt;</span></span>
 <span><span class="co">##  1 356307 SD356307 Gerhard Burger         2024-01-17 14:56:22 2024-01-17 15:04:39 DOCUMENT Gerhard Burger</span></span>
 <span><span class="co">##  2 260004 FL260004 LACDR RDM              2023-11-06 10:19:59 2023-11-06 10:19:59 FOLDER   Gerhard Burger</span></span>
 <span><span class="co">##  3 242175 FL242175 GABi001_EMP_regulation 2023-05-30 10:14:51 2023-06-14 12:30:47 FOLDER   Gerhard Burger</span></span>
@@ -189,21 +151,15 @@ example:</p>
 <div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/folder_tree.html">folder_tree</a></span><span class="op">(</span><span class="st">"FL7833"</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## # A tibble: 6 × 7</span></span>
-<span><span class="co">##       id globalId name                                 created             lastModified        type     owner         </span></span>
-<span><span class="co">##    &lt;int&gt; &lt;chr&gt;    &lt;chr&gt;                                &lt;dttm&gt;              &lt;dttm&gt;              &lt;chr&gt;    &lt;chr&gt;         </span></span>
-<span><span class="co">## 1 242238 SD242238 LACDR-ISA - Contact v0.2.0           2023-05-30 12:21:36 2023-11-06 11:07:03 DOCUMENT Gerhard Burger</span></span>
-<span><span class="co">## 2 242213 SD242213 LACDR-ISA - Publication v0.1.0       2023-05-30 11:57:26 2023-11-06 11:05:57 DOCUMENT Gerhard Burger</span></span>
-<span><span class="co">## 3 260025 SD260025 LACDR-ISA - Assay (General) v1.0.0   2023-11-06 11:03:29 2023-11-06 11:03:29 DOCUMENT Gerhard Burger</span></span>
-<span><span class="co">## 4 260008 SD260008 LACDR-ISA - Study v1.0.0             2023-11-06 10:23:41 2023-11-06 10:23:41 DOCUMENT Gerhard Burger</span></span>
-<span><span class="co">## 5 260005 SD260005 LACDR-ISA - Investigation v1.0.0     2023-11-06 10:21:19 2023-11-06 10:21:19 DOCUMENT Gerhard Burger</span></span>
-<span><span class="co">## 6 242170 SD242170 DDS Beltman - In Silico Assay v1.0.0 2023-05-30 09:57:49 2023-05-30 10:01:47 DOCUMENT Gerhard Burger</span></span></code></pre>
-<p>Of course you can also find these by going to the web interface of
-your RSpace instance. You can also tag your documents using a
-<code>tags</code> vector, for example a status like “finished” or “in
-progress” or “failed”. Finally, you can upload attachments, these need
-to be specified using list of lists, with the field number and the path
-of the file that needs to be attached to that field. An example where we
-also upload the source <code>.qmd</code> file is provided below.</p>
+<span><span class="co">##       id globalId name                                 created             lastModified        type   owner</span></span>
+<span><span class="co">##    &lt;int&gt; &lt;chr&gt;    &lt;chr&gt;                                &lt;dttm&gt;              &lt;dttm&gt;              &lt;chr&gt;  &lt;chr&gt;</span></span>
+<span><span class="co">## 1 242238 SD242238 LACDR-ISA - Contact v0.2.0           2023-05-30 12:21:36 2023-11-06 11:07:03 DOCUM… Gerh…</span></span>
+<span><span class="co">## 2 242213 SD242213 LACDR-ISA - Publication v0.1.0       2023-05-30 11:57:26 2023-11-06 11:05:57 DOCUM… Gerh…</span></span>
+<span><span class="co">## 3 260025 SD260025 LACDR-ISA - Assay (General) v1.0.0   2023-11-06 11:03:29 2023-11-06 11:03:29 DOCUM… Gerh…</span></span>
+<span><span class="co">## 4 260008 SD260008 LACDR-ISA - Study v1.0.0             2023-11-06 10:23:41 2023-11-06 10:23:41 DOCUM… Gerh…</span></span>
+<span><span class="co">## 5 260005 SD260005 LACDR-ISA - Investigation v1.0.0     2023-11-06 10:21:19 2023-11-06 10:21:19 DOCUM… Gerh…</span></span>
+<span><span class="co">## 6 242170 SD242170 DDS Beltman - In Silico Assay v1.0.0 2023-05-30 09:57:49 2023-05-30 10:01:47 DOCUM… Gerh…</span></span></code></pre>
+<p>Of course you can also find these by going to the web interface of your RSpace instance. You can also tag your documents using a <code>tags</code> vector, for example a status like “finished” or “in progress” or “failed”. Finally, you can upload attachments, these need to be specified using list of lists, with the field number and the path of the file that needs to be attached to that field. An example where we also upload the source <code>.qmd</code> file is provided below.</p>
 <div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/document_create_from_html.html">document_create_from_html</a></span><span class="op">(</span></span>
 <span>  path <span class="op">=</span> <span class="va">file_name</span>,</span>
@@ -213,14 +169,94 @@ also upload the source <code>.qmd</code> file is provided below.</p>
 <span>  attachments <span class="op">=</span> <span class="fu">tibble</span><span class="op">(</span>field <span class="op">=</span> <span class="fl">3</span>, path <span class="op">=</span> <span class="va">matching_code_file</span><span class="op">)</span>,</span>
 <span>  existing_document_id <span class="op">=</span> <span class="cn">NULL</span></span>
 <span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">## File uploaded to &lt;https://leiden.researchspace.com/globalId/GL424105&gt;</span></span>
-<span><span class="co">## Document created: &lt;https://leiden.researchspace.com/globalId/SD424106&gt;</span></span></code></pre>
-</div>
-</div>
-  </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
+<pre><code><span><span class="co">## File uploaded to &lt;https://leiden.researchspace.com/globalId/GL426703&gt;</span></span>
+<span><span class="co">## Document created: &lt;https://leiden.researchspace.com/globalId/SD426704&gt;</span></span></code></pre>
+</section></section><script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'light-border',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config);
+    }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script></main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
     </nav></aside>
 </div>
-
 
 
     <footer><div class="pkgdown-footer-left">

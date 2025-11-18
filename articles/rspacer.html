@@ -6,17 +6,19 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <title>Introduction to rspacer • rspacer</title>
-<script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<script src="../lightswitch.js"></script><script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="../deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet">
 <script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="../deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
 <link href="../deps/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet">
-<script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Introduction to rspacer">
+<script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><script src="rspacer_files/libs/quarto-html/popper.min.js"></script><script src="rspacer_files/libs/quarto-html/tippy.umd.min.js"></script><link href="rspacer_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="rspacer_files/libs/quarto-html/light-border.css" rel="stylesheet">
+<!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Introduction to rspacer">
 </head>
 <body>
     <a href="#main" class="visually-hidden-focusable">Skip to contents</a>
 
 
-    <nav class="navbar navbar-expand-lg fixed-top bg-light" data-bs-theme="light" aria-label="Site navigation"><div class="container">
+    <nav class="navbar navbar-expand-lg fixed-top " aria-label="Site navigation"><div class="container">
 
     <a class="navbar-brand me-2" href="../index.html">rspacer</a>
 
@@ -45,81 +47,68 @@
  <input class="form-control" type="search" name="search-input" id="search-input" autocomplete="off" aria-label="Search site" placeholder="Search for" data-search-index="../search.json">
 </form></li>
 <li class="nav-item"><a class="external-link nav-link" href="https://github.com/lacdr/rspacer/" aria-label="GitHub"><span class="fa fab fa-github fa-lg"></span></a></li>
+<li class="nav-item dropdown">
+  <button class="nav-link dropdown-toggle" type="button" id="dropdown-lightswitch" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true" aria-label="Light switch"><span class="fa fa-sun"></span></button>
+  <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdown-lightswitch">
+<li><button class="dropdown-item" data-bs-theme-value="light"><span class="fa fa-sun"></span> Light</button></li>
+    <li><button class="dropdown-item" data-bs-theme-value="dark"><span class="fa fa-moon"></span> Dark</button></li>
+    <li><button class="dropdown-item" data-bs-theme-value="auto"><span class="fa fa-adjust"></span> Auto</button></li>
+  </ul>
+</li>
       </ul>
 </div>
 
 
   </div>
-</nav><div class="container template-article">
-
-
-
-
+</nav><div class="container template-quarto">
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
 
       <h1>Introduction to rspacer</h1>
-            
-      
-      <small class="dont-index">Source: <a href="https://github.com/lacdr/rspacer/blob/main/vignettes/rspacer.Rmd" class="external-link"><code>vignettes/rspacer.Rmd</code></a></small>
-      <div class="d-none name"><code>rspacer.Rmd</code></div>
+
+
+
+
+      <small class="dont-index">Source: <a href="https://github.com/lacdr/rspacer/blob/main/vignettes/rspacer.qmd" class="external-link"><code>vignettes/rspacer.qmd</code></a></small>
+      <div class="d-none name"><code></code></div>
     </div>
 
-    
-    
-<p>The goal of rspacer is to “wrap” the <a href="https://community.researchspace.com/public/apiDocs" class="external-link">RSpace
-API</a>, that is, allow you to use the API directly from R using
-convenience functions.</p>
-<p><strong>This package (and its documentation) is a work-in-progress.
-Contributions are welcome!</strong></p>
-<div class="section level2">
-<h2 id="setting-up-rspacer">Setting up rspacer<a class="anchor" aria-label="anchor" href="#setting-up-rspacer"></a>
+
+
+
+
+
+    <p>The goal of rspacer is to “wrap” the <a href="https://community.researchspace.com/public/apiDocs" class="external-link">RSpace API</a>, that is, allow you to use the API directly from R using convenience functions.</p>
+<p><strong>This package (and its documentation) is a work-in-progress. Contributions are welcome!</strong></p>
+<section class="level2"><h2 id="setting-up-rspacer">Setting up rspacer<a class="anchor" aria-label="anchor" href="#setting-up-rspacer"></a>
 </h2>
 <p>To use rspacer it needs to know two things:</p>
-<ol style="list-style-type: decimal">
-<li>The API URL for your RSpace instance (this is typically the URL of
-your RSpace instance followed by <code>api/v1</code>, e.g.,
-<code>https://leiden.researchspace.com/api/v1</code>)</li>
-<li>Your API key, which is an authentication token you can use instead
-of your username and password. To create an API key go to ‘Manage API
-Key’ section of your RSpace profile page (MyRSpace -&gt; My Profile).
-<strong>You should keep your API key private.</strong> You can
-regenerate an API key at any time, which will invalidate the old
-key.</li>
+<ol type="1">
+<li>The API URL for your RSpace instance (this is typically the URL of your RSpace instance followed by <code>api/v1</code>, e.g., <code>https://leiden.researchspace.com/api/v1</code>)</li>
+<li>Your API key, which is an authentication token you can use instead of your username and password. To create an API key go to ‘Manage API Key’ section of your RSpace profile page (MyRSpace -&gt; My Profile). <strong>You should keep your API key private.</strong> You can regenerate an API key at any time, which will invalidate the old key.</li>
 </ol>
-<p>You can use the <code><a href="../reference/set_api_url.html">set_api_url()</a></code> and
-<code><a href="../reference/set_api_key.html">set_api_key()</a></code> functions to make these available to rspacer
-in the current session. To make this information persistent you can
-store it in environment variables. An easy way to do this is with
-<code><a href="https://usethis.r-lib.org/reference/edit.html" class="external-link">usethis::edit_r_environ()</a></code>; in the file that opens, you
-should add the following lines (insert your own URL and key):</p>
+<p>You can use the <code><a href="../reference/set_api_url.html">set_api_url()</a></code> and <code><a href="../reference/set_api_key.html">set_api_key()</a></code> functions to make these available to rspacer in the current session. To make this information persistent you can store it in environment variables. An easy way to do this is with <code><a href="https://usethis.r-lib.org/reference/edit.html" class="external-link">usethis::edit_r_environ()</a></code>; in the file that opens, you should add the following lines (insert your own URL and key):</p>
 <pre><code><span><span class="va">RSPACE_API_URL</span><span class="op">=</span><span class="st">"https://leiden.researchspace.com/api/v1"</span></span>
 <span><span class="va">RSPACE_API_KEY</span><span class="op">=</span><span class="st">"&lt;YOUR_API_KEY_HERE&gt;"</span></span></code></pre>
-<p>After saving the file and restarting R, you should now be able to
-run</p>
+<p>After saving the file and restarting R, you should now be able to run</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/lacdr/rspacer" class="external-link">rspacer</a></span><span class="op">)</span></span>
 <span><span class="fu"><a href="../reference/api_status.html">api_status</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## $message</span></span>
 <span><span class="co">## [1] "OK"</span></span>
-<span><span class="co">## </span></span>
+<span><span class="co">##</span></span>
 <span><span class="co">## $rspaceVersion</span></span>
-<span><span class="co">## [1] "1.114.0"</span></span></code></pre>
-</div>
-<div class="section level2">
-<h2 id="functionality">Functionality<a class="anchor" aria-label="anchor" href="#functionality"></a>
+<span><span class="co">## [1] "1.115.2"</span></span></code></pre>
+</section><section class="level2"><h2 id="functionality">Functionality<a class="anchor" aria-label="anchor" href="#functionality"></a>
 </h2>
-<div class="section level3">
-<h3 id="folders">Folders<a class="anchor" aria-label="anchor" href="#folders"></a>
+<section class="level3"><h3 id="folders">Folders<a class="anchor" aria-label="anchor" href="#folders"></a>
 </h3>
-<p>Now you can use rspacer to interact with your RSpace Workspace. For
-example, <code><a href="../reference/folder_tree.html">folder_tree()</a></code> will show you the content of your
-Workspace as a tibble:</p>
+<p>Now you can use rspacer to interact with your RSpace Workspace. For example, <code><a href="../reference/folder_tree.html">folder_tree()</a></code> will show you the content of your Workspace as a tibble:</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/folder_tree.html">folder_tree</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## # A tibble: 10 × 7</span></span>
-<span><span class="co">##        id globalId name                   created             lastModified        type     owner         </span></span>
-<span><span class="co">##     &lt;int&gt; &lt;chr&gt;    &lt;chr&gt;                  &lt;dttm&gt;              &lt;dttm&gt;              &lt;chr&gt;    &lt;chr&gt;         </span></span>
+<span><span class="co">##        id globalId name                   created             lastModified        type     owner</span></span>
+<span><span class="co">##     &lt;int&gt; &lt;chr&gt;    &lt;chr&gt;                  &lt;dttm&gt;              &lt;dttm&gt;              &lt;chr&gt;    &lt;chr&gt;</span></span>
 <span><span class="co">##  1 356307 SD356307 Gerhard Burger         2024-01-17 14:56:22 2024-01-17 15:04:39 DOCUMENT Gerhard Burger</span></span>
 <span><span class="co">##  2 260004 FL260004 LACDR RDM              2023-11-06 10:19:59 2023-11-06 10:19:59 FOLDER   Gerhard Burger</span></span>
 <span><span class="co">##  3 242175 FL242175 GABi001_EMP_regulation 2023-05-30 10:14:51 2023-06-14 12:30:47 FOLDER   Gerhard Burger</span></span>
@@ -130,13 +119,12 @@ Workspace as a tibble:</p>
 <span><span class="co">##  8   7833 FL7833   Templates              2022-12-22 12:32:22 2022-12-22 12:32:22 FOLDER   Gerhard Burger</span></span>
 <span><span class="co">##  9   7819 GF7819   Gallery                2022-12-22 12:32:22 2022-12-22 12:32:22 FOLDER   Gerhard Burger</span></span>
 <span><span class="co">## 10   7814 FL7814   Shared                 2022-12-22 12:32:22 2022-12-22 12:32:22 FOLDER   Gerhard Burger</span></span></code></pre>
-<p>You can also specify an id or Unique ID (<code>globalId</code>) to
-show the contents of a specific folder:</p>
+<p>You can also specify an id or Unique ID (<code>globalId</code>) to show the contents of a specific folder:</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/folder_tree.html">folder_tree</a></span><span class="op">(</span><span class="fl">7819</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## # A tibble: 8 × 7</span></span>
-<span><span class="co">##      id globalId name          created             lastModified        type   owner         </span></span>
-<span><span class="co">##   &lt;int&gt; &lt;chr&gt;    &lt;chr&gt;         &lt;dttm&gt;              &lt;dttm&gt;              &lt;chr&gt;  &lt;chr&gt;         </span></span>
+<span><span class="co">##      id globalId name          created             lastModified        type   owner</span></span>
+<span><span class="co">##   &lt;int&gt; &lt;chr&gt;    &lt;chr&gt;         &lt;dttm&gt;              &lt;dttm&gt;              &lt;chr&gt;  &lt;chr&gt;</span></span>
 <span><span class="co">## 1  7828 GF7828   Snippets      2022-12-22 12:32:22 2022-12-22 12:32:22 FOLDER Gerhard Burger</span></span>
 <span><span class="co">## 2  7827 GF7827   PdfDocuments  2022-12-22 12:32:22 2022-12-22 12:32:22 FOLDER Gerhard Burger</span></span>
 <span><span class="co">## 3  7826 GF7826   Miscellaneous 2022-12-22 12:32:22 2022-12-22 12:32:22 FOLDER Gerhard Burger</span></span>
@@ -145,55 +133,50 @@ show the contents of a specific folder:</p>
 <span><span class="co">## 6  7823 GF7823   Videos        2022-12-22 12:32:22 2022-12-22 12:32:22 FOLDER Gerhard Burger</span></span>
 <span><span class="co">## 7  7822 GF7822   Audios        2022-12-22 12:32:22 2022-12-22 12:32:22 FOLDER Gerhard Burger</span></span>
 <span><span class="co">## 8  7820 GF7820   Images        2022-12-22 12:32:22 2022-12-22 12:32:22 FOLDER Gerhard Burger</span></span></code></pre>
-</div>
-<div class="section level3">
-<h3 id="documents">Documents<a class="anchor" aria-label="anchor" href="#documents"></a>
+</section><section class="level3"><h3 id="documents">Documents<a class="anchor" aria-label="anchor" href="#documents"></a>
 </h3>
-<div class="section level4">
-<h4 id="search">Search<a class="anchor" aria-label="anchor" href="#search"></a>
+<section class="level4"><h4 id="search">Search<a class="anchor" aria-label="anchor" href="#search"></a>
 </h4>
-<p>You can search for documents using the <code><a href="../reference/document_search.html">document_search()</a></code>
-function:</p>
+<p>You can search for documents using the <code><a href="../reference/document_search.html">document_search()</a></code> function:</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/document_search.html">document_search</a></span><span class="op">(</span><span class="st">"test"</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">## # A tibble: 50 × 10</span></span>
-<span><span class="co">##        id globalId name             created             lastModified        parentFolderId tags  tagMetaData form  owner</span></span>
-<span><span class="co">##     &lt;int&gt; &lt;chr&gt;    &lt;chr&gt;            &lt;dttm&gt;              &lt;dttm&gt;                       &lt;int&gt; &lt;chr&gt; &lt;chr&gt;       &lt;chr&gt; &lt;chr&gt;</span></span>
-<span><span class="co">##  1 424078 SD424078 test             2025-10-17 10:21:21 2025-10-17 10:21:27         242398 rspa… rspacer     Basi… Gerh…</span></span>
-<span><span class="co">##  2 424072 SD424072 test             2025-10-17 09:21:55 2025-10-17 09:22:01         242398 rspa… rspacer     Basi… Gerh…</span></span>
-<span><span class="co">##  3 422915 SD422915 251001_test_Sir… 2025-09-30 08:33:22 2025-10-07 11:51:30             NA &lt;NA&gt;  &lt;NA&gt;        Basi… Max …</span></span>
-<span><span class="co">##  4 421333 SD421333 250901_compare_… 2025-09-01 09:06:12 2025-09-10 13:16:24             NA &lt;NA&gt;  &lt;NA&gt;        Basi… Max …</span></span>
-<span><span class="co">##  5 420651 SD420651 250820_Surival_… 2025-08-19 14:34:17 2025-09-09 12:37:52             NA &lt;NA&gt;  &lt;NA&gt;        Basi… Max …</span></span>
-<span><span class="co">##  6 421114 SD421114 250829_test_cel… 2025-08-28 12:47:23 2025-09-09 12:06:32             NA &lt;NA&gt;  &lt;NA&gt;        Basi… Max …</span></span>
-<span><span class="co">##  7 421016 SD421016 250827_SAS_Kolf… 2025-08-27 07:29:23 2025-08-29 11:06:20             NA &lt;NA&gt;  &lt;NA&gt;        Basi… Max …</span></span>
-<span><span class="co">##  8 421238 SD421238 2025_08_25_SA00… 2025-08-29 08:59:39 2025-08-29 09:10:11             NA &lt;NA&gt;  &lt;NA&gt;        Basi… Serk…</span></span>
-<span><span class="co">##  9 419599 SD419599 250805_Surival_… 2025-08-05 11:25:24 2025-08-19 09:47:40             NA &lt;NA&gt;  &lt;NA&gt;        Basi… Max …</span></span>
-<span><span class="co">## 10 419593 SD419593 250805_Compare_… 2025-08-05 09:24:31 2025-08-19 09:37:45             NA &lt;NA&gt;  &lt;NA&gt;        Basi… Max …</span></span>
-<span><span class="co">## # ℹ 40 more rows</span></span></code></pre>
-</div>
-<div class="section level4">
-<h4 id="retrieve">Retrieve<a class="anchor" aria-label="anchor" href="#retrieve"></a>
+<pre><code><span><span class="co">## # A tibble: 50 × 11</span></span>
+<span><span class="co">##        id globalId name          created             lastModified        parentFolderId grandParentId tags</span></span>
+<span><span class="co">##     &lt;int&gt; &lt;chr&gt;    &lt;chr&gt;         &lt;dttm&gt;              &lt;dttm&gt;                       &lt;int&gt;         &lt;int&gt; &lt;chr&gt;</span></span>
+<span><span class="co">##  1 426660 SD426660 251117_colle… 2025-11-17 16:13:27 2025-11-18 09:24:17             NA            NA &lt;NA&gt;</span></span>
+<span><span class="co">##  2 426662 SD426662 251120_test_… 2025-11-17 16:17:44 2025-11-17 16:23:49             NA            NA &lt;NA&gt;</span></span>
+<span><span class="co">##  3 424078 SD424078 test          2025-10-17 10:21:21 2025-10-17 10:21:27         242398          7813 rspa…</span></span>
+<span><span class="co">##  4 424072 SD424072 test          2025-10-17 09:21:55 2025-10-17 09:22:01         242398          7813 rspa…</span></span>
+<span><span class="co">##  5 422915 SD422915 251001_test_… 2025-09-30 08:33:22 2025-10-07 11:51:30             NA            NA &lt;NA&gt;</span></span>
+<span><span class="co">##  6 421333 SD421333 250901_compa… 2025-09-01 09:06:12 2025-09-10 13:16:24             NA            NA &lt;NA&gt;</span></span>
+<span><span class="co">##  7 420651 SD420651 250820_Suriv… 2025-08-19 14:34:17 2025-09-09 12:37:52             NA            NA &lt;NA&gt;</span></span>
+<span><span class="co">##  8 421114 SD421114 250829_test_… 2025-08-28 12:47:23 2025-09-09 12:06:32             NA            NA &lt;NA&gt;</span></span>
+<span><span class="co">##  9 421016 SD421016 250827_SAS_K… 2025-08-27 07:29:23 2025-08-29 11:06:20             NA            NA &lt;NA&gt;</span></span>
+<span><span class="co">## 10 421238 SD421238 2025_08_25_S… 2025-08-29 08:59:39 2025-08-29 09:10:11             NA            NA &lt;NA&gt;</span></span>
+<span><span class="co">## # ℹ 40 more rows</span></span>
+<span><span class="co">## # ℹ 3 more variables: tagMetaData &lt;chr&gt;, form &lt;chr&gt;, owner &lt;chr&gt;</span></span></code></pre>
+</section><section class="level4"><h4 id="retrieve">Retrieve<a class="anchor" aria-label="anchor" href="#retrieve"></a>
 </h4>
 <p>You can retrieve documents using</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">res</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/document_retrieve.html">document_retrieve</a></span><span class="op">(</span><span class="st">"SD356307"</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">res</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">##                Length Class  Mode     </span></span>
-<span><span class="co">## id              1     -none- numeric  </span></span>
+<pre><code><span><span class="co">##                Length Class  Mode</span></span>
+<span><span class="co">## id              1     -none- numeric</span></span>
 <span><span class="co">## globalId        1     -none- character</span></span>
 <span><span class="co">## name            1     -none- character</span></span>
 <span><span class="co">## created         1     -none- character</span></span>
 <span><span class="co">## lastModified    1     -none- character</span></span>
-<span><span class="co">## parentFolderId  1     -none- numeric  </span></span>
-<span><span class="co">## signed          1     -none- logical  </span></span>
-<span><span class="co">## tags            0     -none- NULL     </span></span>
-<span><span class="co">## tagMetaData     0     -none- NULL     </span></span>
-<span><span class="co">## form           10     -none- list     </span></span>
-<span><span class="co">## owner          10     -none- list     </span></span>
-<span><span class="co">## fields          8     -none- list     </span></span>
-<span><span class="co">## _links          1     -none- list</span></span></code></pre>
-<p>The result is json converted to an R list, to get the field
-information you could use</p>
+<span><span class="co">## parentFolderId  1     -none- numeric</span></span>
+<span><span class="co">## signed          1     -none- logical</span></span>
+<span><span class="co">## tags            0     -none- NULL</span></span>
+<span><span class="co">## tagMetaData     0     -none- NULL</span></span>
+<span><span class="co">## form           10     -none- list</span></span>
+<span><span class="co">## owner          10     -none- list</span></span>
+<span><span class="co">## fields          8     -none- list</span></span>
+<span><span class="co">## _links          1     -none- list</span></span>
+<span><span class="co">## grandParentId   1     -none- numeric</span></span></code></pre>
+<p>The result is json converted to an R list, to get the field information you could use</p>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyverse.tidyverse.org" class="external-link">tidyverse</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://gt.rstudio.com" class="external-link">gt</a></span><span class="op">)</span></span>
@@ -201,23 +184,24 @@ information you could use</p>
 <span>  <span class="fu"><a href="../reference/fields_to_data_frame.html">fields_to_data_frame</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">gt</span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">fmt_markdown</span><span class="op">(</span>columns <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="va">content</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
-<div id="gojmxnmrim" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#gojmxnmrim table {
+<!--html_preserve-->
+<div id="ufvzveqnuz" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#ufvzveqnuz table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#gojmxnmrim thead, #gojmxnmrim tbody, #gojmxnmrim tfoot, #gojmxnmrim tr, #gojmxnmrim td, #gojmxnmrim th {
+#ufvzveqnuz thead, #ufvzveqnuz tbody, #ufvzveqnuz tfoot, #ufvzveqnuz tr, #ufvzveqnuz td, #ufvzveqnuz th {
   border-style: none;
 }
 
-#gojmxnmrim p {
+#ufvzveqnuz p {
   margin: 0;
   padding: 0;
 }
 
-#gojmxnmrim .gt_table {
+#ufvzveqnuz .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -243,12 +227,12 @@ information you could use</p>
   border-left-color: #D3D3D3;
 }
 
-#gojmxnmrim .gt_caption {
+#ufvzveqnuz .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#gojmxnmrim .gt_title {
+#ufvzveqnuz .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -260,7 +244,7 @@ information you could use</p>
   border-bottom-width: 0;
 }
 
-#gojmxnmrim .gt_subtitle {
+#ufvzveqnuz .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -272,7 +256,7 @@ information you could use</p>
   border-top-width: 0;
 }
 
-#gojmxnmrim .gt_heading {
+#ufvzveqnuz .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -284,13 +268,13 @@ information you could use</p>
   border-right-color: #D3D3D3;
 }
 
-#gojmxnmrim .gt_bottom_border {
+#ufvzveqnuz .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#gojmxnmrim .gt_col_headings {
+#ufvzveqnuz .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -305,7 +289,7 @@ information you could use</p>
   border-right-color: #D3D3D3;
 }
 
-#gojmxnmrim .gt_col_heading {
+#ufvzveqnuz .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -325,7 +309,7 @@ information you could use</p>
   overflow-x: hidden;
 }
 
-#gojmxnmrim .gt_column_spanner_outer {
+#ufvzveqnuz .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -337,15 +321,15 @@ information you could use</p>
   padding-right: 4px;
 }
 
-#gojmxnmrim .gt_column_spanner_outer:first-child {
+#ufvzveqnuz .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#gojmxnmrim .gt_column_spanner_outer:last-child {
+#ufvzveqnuz .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#gojmxnmrim .gt_column_spanner {
+#ufvzveqnuz .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -357,11 +341,11 @@ information you could use</p>
   width: 100%;
 }
 
-#gojmxnmrim .gt_spanner_row {
+#ufvzveqnuz .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#gojmxnmrim .gt_group_heading {
+#ufvzveqnuz .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -387,7 +371,7 @@ information you could use</p>
   text-align: left;
 }
 
-#gojmxnmrim .gt_empty_group_heading {
+#ufvzveqnuz .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -402,15 +386,15 @@ information you could use</p>
   vertical-align: middle;
 }
 
-#gojmxnmrim .gt_from_md > :first-child {
+#ufvzveqnuz .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#gojmxnmrim .gt_from_md > :last-child {
+#ufvzveqnuz .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#gojmxnmrim .gt_row {
+#ufvzveqnuz .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -429,7 +413,7 @@ information you could use</p>
   overflow-x: hidden;
 }
 
-#gojmxnmrim .gt_stub {
+#ufvzveqnuz .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -442,7 +426,7 @@ information you could use</p>
   padding-right: 5px;
 }
 
-#gojmxnmrim .gt_stub_row_group {
+#ufvzveqnuz .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -456,15 +440,15 @@ information you could use</p>
   vertical-align: top;
 }
 
-#gojmxnmrim .gt_row_group_first td {
+#ufvzveqnuz .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#gojmxnmrim .gt_row_group_first th {
+#ufvzveqnuz .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#gojmxnmrim .gt_summary_row {
+#ufvzveqnuz .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -474,16 +458,16 @@ information you could use</p>
   padding-right: 5px;
 }
 
-#gojmxnmrim .gt_first_summary_row {
+#ufvzveqnuz .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#gojmxnmrim .gt_first_summary_row.thick {
+#ufvzveqnuz .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#gojmxnmrim .gt_last_summary_row {
+#ufvzveqnuz .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -493,7 +477,7 @@ information you could use</p>
   border-bottom-color: #D3D3D3;
 }
 
-#gojmxnmrim .gt_grand_summary_row {
+#ufvzveqnuz .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -503,7 +487,7 @@ information you could use</p>
   padding-right: 5px;
 }
 
-#gojmxnmrim .gt_first_grand_summary_row {
+#ufvzveqnuz .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -513,7 +497,7 @@ information you could use</p>
   border-top-color: #D3D3D3;
 }
 
-#gojmxnmrim .gt_last_grand_summary_row_top {
+#ufvzveqnuz .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -523,11 +507,11 @@ information you could use</p>
   border-bottom-color: #D3D3D3;
 }
 
-#gojmxnmrim .gt_striped {
+#ufvzveqnuz .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#gojmxnmrim .gt_table_body {
+#ufvzveqnuz .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -536,7 +520,7 @@ information you could use</p>
   border-bottom-color: #D3D3D3;
 }
 
-#gojmxnmrim .gt_footnotes {
+#ufvzveqnuz .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -550,7 +534,7 @@ information you could use</p>
   border-right-color: #D3D3D3;
 }
 
-#gojmxnmrim .gt_footnote {
+#ufvzveqnuz .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -559,7 +543,7 @@ information you could use</p>
   padding-right: 5px;
 }
 
-#gojmxnmrim .gt_sourcenotes {
+#ufvzveqnuz .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -573,7 +557,7 @@ information you could use</p>
   border-right-color: #D3D3D3;
 }
 
-#gojmxnmrim .gt_sourcenote {
+#ufvzveqnuz .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -581,201 +565,458 @@ information you could use</p>
   padding-right: 5px;
 }
 
-#gojmxnmrim .gt_left {
+#ufvzveqnuz .gt_left {
   text-align: left;
 }
 
-#gojmxnmrim .gt_center {
+#ufvzveqnuz .gt_center {
   text-align: center;
 }
 
-#gojmxnmrim .gt_right {
+#ufvzveqnuz .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#gojmxnmrim .gt_font_normal {
+#ufvzveqnuz .gt_font_normal {
   font-weight: normal;
 }
 
-#gojmxnmrim .gt_font_bold {
+#ufvzveqnuz .gt_font_bold {
   font-weight: bold;
 }
 
-#gojmxnmrim .gt_font_italic {
+#ufvzveqnuz .gt_font_italic {
   font-style: italic;
 }
 
-#gojmxnmrim .gt_super {
+#ufvzveqnuz .gt_super {
   font-size: 65%;
 }
 
-#gojmxnmrim .gt_footnote_marks {
+#ufvzveqnuz .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#gojmxnmrim .gt_asterisk {
+#ufvzveqnuz .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#gojmxnmrim .gt_indent_1 {
+#ufvzveqnuz .gt_indent_1 {
   text-indent: 5px;
 }
 
-#gojmxnmrim .gt_indent_2 {
+#ufvzveqnuz .gt_indent_2 {
   text-indent: 10px;
 }
 
-#gojmxnmrim .gt_indent_3 {
+#ufvzveqnuz .gt_indent_3 {
   text-indent: 15px;
 }
 
-#gojmxnmrim .gt_indent_4 {
+#ufvzveqnuz .gt_indent_4 {
   text-indent: 20px;
 }
 
-#gojmxnmrim .gt_indent_5 {
+#ufvzveqnuz .gt_indent_5 {
   text-indent: 25px;
 }
 
-#gojmxnmrim .katex-display {
+#ufvzveqnuz .katex-display {
   display: inline-flex !important;
   margin-bottom: 0.75em !important;
 }
 
-#gojmxnmrim div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+#ufvzveqnuz div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
   height: 0px !important;
 }
 </style>
 <table class="table gt_table" data-quarto-disable-processing="false" data-quarto-bootstrap="false">
 <thead><tr class="gt_col_headings">
-<th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="id">id</th>
-      <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1" scope="col" id="globalId">globalId</th>
-      <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1" scope="col" id="name">name</th>
-      <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1" scope="col" id="type">type</th>
-      <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1" scope="col" id="content">content</th>
-      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="lastModified">lastModified</th>
-      <th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="columnIndex">columnIndex</th>
-      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1" scope="col" id="files">files</th>
-      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1" scope="col" id="listOfMaterials">listOfMaterials</th>
-      <th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1" scope="col" id="_links">_links</th>
-    </tr></thead>
+<th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="id">
+id
+</th>
+<th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1" scope="col" id="globalId">
+globalId
+</th>
+<th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1" scope="col" id="name">
+name
+</th>
+<th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1" scope="col" id="type">
+type
+</th>
+<th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="1" colspan="1" scope="col" id="content">
+content
+</th>
+<th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="lastModified">
+lastModified
+</th>
+<th class="gt_col_heading gt_columns_bottom_border gt_right" rowspan="1" colspan="1" scope="col" id="columnIndex">
+columnIndex
+</th>
+<th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1" scope="col" id="files">
+files
+</th>
+<th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1" scope="col" id="listOfMaterials">
+listOfMaterials
+</th>
+<th class="gt_col_heading gt_columns_bottom_border gt_center" rowspan="1" colspan="1" scope="col" id="_links">
+_links
+</th>
+</tr></thead>
 <tbody class="gt_table_body">
 <tr>
-<td headers="id" class="gt_row gt_right">1873444</td>
-<td headers="globalId" class="gt_row gt_left">FD1873444</td>
-<td headers="name" class="gt_row gt_left">Template Used</td>
-<td headers="type" class="gt_row gt_left">string</td>
-<td headers="content" class="gt_row gt_left"><span class="gt_from_md">LACDR-ISA - Contact v0.2.0</span></td>
-<td headers="lastModified" class="gt_row gt_right">2024-01-17 14:56:22.625</td>
-<td headers="columnIndex" class="gt_row gt_right">0</td>
-<td headers="files" class="gt_row gt_center">NA</td>
-<td headers="listOfMaterials" class="gt_row gt_center">NA</td>
-<td headers="_links" class="gt_row gt_center">NA</td>
+<td headers="id" class="gt_row gt_right">
+1873444
+</td>
+<td headers="globalId" class="gt_row gt_left">
+FD1873444
+</td>
+<td headers="name" class="gt_row gt_left">
+Template Used
+</td>
+<td headers="type" class="gt_row gt_left">
+string
+</td>
+<td headers="content" class="gt_row gt_left">
+<span class="gt_from_md">LACDR-ISA - Contact v0.2.0</span>
+</td>
+<td headers="lastModified" class="gt_row gt_right">
+2024-01-17 14:56:22.625
+</td>
+<td headers="columnIndex" class="gt_row gt_right">
+0
+</td>
+<td headers="files" class="gt_row gt_center">
+NA
+</td>
+<td headers="listOfMaterials" class="gt_row gt_center">
+NA
+</td>
+<td headers="_links" class="gt_row gt_center">
+NA
+</td>
 </tr>
 <tr>
-<td headers="id" class="gt_row gt_right">1873445</td>
-<td headers="globalId" class="gt_row gt_left">FD1873445</td>
-<td headers="name" class="gt_row gt_left">Name</td>
-<td headers="type" class="gt_row gt_left">string</td>
-<td headers="content" class="gt_row gt_left"><span class="gt_from_md">Gerhard A. Burger</span></td>
-<td headers="lastModified" class="gt_row gt_right">2024-01-17 14:56:39.641</td>
-<td headers="columnIndex" class="gt_row gt_right">1</td>
-<td headers="files" class="gt_row gt_center">NA</td>
-<td headers="listOfMaterials" class="gt_row gt_center">NA</td>
-<td headers="_links" class="gt_row gt_center">NA</td>
+<td headers="id" class="gt_row gt_right">
+1873445
+</td>
+<td headers="globalId" class="gt_row gt_left">
+FD1873445
+</td>
+<td headers="name" class="gt_row gt_left">
+Name
+</td>
+<td headers="type" class="gt_row gt_left">
+string
+</td>
+<td headers="content" class="gt_row gt_left">
+<span class="gt_from_md">Gerhard A. Burger</span>
+</td>
+<td headers="lastModified" class="gt_row gt_right">
+2024-01-17 14:56:39.641
+</td>
+<td headers="columnIndex" class="gt_row gt_right">
+1
+</td>
+<td headers="files" class="gt_row gt_center">
+NA
+</td>
+<td headers="listOfMaterials" class="gt_row gt_center">
+NA
+</td>
+<td headers="_links" class="gt_row gt_center">
+NA
+</td>
 </tr>
 <tr>
-<td headers="id" class="gt_row gt_right">1873446</td>
-<td headers="globalId" class="gt_row gt_left">FD1873446</td>
-<td headers="name" class="gt_row gt_left">Email</td>
-<td headers="type" class="gt_row gt_left">string</td>
-<td headers="content" class="gt_row gt_left"><span class="gt_from_md"><a href="mailto:g.a.burger@lacdr.leidenuniv.nl">g.a.burger@lacdr.leidenuniv.nl</a></span></td>
-<td headers="lastModified" class="gt_row gt_right">2024-01-17 14:57:02.811</td>
-<td headers="columnIndex" class="gt_row gt_right">2</td>
-<td headers="files" class="gt_row gt_center">NA</td>
-<td headers="listOfMaterials" class="gt_row gt_center">NA</td>
-<td headers="_links" class="gt_row gt_center">NA</td>
+<td headers="id" class="gt_row gt_right">
+1873446
+</td>
+<td headers="globalId" class="gt_row gt_left">
+FD1873446
+</td>
+<td headers="name" class="gt_row gt_left">
+Email
+</td>
+<td headers="type" class="gt_row gt_left">
+string
+</td>
+<td headers="content" class="gt_row gt_left">
+<span class="gt_from_md"><a href="mailto:g.a.burger@lacdr.leidenuniv.nl">g.a.burger@lacdr.leidenuniv.nl</a></span>
+</td>
+<td headers="lastModified" class="gt_row gt_right">
+2024-01-17 14:57:02.811
+</td>
+<td headers="columnIndex" class="gt_row gt_right">
+2
+</td>
+<td headers="files" class="gt_row gt_center">
+NA
+</td>
+<td headers="listOfMaterials" class="gt_row gt_center">
+NA
+</td>
+<td headers="_links" class="gt_row gt_center">
+NA
+</td>
 </tr>
 <tr>
-<td headers="id" class="gt_row gt_right">1873447</td>
-<td headers="globalId" class="gt_row gt_left">FD1873447</td>
-<td headers="name" class="gt_row gt_left">Phone</td>
-<td headers="type" class="gt_row gt_left">string</td>
-<td headers="content" class="gt_row gt_left"><span class="gt_from_md"></span></td>
-<td headers="lastModified" class="gt_row gt_right">2024-01-17 14:56:22.625</td>
-<td headers="columnIndex" class="gt_row gt_right">3</td>
-<td headers="files" class="gt_row gt_center">NA</td>
-<td headers="listOfMaterials" class="gt_row gt_center">NA</td>
-<td headers="_links" class="gt_row gt_center">NA</td>
+<td headers="id" class="gt_row gt_right">
+1873447
+</td>
+<td headers="globalId" class="gt_row gt_left">
+FD1873447
+</td>
+<td headers="name" class="gt_row gt_left">
+Phone
+</td>
+<td headers="type" class="gt_row gt_left">
+string
+</td>
+<td headers="content" class="gt_row gt_left">
+<span class="gt_from_md"></span>
+</td>
+<td headers="lastModified" class="gt_row gt_right">
+2024-01-17 14:56:22.625
+</td>
+<td headers="columnIndex" class="gt_row gt_right">
+3
+</td>
+<td headers="files" class="gt_row gt_center">
+NA
+</td>
+<td headers="listOfMaterials" class="gt_row gt_center">
+NA
+</td>
+<td headers="_links" class="gt_row gt_center">
+NA
+</td>
 </tr>
 <tr>
-<td headers="id" class="gt_row gt_right">1873448</td>
-<td headers="globalId" class="gt_row gt_left">FD1873448</td>
-<td headers="name" class="gt_row gt_left">ORCID</td>
-<td headers="type" class="gt_row gt_left">string</td>
-<td headers="content" class="gt_row gt_left"><span class="gt_from_md">0000-0003-1062-5576</span></td>
-<td headers="lastModified" class="gt_row gt_right">2024-01-17 14:59:29.511</td>
-<td headers="columnIndex" class="gt_row gt_right">4</td>
-<td headers="files" class="gt_row gt_center">NA</td>
-<td headers="listOfMaterials" class="gt_row gt_center">NA</td>
-<td headers="_links" class="gt_row gt_center">NA</td>
+<td headers="id" class="gt_row gt_right">
+1873448
+</td>
+<td headers="globalId" class="gt_row gt_left">
+FD1873448
+</td>
+<td headers="name" class="gt_row gt_left">
+ORCID
+</td>
+<td headers="type" class="gt_row gt_left">
+string
+</td>
+<td headers="content" class="gt_row gt_left">
+<span class="gt_from_md">0000-0003-1062-5576</span>
+</td>
+<td headers="lastModified" class="gt_row gt_right">
+2024-01-17 14:59:29.511
+</td>
+<td headers="columnIndex" class="gt_row gt_right">
+4
+</td>
+<td headers="files" class="gt_row gt_center">
+NA
+</td>
+<td headers="listOfMaterials" class="gt_row gt_center">
+NA
+</td>
+<td headers="_links" class="gt_row gt_center">
+NA
+</td>
 </tr>
 <tr>
-<td headers="id" class="gt_row gt_right">1873449</td>
-<td headers="globalId" class="gt_row gt_left">FD1873449</td>
-<td headers="name" class="gt_row gt_left">Address</td>
-<td headers="type" class="gt_row gt_left">text</td>
-<td headers="content" class="gt_row gt_left"><span class="gt_from_md"><a href="https://www.universiteitleiden.nl/en/locations/gorlaeus-building" class="external-link">Gorlaeus Building</a><br>Einsteinweg 55<br>2333 CC Leiden<br>Room number GE2.05</span></td>
-<td headers="lastModified" class="gt_row gt_right">2024-01-17 14:57:49.379</td>
-<td headers="columnIndex" class="gt_row gt_right">5</td>
-<td headers="files" class="gt_row gt_center">NA</td>
-<td headers="listOfMaterials" class="gt_row gt_center">NA</td>
-<td headers="_links" class="gt_row gt_center">NA</td>
+<td headers="id" class="gt_row gt_right">
+1873449
+</td>
+<td headers="globalId" class="gt_row gt_left">
+FD1873449
+</td>
+<td headers="name" class="gt_row gt_left">
+Address
+</td>
+<td headers="type" class="gt_row gt_left">
+text
+</td>
+<td headers="content" class="gt_row gt_left">
+<span class="gt_from_md"><a href="https://www.universiteitleiden.nl/en/locations/gorlaeus-building" class="external-link">Gorlaeus Building</a><br>Einsteinweg 55<br>2333 CC Leiden<br>Room number GE2.05</span>
+</td>
+<td headers="lastModified" class="gt_row gt_right">
+2024-01-17 14:57:49.379
+</td>
+<td headers="columnIndex" class="gt_row gt_right">
+5
+</td>
+<td headers="files" class="gt_row gt_center">
+NA
+</td>
+<td headers="listOfMaterials" class="gt_row gt_center">
+NA
+</td>
+<td headers="_links" class="gt_row gt_center">
+NA
+</td>
 </tr>
 <tr>
-<td headers="id" class="gt_row gt_right">1873450</td>
-<td headers="globalId" class="gt_row gt_left">FD1873450</td>
-<td headers="name" class="gt_row gt_left">Affiliation</td>
-<td headers="type" class="gt_row gt_left">string</td>
-<td headers="content" class="gt_row gt_left"><span class="gt_from_md">Leiden University</span></td>
-<td headers="lastModified" class="gt_row gt_right">2024-01-17 14:59:13.433</td>
-<td headers="columnIndex" class="gt_row gt_right">6</td>
-<td headers="files" class="gt_row gt_center">NA</td>
-<td headers="listOfMaterials" class="gt_row gt_center">NA</td>
-<td headers="_links" class="gt_row gt_center">NA</td>
+<td headers="id" class="gt_row gt_right">
+1873450
+</td>
+<td headers="globalId" class="gt_row gt_left">
+FD1873450
+</td>
+<td headers="name" class="gt_row gt_left">
+Affiliation
+</td>
+<td headers="type" class="gt_row gt_left">
+string
+</td>
+<td headers="content" class="gt_row gt_left">
+<span class="gt_from_md">Leiden University</span>
+</td>
+<td headers="lastModified" class="gt_row gt_right">
+2024-01-17 14:59:13.433
+</td>
+<td headers="columnIndex" class="gt_row gt_right">
+6
+</td>
+<td headers="files" class="gt_row gt_center">
+NA
+</td>
+<td headers="listOfMaterials" class="gt_row gt_center">
+NA
+</td>
+<td headers="_links" class="gt_row gt_center">
+NA
+</td>
 </tr>
 <tr>
-<td headers="id" class="gt_row gt_right">1873451</td>
-<td headers="globalId" class="gt_row gt_left">FD1873451</td>
-<td headers="name" class="gt_row gt_left">Roles</td>
-<td headers="type" class="gt_row gt_left">text</td>
-<td headers="content" class="gt_row gt_left"><span class="gt_from_md"></span></td>
-<td headers="lastModified" class="gt_row gt_right">2024-01-17 14:56:22.625</td>
-<td headers="columnIndex" class="gt_row gt_right">7</td>
-<td headers="files" class="gt_row gt_center">NA</td>
-<td headers="listOfMaterials" class="gt_row gt_center">NA</td>
-<td headers="_links" class="gt_row gt_center">NA</td>
+<td headers="id" class="gt_row gt_right">
+1873451
+</td>
+<td headers="globalId" class="gt_row gt_left">
+FD1873451
+</td>
+<td headers="name" class="gt_row gt_left">
+Roles
+</td>
+<td headers="type" class="gt_row gt_left">
+text
+</td>
+<td headers="content" class="gt_row gt_left">
+<span class="gt_from_md"></span>
+</td>
+<td headers="lastModified" class="gt_row gt_right">
+2024-01-17 14:56:22.625
+</td>
+<td headers="columnIndex" class="gt_row gt_right">
+7
+</td>
+<td headers="files" class="gt_row gt_center">
+NA
+</td>
+<td headers="listOfMaterials" class="gt_row gt_center">
+NA
+</td>
+<td headers="_links" class="gt_row gt_center">
+NA
+</td>
 </tr>
 </tbody>
 </table>
 </div>
-</div>
-<div class="section level4">
-<h4 id="create">Create<a class="anchor" aria-label="anchor" href="#create"></a>
+<!--/html_preserve-->
+</section><section class="level4"><h4 id="create">Create<a class="anchor" aria-label="anchor" href="#create"></a>
 </h4>
-<p>Creating (structured) documents is slightly more involved, see the
-Articles tab for detailed instructions.</p>
-</div>
-</div>
-</div>
-  </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
+<p>Creating (structured) documents is slightly more involved, see the Articles tab for detailed instructions.</p>
+</section></section></section><script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'light-border',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config);
+    }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script></main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
     </nav></aside>
 </div>
-
 
 
     <footer><div class="pkgdown-footer-left">

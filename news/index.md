@@ -4,8 +4,6 @@
 
 ## rspacer 0.3.0
 
-CRAN release: 2025-10-17
-
 - Added support for retrieving paginated results (i.e., more than 20)
   from the RSpace API endpoints that support it.
 - Added `create_document_from_tabular()` function to create RSpace
@@ -25,7 +23,5 @@ CRAN release: 2025-10-17
 - Update documentation and vignettes.
 
 ## rspacer 0.2.0
-
-CRAN release: 2025-07-05
 
 - Initial release
