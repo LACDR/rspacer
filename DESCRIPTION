@@ -10,7 +10,9 @@ Authors@R: c(
     person("Hanneke", "Leegwater",
            email = "h.leegwater@lacdr.leidenuniv.nl",
            role = c("aut"),
-           comment = c(ORCID = "0000-0001-6003-1544"))
+           comment = c(ORCID = "0000-0001-6003-1544")),
+    person("Leiden University", role = c("cph", "fnd"),
+           comment = c(ROR = "027bh9e22"))
             )
 Description: Wrapper for the 'RSpace' Electronic Lab Notebook (<https://www.researchspace.com/>)
     API. This packages provides convenience functions to browse, search, create,
