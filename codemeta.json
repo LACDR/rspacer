@@ -1,0 +1,73 @@
+{
+    "@context": "https://w3id.org/codemeta/3.0",
+    "type": "SoftwareSourceCode",
+    "author": [
+        {
+            "id": "https://orcid.org/0000-0001-6003-1544",
+            "type": "Person",
+            "affiliation": {
+                "type": "Organization",
+                "name": "LACDR, Leiden University"
+            },
+            "familyName": "Leegwater",
+            "givenName": "Hanneke"
+        },
+        {
+            "type": "Role",
+            "schema:author": "https://orcid.org/0000-0001-6003-1544",
+            "roleName": "Developer"
+        },
+        {
+            "id": "https://orcid.org/0000-0003-1062-5576",
+            "type": "Person",
+            "affiliation": {
+                "type": "Organization",
+                "name": "LACDR, Leiden University"
+            },
+            "email": "g.a.burger@lacdr.leidenuniv.nl",
+            "familyName": "Burger",
+            "givenName": "Gerhard"
+        },
+        {
+            "type": "Role",
+            "schema:author": "https://orcid.org/0000-0003-1062-5576",
+            "roleName": "Developer",
+            "startDate": "2024-03-28"
+        },
+        {
+            "type": "Role",
+            "schema:author": "https://orcid.org/0000-0003-1062-5576",
+            "roleName": "Maintainer",
+            "startDate": "2024-03-28"
+        }
+    ],
+    "codeRepository": "https://github.com/LACDR/rspacer.git",
+    "dateCreated": "2024-03-28",
+    "dateModified": "2025-10-17",
+    "datePublished": "2025-07-05",
+    "description": "Wrapper for the RSpace Electronic Lab Notebook (https://www.researchspace.com/) API. This packages provides convenience functions to browse, search, create, and edit your RSpace documents. In addition, it enables filling RSpace templates from R Markdown/Quarto HTML reports or tabular data (e.g., Excel files).",
+    "downloadUrl": "https://cran.r-project.org/src/contrib/rspacer_0.3.0.tar.gz",
+    "funder": {
+        "id": "https://ror.org/027bh9e22",
+        "type": "Organization"
+    },
+    "identifier": "https://doi.org/10.32614/CRAN.package.rspacer",
+    "keywords": [
+        "FAIR",
+        "data management",
+        "ELN"
+    ],
+    "license": "https://spdx.org/licenses/MIT",
+    "name": "rspacer",
+    "operatingSystem": [
+        "Linux",
+        "Windows",
+        "MacOS"
+    ],
+    "programmingLanguage": "R",
+    "relatedLink": "https://CRAN.R-project.org/package=rspacer",
+    "releaseNotes": "Added support for retrieving paginated results (i.e., more than 20) from the RSpace API endpoints that support it.\nAdded create_document_from_tabular() function to create RSpace documents directly from R data.frames/tibbles.\nAdded document_get_fields() function to retrieve the field contents of a given RSpace document.\ndocument_list_attachments() function now returns all attachments instead of just for a given field.\nFixed: Uploading a document without template id now keeps section headings.\nSimplify return of document search and folder tree functions.\nAdd fields_to_data_frame() function to convert RSpace document fields to a tibble.\nUpdate documentation and vignettes.",
+    "version": "0.3.0",
+    "developmentStatus": "active",
+    "issueTracker": "https://github.com/LACDR/rspacer/issues"
+}

@@ -3,6 +3,7 @@
 ^LICENSE\.md$
 ^README\.Rmd$
 ^CONTRIBUTING\.md$
+^codemeta\.json$
 ^_pkgdown\.yml$
 ^docs$
 ^pkgdown$
