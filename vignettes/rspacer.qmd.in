@@ -10,15 +10,19 @@ vignette: >
 options(tidyverse.quiet = TRUE)
 ```
 
-The goal of rspacer is to "wrap" the [RSpace API](https://community.researchspace.com/public/apiDocs), that is, allow you to use the API directly from R using convenience functions.
+The rspacer package is a wrapper for the RSpace Electronic Lab Notebook
+(<https://www.researchspace.com/>) API (<https://community.researchspace.com/public/apiDocs>),
+and packages provides convenience functions to browse, search, create, and edit your RSpace documents.
+In addition, it enables filling RSpace templates from R Markdown/Quarto reports
+or from tabular data (e.g., R data.frames/tibbles, but also Excel/CSV files).
 
-**This package (and its documentation) is a work-in-progress. Contributions are welcome!**
+This vignette will show you how to get started with rspacer.
 
 ## Setting up rspacer
 
-To use rspacer it needs to know two things:
+To use rspacer it needs two things:
 
-1. The API URL for your RSpace instance (this is typically the URL of your RSpace instance followed by `api/v1`, e.g., `https://leiden.researchspace.com/api/v1`)
+1. The API URL for your RSpace instance (this is typically the URL of your RSpace instance followed by `api/v1`, e.g., `https://leiden.researchspace.com/api/v1`)^[If you don't have an RSpace instance yet, you can use the <https://community.researchspace.com/> instance.]
 2. Your API key, which is an authentication token you can use instead of your username and password. To create an API key go to 'Manage API Key' section of your RSpace profile page (MyRSpace -> My Profile). **You should keep your API key private.** You can regenerate an API key at any time, which will invalidate the old key.
 
 You can use the `set_api_url()` and `set_api_key()` functions to make these available to rspacer in the current session.
@@ -76,13 +80,45 @@ The result is json converted to an R list, to get the field information you coul
 
 ```{r}
 library(tidyverse)
+(res$fields |>
+  fields_to_data_frame() -> res_df)
+```
+
+Since the fields typically contain HTML formatted information, this can be better displayed using the [`gt`](https://gt.rstudio.com/) package:
+```{r}
 library(gt)
-res$fields |>
-  fields_to_data_frame() |>
+res_df |>
   gt() |>
   fmt_markdown(columns = c(content))
 ```
 
+
 #### Create
 
-Creating (structured) documents is slightly more involved, see the Articles tab for detailed instructions.
+To create a document you need to specify name and content of the fields to be created.
+The simplest way to do this is specify these in tabular form:
+
+```{r}
+doc_df_to_upload <- tribble(
+~name, ~content,
+"Example field", "Example content"
+)
+document_create_from_tabular(df = doc_df_to_upload, document_name = "Example document")
+```
+
+Support for multiple fields is supported if a compatible RSpace template
+is provided with the `template_id` argument; if `template_id = NULL` all fields
+will be concatenated into a single field using the field names as section headers.
+The Articles tab contains more detailed instructions on how to create more structured
+documents in RSpace using the rspacer `document_create_*` functions and their arguments.
+
+##### The `rspacer` document tag
+
+By default rspacer tags all RSpace documents created/updated using rspacer
+functions with the `rspacer` tag. To disable this^[this might be necessary on
+instances that enforce controlled vocabularies for tags], use the following code:
+
+```{r, eval=F}
+options(rspacer.set_rspacer_tag = F)
+```
+
