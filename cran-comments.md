@@ -4,6 +4,6 @@
 
 ## Other comments
 
-* Couldn't get rhub working due to OAuth App permission issues on GitHub
+* rhub doesn't work with Quarto vignettes yet
 * Testing on GH on all platforms successful: https://github.com/LACDR/rspacer/actions/workflows/R-CMD-check.yaml
 * win_builder also fine
