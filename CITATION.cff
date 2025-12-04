@@ -1,35 +1,68 @@
-# --------------------------------------------
-# CITATION file created with {cffr} R package
-# See also: https://docs.ropensci.org/cffr/
-# --------------------------------------------
- 
-cff-version: 1.2.0
-message: 'To cite package "rspacer" in publications use:'
-type: software
-license: MIT
-title: 'rspacer: ''RSpace'' API Wrapper'
-version: 0.3.0
-doi: 10.32614/CRAN.package.rspacer
-abstract: Wrapper for the 'RSpace' Electronic Lab Notebook (<https://www.researchspace.com/>)
-  API. This packages provides convenience functions to browse, search, create, and
-  edit your 'RSpace' documents. In addition, it enables filling 'RSpace' templates
-  from R Markdown/Quarto templates or tabular data (e.g., 'Excel' files). This R package
-  is not developed or endorsed by 'Research Space'.
-authors:
-- family-names: Burger
-  given-names: Gerhard
-  email: burger.ga@gmail.com
-  orcid: https://orcid.org/0000-0003-1062-5576
-- family-names: Leegwater
-  given-names: Hanneke
-  email: h.leegwater@lacdr.leidenuniv.nl
-  orcid: https://orcid.org/0000-0001-6003-1544
-repository: https://CRAN.R-project.org/package=rspacer
-repository-code: https://github.com/lacdr/rspacer
-url: https://lacdr.github.io/rspacer/
-contact:
-- family-names: Burger
-  given-names: Gerhard
-  email: burger.ga@gmail.com
-  orcid: https://orcid.org/0000-0003-1062-5576
+# This CITATION.cff file was generated with cffinit.
+# Visit https://bit.ly/cffinit to generate yours today!
 
+cff-version: 1.2.0
+title: 'rspacer: ''RSpace'' API Wrapper'
+message: >-
+  Please cite this software using the metadata from
+  "preferred-citation".
+type: software
+authors:
+  - family-names: Burger
+    given-names: Gerhard
+    email: burger.ga@gmail.com
+    orcid: 'https://orcid.org/0000-0003-1062-5576'
+  - family-names: Leegwater
+    given-names: Hanneke
+    email: h.leegwater@lacdr.leidenuniv.nl
+    orcid: 'https://orcid.org/0000-0001-6003-1544'
+identifiers:
+  - type: doi
+    value: 10.32614/CRAN.package.rspacer
+repository-code: 'https://github.com/lacdr/rspacer'
+url: 'https://lacdr.github.io/rspacer/'
+repository: 'https://CRAN.R-project.org/package=rspacer'
+abstract: >-
+  Wrapper for the 'RSpace' Electronic Lab Notebook
+  (<https://www.researchspace.com/>) API. This packages
+  provides convenience functions to browse, search, create,
+  and edit your 'RSpace' documents. In addition, it enables
+  filling 'RSpace' templates from R Markdown/Quarto
+  templates or tabular data (e.g., 'Excel' files). This R
+  package is not developed or endorsed by 'Research Space'.
+keywords:
+  - api-wrapper
+  - data-management
+  - eln
+  - fair-data
+license: MIT
+commit: f324884ba567eb3691be1449ddba1fce4b83622d
+version: 0.3.1
+date-released: '2025-12-04'
+preferred-citation:
+  type: generic
+  title: 'rspacer: ''RSpace'' API Wrapper'
+  authors:
+    - family-names: Burger
+      given-names: Gerhard
+      email: burger.ga@gmail.com
+      orcid: 'https://orcid.org/0000-0003-1062-5576'
+    - family-names: Leegwater
+      given-names: Hanneke
+      email: h.leegwater@lacdr.leidenuniv.nl
+      orcid: 'https://orcid.org/0000-0001-6003-1544'
+  doi: 10.32614/CRAN.package.rspacer
+  url: 'https://lacdr.github.io/rspacer/'
+  abstract: >-
+    Wrapper for the 'RSpace' Electronic Lab Notebook
+    (<https://www.researchspace.com/>) API. This packages provides convenience
+    functions to browse, search, create, and edit your 'RSpace' documents. In
+    addition, it enables filling 'RSpace' templates from R Markdown/Quarto
+    templates or tabular data (e.g., 'Excel' files). This R package is not
+    developed or endorsed by 'Research Space'.
+  version: 0.3.1
+contact:
+  - family-names: Burger
+    given-names: Gerhard
+    email: burger.ga@gmail.com
+    orcid: 'https://orcid.org/0000-0003-1062-5576'
