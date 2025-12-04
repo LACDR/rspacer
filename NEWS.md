@@ -1,4 +1,7 @@
-# rspacer (development version)
+# rspacer 0.3.1
+
+* Documentation improvements.
+* Fix `httr2` dependency version issue.
 
 # rspacer 0.3.0
 
