@@ -26,5 +26,5 @@ Burger G, Leegwater H (????). “rspacer: 'RSpace' API Wrapper.”
       doi = {10.32614/CRAN.package.rspacer},
       url = {https://lacdr.github.io/rspacer/},
       abstract = {Wrapper for the 'RSpace' Electronic Lab Notebook (<https://www.researchspace.com/>) API. This packages provides convenience functions to browse, search, create, and edit your 'RSpace' documents. In addition, it enables filling 'RSpace' templates from R Markdown/Quarto templates or tabular data (e.g., 'Excel' files). This R package is not developed or endorsed by 'Research Space'.},
-      version = {0.3.0},
+      version = {0.3.1},
     }
