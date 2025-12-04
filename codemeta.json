@@ -43,19 +43,20 @@
     ],
     "codeRepository": "https://github.com/LACDR/rspacer.git",
     "dateCreated": "2024-03-28",
-    "dateModified": "2025-10-17",
+    "dateModified": "2025-12-04",
     "datePublished": "2025-07-05",
     "description": "Wrapper for the RSpace Electronic Lab Notebook (https://www.researchspace.com/) API. This packages provides convenience functions to browse, search, create, and edit your RSpace documents. In addition, it enables filling RSpace templates from R Markdown/Quarto HTML reports or tabular data (e.g., Excel files).",
-    "downloadUrl": "https://cran.r-project.org/src/contrib/rspacer_0.3.0.tar.gz",
+    "downloadUrl": "https://cran.r-project.org/src/contrib/rspacer_0.3.1.tar.gz",
     "funder": {
         "id": "https://ror.org/027bh9e22",
         "type": "Organization"
     },
     "identifier": "https://doi.org/10.32614/CRAN.package.rspacer",
     "keywords": [
-        "FAIR",
+        "api-wrapper",
         "data management",
-        "ELN"
+        "eln",
+        "fair-data"
     ],
     "license": "https://spdx.org/licenses/MIT",
     "name": "rspacer",
@@ -65,9 +66,16 @@
         "MacOS"
     ],
     "programmingLanguage": "R",
-    "relatedLink": "https://CRAN.R-project.org/package=rspacer",
-    "releaseNotes": "Added support for retrieving paginated results (i.e., more than 20) from the RSpace API endpoints that support it.\nAdded create_document_from_tabular() function to create RSpace documents directly from R data.frames/tibbles.\nAdded document_get_fields() function to retrieve the field contents of a given RSpace document.\ndocument_list_attachments() function now returns all attachments instead of just for a given field.\nFixed: Uploading a document without template id now keeps section headings.\nSimplify return of document search and folder tree functions.\nAdd fields_to_data_frame() function to convert RSpace document fields to a tibble.\nUpdate documentation and vignettes.",
-    "version": "0.3.0",
+    "relatedLink": [
+        "https://lacdr.github.io/rspacer/",
+        "https://CRAN.R-project.org/package=rspacer"
+    ],
+    "releaseNotes": "https://github.com/lacdr/rspacer/blob/main/NEWS.md",
+    "version": "0.3.1",
+    "codemeta:contIntegration": {
+        "id": "https://github.com/LACDR/rspacer/actions/workflows/R-CMD-check.yaml"
+    },
+    "continuousIntegration": "https://github.com/LACDR/rspacer/actions/workflows/R-CMD-check.yaml",
     "developmentStatus": "active",
     "issueTracker": "https://github.com/LACDR/rspacer/issues"
 }
