@@ -1,5 +1,7 @@
 # Changelog
 
+## rspacer (development version)
+
 ## rspacer 0.3.1
 
 - Documentation improvements.
