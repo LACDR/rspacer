@@ -4,6 +4,8 @@
 
 ## rspacer 0.3.1
 
+CRAN release: 2025-12-04
+
 - Documentation improvements.
 - Fix `httr2` dependency version issue.
 
