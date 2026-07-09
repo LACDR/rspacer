@@ -5,15 +5,14 @@
 #' @inheritParams api_status
 #' @returns Parsed JSON response from the API.
 #' @export
-file_upload <- function(path, api_key = get_api_key()) {
-  request() |>
+file_upload <- function(path, api = get_api()) {
+  request(api) |>
     httr2::req_url_path_append("files") |>
     httr2::req_body_multipart(file = curl::form_file(path)) |>
-    httr2::req_headers(`apiKey` = api_key) |>
     httr2::req_perform() |>
     httr2::resp_body_json() -> json
 
-  cli::cli_inform("File uploaded to {.url {create_global_id_link(json$globalId)}}")
+  cli::cli_inform("File uploaded to {.url {create_global_id_link(json$globalId, api)}}")
 
   json
 }
@@ -28,12 +27,11 @@ file_upload <- function(path, api_key = get_api_key()) {
 #'          the user is asked whether the function should overwrite the pre-existing file.
 #'          If not, the download is canceled and `FALSE` is returned invisibly.
 #' @export
-file_download <- function(file_id, path = ".", api_key = get_api_key()) {
+file_download <- function(file_id, path = ".", api = get_api()) {
   if (fs::is_dir(path)) {
     # determine file name
-    request() |>
+    request(api) |>
       httr2::req_url_path_append("files", parse_rspace_id(file_id)) |>
-      httr2::req_headers(`apiKey` = api_key) |>
       httr2::req_perform() |>
       httr2::resp_body_json() -> json
 
@@ -45,16 +43,15 @@ file_download <- function(file_id, path = ".", api_key = get_api_key()) {
     return(invisible(FALSE))
   }
 
-  request() |>
+  request(api) |>
     httr2::req_url_path_append("files", parse_rspace_id(file_id), "file") |>
-    httr2::req_headers(`apiKey` = api_key) |>
     httr2::req_perform(path = path) |>
     httr2::resp_check_status() -> resp
   cli::cli_inform("Downloaded to {.path {resp$body}} ({file.size(resp$body)} bytes)")
   return(path)
 }
 
-attachment_upload <- function(doc_body, attachments, api_key) {
+attachment_upload <- function(doc_body, attachments, api) {
   # QC
   if (!is.data.frame(attachments)) cli::cli_abort(message = c("x" = "attachment is not provided as a tibble/data.frame"))
   if (length(setdiff(c("field", "path"), names(attachments))) > 0) cli::cli_abort(message = c("x" = "attachments df is missing the `field` or `path` column"))
@@ -64,7 +61,7 @@ attachment_upload <- function(doc_body, attachments, api_key) {
   attachments <- attachments |>
     dplyr::distinct() |> # filter out duplicates
     dplyr::rowwise() |>
-    dplyr::mutate(rspace_id = file_upload(.data$path, api_key)$id)
+    dplyr::mutate(rspace_id = file_upload(.data$path, api = api)$id)
 
   attachments_res <- attachments |>
     dplyr::mutate(html = glue::glue("<fileId={.data$rspace_id}>")) |>

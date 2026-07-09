@@ -4,10 +4,10 @@
 \alias{api_status}
 \title{Function to check availability of the API service}
 \usage{
-api_status(api_key = get_api_key())
+api_status(api = get_api())
 }
 \arguments{
-\item{api_key}{RSpace API key}
+\item{api}{RSpace API}
 }
 \value{
 If the request succeeds, a list with the status message and the RSpace version of the API.

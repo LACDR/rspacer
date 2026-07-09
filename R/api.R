@@ -88,19 +88,36 @@ set_api_key <- function(rspace_api_key) {
   Sys.setenv(RSPACE_API_KEY = rspace_api_key)
 }
 
+#' Get the RSpace API
+#'
+#' Gets the RSpace API list containing the API key and API URL.
+#'
+#' @examples
+#' \dontrun{
+#' get_api()
+#' }
+#'
+#' @seealso [get_api_key()], [get_api_url()]
+#' @export
+get_api <- function() {
+  list(api_key = get_api_key(), api_url = get_api_url())
+}
+
+
 rspace_error_body <- function(resp) {
   resp |>
     httr2::resp_body_json() |>
     purrr::pluck("message")
 }
 
-create_global_id_link <- function(global_id) {
-  httr2::url_modify(get_api_url(), path = glue::glue("globalId/{global_id}"))
+create_global_id_link <- function(global_id, api) {
+  httr2::url_modify(api$api_url, path = glue::glue("globalId/{global_id}"))
 }
 
-request <- function() {
-  httr2::request(get_api_url()) |>
+request <- function(api) {
+  httr2::request(api$api_url) |>
     httr2::req_user_agent("rspacer (https://github.com/lacdr/rspacer)") |>
+    httr2::req_headers(`apiKey` = api$api_key) |>
     httr2::req_error(body = rspace_error_body)
 }
 
@@ -108,7 +125,7 @@ request <- function() {
 #'
 #' Function to check availability of the API service
 #'
-#' @param api_key RSpace API key
+#' @param api RSpace API
 #'
 #' @returns If the request succeeds, a list with the status message and the RSpace version of the API.
 #' @examples
@@ -117,10 +134,9 @@ request <- function() {
 #' }
 #'
 #' @export
-api_status <- function(api_key = get_api_key()) {
-  request() |>
+api_status <- function(api = get_api()) {
+  request(api) |>
     httr2::req_url_path_append("status") |>
-    httr2::req_headers(`apiKey` = get_api_key()) |>
     httr2::req_perform() |>
     httr2::resp_body_json()
 }

@@ -4,7 +4,7 @@
 \alias{document_add_attachments}
 \title{Add attachments to existing document}
 \usage{
-document_add_attachments(doc_id, attachments, api_key = get_api_key())
+document_add_attachments(doc_id, attachments, api = get_api())
 }
 \arguments{
 \item{doc_id}{Unique identifier of the document}
@@ -12,7 +12,7 @@ document_add_attachments(doc_id, attachments, api_key = get_api_key())
 \item{attachments}{attachments to attach to the fields in tibble/data.frame
 form (one attachment per row), e.g., \code{tibble(field = 7, path = "file.txt")}}
 
-\item{api_key}{RSpace API key}
+\item{api}{RSpace API}
 }
 \value{
 A JSON object, invisibly. The function will raise an error if \code{doc_id} is not specified.

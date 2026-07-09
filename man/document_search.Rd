@@ -4,13 +4,7 @@
 \alias{document_search}
 \title{Global search for a term}
 \usage{
-document_search(
-  query,
-  ...,
-  max_results = 50,
-  simplify = T,
-  api_key = get_api_key()
-)
+document_search(query, ..., max_results = 50, simplify = T, api = get_api())
 }
 \arguments{
 \item{query}{description}
@@ -24,7 +18,7 @@ Can be used to order/filter the results.}
 \item{simplify}{Whether to simplify the returned tibble by converting/removing columns
 Use \code{Inf} to return all results (may take a while).}
 
-\item{api_key}{RSpace API key}
+\item{api}{RSpace API}
 }
 \value{
 A tibble with search results, one result per row.

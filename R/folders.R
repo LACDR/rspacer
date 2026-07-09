@@ -12,13 +12,12 @@
 #' @returns A tibble with the folder content as rows.
 #' @export
 #'
-folder_tree <- function(folder_id = NULL, ..., max_results = Inf, simplify = T, api_key = get_api_key()) {
+folder_tree <- function(folder_id = NULL, ..., max_results = Inf, simplify = T, api = get_api()) {
   path <- list("folders", "tree")
   if (!is.null(folder_id)) path <- c(path, parse_rspace_id(folder_id))
 
-  req <- request() |>
-    httr2::req_url_path_append(path) |>
-    httr2::req_headers(`apiKey` = api_key)
+  req <- request(api) |>
+    httr2::req_url_path_append(path)
 
   records <- retrieve_results(req, "records", max_results)
 

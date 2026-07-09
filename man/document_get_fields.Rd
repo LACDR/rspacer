@@ -4,12 +4,12 @@
 \alias{document_get_fields}
 \title{Get the fields of a structured document as a tibble}
 \usage{
-document_get_fields(doc_id, api_key = get_api_key())
+document_get_fields(doc_id, api = get_api())
 }
 \arguments{
 \item{doc_id}{Unique identifier of the document}
 
-\item{api_key}{RSpace API key}
+\item{api}{RSpace API}
 }
 \value{
 A tibble with the fields as rows.

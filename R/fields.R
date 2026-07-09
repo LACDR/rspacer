@@ -50,8 +50,8 @@ fields_to_data_frame <- function(fields, simplify = T) {
 #' library(gt)
 #' document_get_fields("SD123456") |> gt() |> fmt_markdown(columns = c(content))
 #' }
-document_get_fields <- function(doc_id, api_key = get_api_key()) {
-  doc <- document_retrieve(doc_id, api_key)
+document_get_fields <- function(doc_id, api = get_api()) {
+  doc <- document_retrieve(doc_id, api)
   fields_to_data_frame(doc$fields)
 }
 
