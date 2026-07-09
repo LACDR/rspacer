@@ -10,7 +10,7 @@ document_append_from_html(
   tags = NULL,
   attachments = NULL,
   allow_missing_fields = FALSE,
-  api_key = get_api_key()
+  api = get_api()
 )
 }
 \arguments{
@@ -26,7 +26,7 @@ document_append_from_html(
 If this is \code{FALSE}, the html fields cannot be appended to the RSpace document when fields are missing.
 If it is \code{TRUE}, only fields with the same name as in the template will be appended.}
 
-\item{api_key}{RSpace API key}
+\item{api}{RSpace API}
 }
 \description{
 Append a html document (e.g., generated from quarto) to an RSpace structured document.

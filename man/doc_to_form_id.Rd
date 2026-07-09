@@ -4,14 +4,14 @@
 \alias{doc_to_form_id}
 \title{Get the form id used for a document}
 \usage{
-doc_to_form_id(doc_id, verbose = TRUE, api_key = get_api_key())
+doc_to_form_id(doc_id, verbose = TRUE, api = get_api())
 }
 \arguments{
 \item{doc_id}{Unique identifier of the document}
 
 \item{verbose}{whether to print the matching document/form}
 
-\item{api_key}{RSpace API key}
+\item{api}{RSpace API}
 }
 \description{
 Get the form id used for a document

@@ -15,8 +15,8 @@ fields_to_data_frame <- function(fields) {
   tibble::tibble(fields = fields) |> tidyr::unnest_wider("fields")
 }
 
-doc_get_fields <- function(doc_id, api_key = get_api_key()) {
-  doc <- document_retrieve(doc_id, api_key)
+doc_get_fields <- function(doc_id, api = get_api()) {
+  doc <- document_retrieve(doc_id, api)
   fields_to_data_frame(doc$fields)
 }
 

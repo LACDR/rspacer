@@ -5,19 +5,17 @@
 #'
 #' @export
 #'
-document_retrieve <- function(doc_id, api_key = get_api_key()) {
-  request() |>
+document_retrieve <- function(doc_id, api = get_api()) {
+  request(api) |>
     httr2::req_url_path_append("documents", parse_rspace_id(doc_id)) |>
-    httr2::req_headers(`apiKey` = api_key) |>
     httr2::req_perform() |>
     httr2::resp_body_json()
 }
 
-document_post <- function(body, api_key = get_api_key()) {
+document_post <- function(body, api = get_api()) {
   body$tags <- paste0(c("rspacer", body$tags), collapse = ",")
-  request() |>
+  request(api) |>
     httr2::req_url_path_append("documents") |>
-    httr2::req_headers(`apiKey` = api_key) |>
     httr2::req_body_json(body) |>
     httr2::req_perform() |>
     httr2::resp_body_json() -> json
@@ -27,13 +25,12 @@ document_post <- function(body, api_key = get_api_key()) {
   json
 }
 
-document_replace <- function(body, existing_document_id, api_key = get_api_key()) {
+document_replace <- function(body, existing_document_id, api = get_api()) {
   if(!is.null(body$tags)) {
     ifelse("rspacer" %in% stringr::str_split_1(body$tags, ","), body$tags, paste0(c("rspacer", body$tags), collapse = ","))
   }
-  request() |>
+  request(api) |>
     httr2::req_url_path_append("documents", parse_rspace_id(existing_document_id)) |>
-    httr2::req_headers(`apiKey` = api_key) |>
     httr2::req_body_json(body) |>
     httr2::req_method("PUT") |>
     httr2::req_perform() |>
@@ -56,11 +53,10 @@ document_replace <- function(body, existing_document_id, api_key = get_api_key()
 #' @inheritParams api_status
 #'
 #' @export
-document_search <- function(query, ..., api_key = get_api_key()) {
-  request() |>
+document_search <- function(query, ..., api = get_api()) {
+  request(api) |>
     httr2::req_url_path_append("documents") |>
     httr2::req_url_query(query = query, ...) |>
-    httr2::req_headers(`apiKey` = get_api_key()) |>
     httr2::req_perform() |>
     httr2::resp_body_json() -> json
 
@@ -74,8 +70,8 @@ document_search <- function(query, ..., api_key = get_api_key()) {
 #' @param verbose whether to print the matching document/form
 #' @inheritParams document_retrieve
 #' @export
-doc_to_form_id <- function(doc_id, verbose = TRUE, api_key = get_api_key()) {
-  json <- document_retrieve(doc_id, api_key)
+doc_to_form_id <- function(doc_id, verbose = TRUE, api = get_api()) {
+  json <- document_retrieve(doc_id, api)
   if (verbose) {
     cli::cli_inform(c(
       "{.field Document}: {json$globalId} ({json$name})",
@@ -100,7 +96,7 @@ doc_to_form_id <- function(doc_id, verbose = TRUE, api_key = get_api_key()) {
 #' @return A data frame with identifiers and information on attachments.
 #' Returns `FALSE` if no files are attached to the field.
 #' @export
-document_list_attachments <- function(doc_id, field_id = NULL, field_name = NULL, api_key = get_api_key()) {
+document_list_attachments <- function(doc_id, field_id = NULL, field_name = NULL, api = get_api()) {
   if (is.null(doc_id)) cli::cli_abort("Specify the documnt identifier `doc_id`")
   # Check field id and/or name
   if (is.null(field_id) && is.null(field_name)) cli::cli_abort("Specify `field_id` or `field_name`")
@@ -108,7 +104,7 @@ document_list_attachments <- function(doc_id, field_id = NULL, field_name = NULL
   if (!is.null(field_id) && !is.numeric(field_id)) cli::cli_abort("`field_id` should be a number")
   if (!is.null(field_name) && !is.character(field_name)) cli::cli_abort("`field_name` should be a string")
 
-  fields <- doc_get_fields(doc_id)
+  fields <- doc_get_fields(doc_id, api)
   if (!is.null(field_name)) fields <- dplyr::filter(fields, .data$name == field_name)
   if (!is.null(field_id)) fields <- fields[field_id, ]
 

@@ -4,7 +4,7 @@
 \alias{document_search}
 \title{Global search for a term}
 \usage{
-document_search(query, ..., api_key = get_api_key())
+document_search(query, ..., api = get_api())
 }
 \arguments{
 \item{query}{description}
@@ -12,7 +12,7 @@ document_search(query, ..., api_key = get_api_key())
 \item{...}{query parameters as documented in
 \url{https://community.researchspace.com/public/apiDocs} [GET /documents]}
 
-\item{api_key}{RSpace API key}
+\item{api}{RSpace API}
 }
 \description{
 Global search for a term, works identically to the simple "All" search in RSpace Workspace.

@@ -4,13 +4,13 @@
 \alias{folder_tree}
 \title{List contents of a folder}
 \usage{
-folder_tree(folder_id = NULL, api_key = get_api_key())
+folder_tree(folder_id = NULL, api = get_api())
 }
 \arguments{
 \item{folder_id}{Unique identifier of the folder,
 if NULL will return contents of the Workspace Home folder}
 
-\item{api_key}{RSpace API key}
+\item{api}{RSpace API}
 }
 \description{
 List contents of a folder

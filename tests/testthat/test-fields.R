@@ -23,10 +23,10 @@ test_that("fields_to_data_frame creates a tibble", {
 
 test_that("doc_get_fields creates a fields data frame", {
   local_mocked_bindings(
-    get_api_key = function() {
-      return("API key used for testing")
+    get_api = function() {
+      return(list(api_key = "API key used for testing", api_url = "https://example.com/api/v1"))
     },
-    document_retrieve = function(doc_id, api_key = get_api_key()) {
+    document_retrieve = function(doc_id, api = get_api()) {
       helper_larger_SD()
     }
   )

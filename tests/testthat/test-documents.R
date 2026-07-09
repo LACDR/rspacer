@@ -1,9 +1,9 @@
 test_that("document_list_attachments", {
   local_mocked_bindings(
-    get_api_key = function() {
-      return("API key used for testing")
+    get_api = function() {
+      return(list(api_key = "API key used for testing", api_url = "https://example.com/api/v1"))
     },
-    doc_get_fields = function(doc_id) {
+    doc_get_fields = function(doc_id, api = get_api()) {
       helper_get_fields_df()
     }
   )
