@@ -23,7 +23,8 @@ License: MIT + file LICENSE
 Encoding: UTF-8
 Depends:
     R (>= 4.1.0)
-Imports:
+LazyData: true
+Imports: 
     cli,
     curl,
     dplyr,
