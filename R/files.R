@@ -4,11 +4,10 @@
 #' @param path file to be uploaded
 #' @inheritParams api_status
 #' @export
-file_upload <- function(path, api_key = get_api_key()) {
-  request() |>
+file_upload <- function(path, api = get_api()) {
+  request(api) |>
     httr2::req_url_path_append("files") |>
     httr2::req_body_multipart(file = curl::form_file(path)) |>
-    httr2::req_headers(`apiKey` = api_key) |>
     httr2::req_perform() |>
     httr2::resp_body_json() -> json
 
@@ -27,12 +26,11 @@ file_upload <- function(path, api_key = get_api_key()) {
 #'          the user is asked whether the function should overwrite the pre-existing file.
 #'          If not, the download is canceled and `FALSE` is returned.
 #' @export
-file_download <- function(file_id, path = ".", api_key = get_api_key()) {
+file_download <- function(file_id, path = ".", api = get_api()) {
   if (fs::is_dir(path)) {
     # determine file name
-    request() |>
+    request(api) |>
       httr2::req_url_path_append("files", parse_rspace_id(file_id)) |>
-      httr2::req_headers(`apiKey` = api_key) |>
       httr2::req_perform() |>
       httr2::resp_body_json() -> json
 
@@ -44,9 +42,8 @@ file_download <- function(file_id, path = ".", api_key = get_api_key()) {
     return(invisible(FALSE))
   }
 
-  request() |>
+  request(api) |>
     httr2::req_url_path_append("files", parse_rspace_id(file_id), "file") |>
-    httr2::req_headers(`apiKey` = api_key) |>
     httr2::req_perform(path = path) |>
     httr2::resp_check_status() -> resp
   cli::cli_inform("Downloaded to {.path {resp$body}} ({file.size(resp$body)} bytes)")

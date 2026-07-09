@@ -6,13 +6,12 @@
 #'
 #' @export
 #'
-folder_tree <- function(folder_id = NULL, api_key = get_api_key()) {
+folder_tree <- function(folder_id = NULL, api = get_api()) {
   path <- list("folders", "tree")
   if (!is.null(folder_id)) path <- c(path, parse_rspace_id(folder_id))
 
-  request() |>
+  request(api) |>
     httr2::req_url_path_append(path) |>
-    httr2::req_headers(`apiKey` = api_key) |>
     httr2::req_perform() |>
     httr2::resp_body_json() -> json
 

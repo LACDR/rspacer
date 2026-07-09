@@ -8,7 +8,7 @@ document_list_attachments(
   doc_id,
   field_id = NULL,
   field_name = NULL,
-  api_key = get_api_key()
+  api = get_api()
 )
 }
 \arguments{
@@ -21,7 +21,7 @@ for the top field, 2 for the second field, etc. It is not the unique field ident
 \item{field_name}{Specify either \code{field_id} or \code{field_name}. The field name
 for which attachments need to be listed.}
 
-\item{api_key}{RSpace API key}
+\item{api}{RSpace API}
 }
 \value{
 A data frame with identifiers and information on attachments.

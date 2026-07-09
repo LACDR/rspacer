@@ -11,7 +11,7 @@ document_create_from_html(
   tags = NULL,
   attachments = NULL,
   existing_document_id = NULL,
-  api_key = get_api_key()
+  api = get_api()
 )
 }
 \arguments{
@@ -29,7 +29,7 @@ A basic document is created if no template is specified.}
 
 \item{existing_document_id}{document id of a document to be replaced, if NULL (the default) a new document will be created.}
 
-\item{api_key}{RSpace API key}
+\item{api}{RSpace API}
 }
 \value{
 Invisible JSON response from the API.

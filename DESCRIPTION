@@ -39,7 +39,7 @@ Suggests:
     testthat (>= 3.0.0)
 Config/testthat/edition: 3
 Roxygen: list(markdown = TRUE)
-RoxygenNote: 7.3.2
+RoxygenNote: 7.3.3
 Language: en-US
 URL: https://github.com/burgerga/rspacer, https://burgerga.github.io/rspacer/
 BugReports: https://github.com/burgerga/rspacer/issues

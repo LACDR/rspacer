@@ -70,7 +70,7 @@ excel_to_doc_body <- function(path, document_name = NULL, verbose = T, file_type
   )
 }
 
-attachment_upload <- function(doc_body, attachments, api_key) {
+attachment_upload <- function(doc_body, attachments, api) {
   # QC
   if (!is.data.frame(attachments)) cli::cli_abort(message = c("x" = "attachment is not provided as a tibble/data.frame"))
   if (length(setdiff(c("field", "path"), names(attachments))) > 0) cli::cli_abort(message = c("x" = "attachments df is missing the `field` or `path` column"))
@@ -80,7 +80,7 @@ attachment_upload <- function(doc_body, attachments, api_key) {
   attachments <- attachments |>
     dplyr::distinct() |> # filter out duplicates
     dplyr::rowwise() |>
-    dplyr::mutate(rspace_id = file_upload(.data$path, api_key)$id)
+    dplyr::mutate(rspace_id = file_upload(.data$path, api)$id)
 
   attachments_res <- attachments |>
     dplyr::mutate(html = glue::glue("<fileId={.data$rspace_id}>")) |>
@@ -98,7 +98,7 @@ attachment_upload <- function(doc_body, attachments, api_key) {
   return(doc_body)
 }
 
-add_information_to_doc_body <- function(doc_body, template_id = NULL, folder_id = NULL, tags = NULL, attachments = NULL, api_key = get_api_key()) {
+add_information_to_doc_body <- function(doc_body, template_id = NULL, folder_id = NULL, tags = NULL, attachments = NULL, api = get_api()) {
   if (!is.null(template_id)) {
     form_id <- parse_rspace_id(doc_to_form_id(template_id, verbose = F))
     doc_body$form <- list(id = form_id)
@@ -113,7 +113,7 @@ add_information_to_doc_body <- function(doc_body, template_id = NULL, folder_id 
   }
 
   if (!is.null(attachments)) {
-    doc_body <- attachment_upload(doc_body, attachments, api_key)
+    doc_body <- attachment_upload(doc_body, attachments, api)
   }
 
   # The API wants a plain array -> remove the names
@@ -138,7 +138,7 @@ add_information_to_doc_body <- function(doc_body, template_id = NULL, folder_id 
 #' @return Invisible JSON response from the API.
 #' @export
 document_create_from_html <- function(path, template_id = NULL, folder_id = NULL, tags = NULL, attachments = NULL,
-                                      existing_document_id = NULL, api_key = get_api_key()) {
+                                      existing_document_id = NULL, api = get_api()) {
   doc_body <- html_to_doc_body(path, verbose = F)
 
   if (!is.null(existing_document_id)) {
@@ -163,7 +163,7 @@ document_create_from_html <- function(path, template_id = NULL, folder_id = NULL
     doc_body$fields <- put_all_fields_in_one_field(doc_body$fields)
   }
   # Add tags, form ID and attachments to doc_body
-  doc_body <- add_information_to_doc_body(doc_body, template_id, folder_id, tags, attachments, api_key)
+  doc_body <- add_information_to_doc_body(doc_body, template_id, folder_id, tags, attachments, api)
 
   # Create or replace the document
   if (is.null(existing_document_id)) {
@@ -189,7 +189,7 @@ document_create_from_html <- function(path, template_id = NULL, folder_id = NULL
 #' @inheritParams document_create_from_html
 #' @export
 document_append_from_html <- function(path, existing_document_id, tags = NULL, attachments = NULL,
-                                      allow_missing_fields = FALSE, api_key = get_api_key()) {
+                                      allow_missing_fields = FALSE, api = get_api()) {
   # Get the current fields
   current_fields <- doc_get_fields(existing_document_id)
 
@@ -259,7 +259,7 @@ document_append_from_html <- function(path, existing_document_id, tags = NULL, a
 
   if (!is.null(attachments)) {
     # TODO maybe use the columnIndex because I already removed all non-altered field numbers?
-    doc_body <- attachment_upload(doc_body, attachments, api_key)
+    doc_body <- attachment_upload(doc_body, attachments, api)
   }
 
   # Replace old fields with new fields
@@ -281,7 +281,7 @@ document_append_from_html <- function(path, existing_document_id, tags = NULL, a
 #' @inheritParams document_create_from_html
 #' @export
 document_create_from_excel <- function(path, file_type = NULL, document_name = NULL, template_id = NULL, folder_id = NULL,
-                                       tags = NULL, attachments = NULL, existing_document_id = NULL, api_key = get_api_key()) {
+                                       tags = NULL, attachments = NULL, existing_document_id = NULL, api = get_api()) {
   doc_body <- excel_to_doc_body(path, document_name = document_name, verbose = F, file_type = file_type)
 
   if (!is.null(existing_document_id)) {
@@ -298,7 +298,7 @@ document_create_from_excel <- function(path, file_type = NULL, document_name = N
     doc_body$fields <- put_all_fields_in_one_field(doc_body$fields)
   }
   # Add tags, form ID and attachments to doc_body
-  doc_body <- add_information_to_doc_body(doc_body, template_id = template_id, folder_id = folder_id, tags = tags, attachments = attachments)
+  doc_body <- add_information_to_doc_body(doc_body, template_id = template_id, folder_id = folder_id, tags = tags, attachments = attachments, api = api)
 
   # Create or replace the document
   if (is.null(existing_document_id)) {

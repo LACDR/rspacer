@@ -4,12 +4,12 @@
 \alias{document_retrieve}
 \title{Get document from RSpace based on document ID}
 \usage{
-document_retrieve(doc_id, api_key = get_api_key())
+document_retrieve(doc_id, api = get_api())
 }
 \arguments{
 \item{doc_id}{Unique identifier of the document}
 
-\item{api_key}{RSpace API key}
+\item{api}{RSpace API}
 }
 \description{
 Get document from RSpace based on document ID

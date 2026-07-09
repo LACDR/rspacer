@@ -4,14 +4,14 @@
 \alias{file_download}
 \title{Download a file from the gallery}
 \usage{
-file_download(file_id, path = ".", api_key = get_api_key())
+file_download(file_id, path = ".", api = get_api())
 }
 \arguments{
 \item{file_id}{gallery file to be downloaded}
 
 \item{path}{download destination}
 
-\item{api_key}{RSpace API key}
+\item{api}{RSpace API}
 }
 \value{
 The file path of the downloaded file. If the file already exists,

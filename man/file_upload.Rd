@@ -4,12 +4,12 @@
 \alias{file_upload}
 \title{Upload a file to the gallery}
 \usage{
-file_upload(path, api_key = get_api_key())
+file_upload(path, api = get_api())
 }
 \arguments{
 \item{path}{file to be uploaded}
 
-\item{api_key}{RSpace API key}
+\item{api}{RSpace API}
 }
 \description{
 Upload a file to the gallery
