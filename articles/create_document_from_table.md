@@ -13,6 +13,7 @@ this tutorial.
 ## Load R libraries
 
 ``` r
+
 library(tidyverse)
 library(rspacer)
 ```
@@ -22,6 +23,7 @@ library(rspacer)
 This code checks if the API is available. The API status should be OK.
 
 ``` r
+
 (res <- api_status())
 ```
 
@@ -32,6 +34,7 @@ This code checks if the API is available. The API status should be OK.
     ## [1] "1.115.2"
 
 ``` r
+
 stopifnot(res$message == "OK")
 ```
 
@@ -53,6 +56,7 @@ Excel, make sure that dates are saved as a string in the format
 dd-mm-yyyy.
 
 ``` r
+
 df_to_upload <- data.frame(
     name = c("Title", "Date", "Main part", "Conclusion"),
     content = c("example title", "23-12-2024", "This is example text.",
@@ -69,6 +73,7 @@ formats. Make sure that the template_id is the identifier of the
 template that you previously made in RSpace.
 
 ``` r
+
 document_create_from_tabular(
     df = df_to_upload,
     template_id = "SD377682"
@@ -90,6 +95,7 @@ and use either the `id` or the `globalID`. Folder identifiers start with
 identifiers start with `SD`. For example:
 
 ``` r
+
 folder_tree()
 ```
 
@@ -108,6 +114,7 @@ folder_tree()
     ## 10   7814 FL7814   Shared                 2022-12-22 12:32:22 2022-12-22 12:32:22 FOLDER   Gerhard Burger
 
 ``` r
+
 folder_tree("FL409926")
 ```
 
@@ -133,6 +140,7 @@ Template_example.html as an attachment to the field with number 4. We
 also place the file in a specific folder, and add the “tutorial” tag.
 
 ``` r
+
 attachment_file <- system.file("Template_example.html", package = "rspacer")
 (matching_code_file <- fs::path_ext_set(attachment_file, ".qmd"))
 ```
@@ -140,6 +148,7 @@ attachment_file <- system.file("Template_example.html", package = "rspacer")
     ## /Users/gerhard/GitHub/rspacer/inst/Template_example.qmd
 
 ``` r
+
 document_create_from_tabular(
   df = df_to_upload,
   template_id = "SD377682",
@@ -159,6 +168,7 @@ You can also directly upload tabular data from files using the
 function. A small example, with the example data from before:
 
 ``` r
+
 file_name <- "Template_example.csv"
 df_to_upload |>
   write_csv(file_name, col_names = FALSE) # the csv should not contain the column names

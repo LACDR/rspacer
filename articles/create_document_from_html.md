@@ -14,6 +14,7 @@ this tutorial.
 ## Load R libraries
 
 ``` r
+
 library(tidyverse)
 library(rspacer)
 ```
@@ -23,6 +24,7 @@ library(rspacer)
 This code checks if the API is available. The API status should be OK.
 
 ``` r
+
 (res <- api_status())
 ```
 
@@ -33,6 +35,7 @@ This code checks if the API is available. The API status should be OK.
     ## [1] "1.115.2"
 
 ``` r
+
 stopifnot(res$message == "OK")
 ```
 
@@ -75,18 +78,21 @@ html file and qmd file have the same filename. If this is not the case,
 change both the `file_name` and the `matching_code_file` variables.
 
 ``` r
+
 (file_name <- system.file("Template_example.html", package = "rspacer"))
 ```
 
     ## [1] "/Users/gerhard/GitHub/rspacer/inst/Template_example.html"
 
 ``` r
+
 (matching_code_file <- fs::path_ext_set(file_name, ".qmd"))
 ```
 
     ## /Users/gerhard/GitHub/rspacer/inst/Template_example.qmd
 
 ``` r
+
 stopifnot(file.exists(file_name))
 stopifnot(file.exists(matching_code_file))
 ```
@@ -97,6 +103,7 @@ To upload the document and attachment to the API inbox, this code chunk
 is sufficient:
 
 ``` r
+
 document_create_from_html(
     path = file_name,
     template_id = template_id
@@ -119,6 +126,7 @@ and use either the `id` or the `globalID`. Folder identifiers start with
 identifiers start with `SD`. For example:
 
 ``` r
+
 folder_tree()
 ```
 
@@ -137,6 +145,7 @@ folder_tree()
     ## 10   7814 FL7814   Shared                 2022-12-22 12:32:22 2022-12-22 12:32:22 FOLDER   Gerhard Burger
 
 ``` r
+
 folder_tree("FL7833")
 ```
 
@@ -159,6 +168,7 @@ to be attached to that field. An example where we also upload the source
 `.qmd` file is provided below.
 
 ``` r
+
 document_create_from_html(
   path = file_name,
   template_id = "SD377682",

@@ -16,7 +16,7 @@ To use rspacer it needs two things:
 
 1.  The API URL for your RSpace instance (this is typically the URL of
     your RSpace instance followed by `api/v1`, e.g.,
-    `https://leiden.researchspace.com/api/v1`)[¹](#fn1)
+    `https://leiden.researchspace.com/api/v1`)[^1]
 2.  Your API key, which is an authentication token you can use instead
     of your username and password. To create an API key go to ‘Manage
     API Key’ section of your RSpace profile page (MyRSpace -\> My
@@ -41,6 +41,7 @@ own URL and key):
 After saving the file and restarting R, you should now be able to run
 
 ``` r
+
 library(rspacer)
 api_status()
 ```
@@ -61,6 +62,7 @@ example,
 will show you the content of your Workspace as a tibble:
 
 ``` r
+
 folder_tree()
 ```
 
@@ -82,6 +84,7 @@ You can also specify an id or Unique ID (`globalId`) to show the
 contents of a specific folder:
 
 ``` r
+
 folder_tree(7819)
 ```
 
@@ -106,6 +109,7 @@ You can search for documents using the
 function:
 
 ``` r
+
 document_search("test")
 ```
 
@@ -130,6 +134,7 @@ document_search("test")
 You can retrieve documents using
 
 ``` r
+
 res <- document_retrieve("SD356307")
 summary(res)
 ```
@@ -154,6 +159,7 @@ The result is json converted to an R list, to get the field information
 you could use
 
 ``` r
+
 library(tidyverse)
 (res$fields |>
   fields_to_data_frame() -> res_df)
@@ -175,6 +181,7 @@ Since the fields typically contain HTML formatted information, this can
 be better displayed using the [`gt`](https://gt.rstudio.com/) package:
 
 ``` r
+
 library(gt)
 res_df |>
   gt() |>
@@ -190,6 +197,7 @@ to be created. The simplest way to do this is specify these in tabular
 form:
 
 ``` r
+
 doc_df_to_upload <- tribble(
 ~name, ~content,
 "Example field", "Example content"
@@ -209,17 +217,16 @@ how to create more structured documents in RSpace using the rspacer
 ##### The `rspacer` document tag
 
 By default rspacer tags all RSpace documents created/updated using
-rspacer functions with the `rspacer` tag. To disable this[²](#fn2), use
-the following code:
+rspacer functions with the `rspacer` tag. To disable this[^2], use the
+following code:
 
 ``` r
+
 options(rspacer.set_rspacer_tag = F)
 ```
 
-------------------------------------------------------------------------
-
-1.  If you don’t have an RSpace instance yet, you can use the
+[^1]: If you don’t have an RSpace instance yet, you can use the
     <https://community.researchspace.com/> instance.
 
-2.  this might be necessary on instances that enforce controlled
+[^2]: this might be necessary on instances that enforce controlled
     vocabularies for tags

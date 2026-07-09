@@ -17,7 +17,7 @@ Source:
 [`inst/CITATION`](https://github.com/lacdr/rspacer/blob/main/inst/CITATION)
 
 Burger G, Leegwater H (2025). “rspacer: 'RSpace' API Wrapper.”
-[doi:10.32614/CRAN.package.rspacer](https://doi.org/10.32614/CRAN.package.rspacer),
+[doi:10.32614/CRAN.package.rspacer](https://doi.org/10.32614/CRAN.package.rspacer).
 <https://lacdr.github.io/rspacer/>.
 
     @Misc{rspacer,
