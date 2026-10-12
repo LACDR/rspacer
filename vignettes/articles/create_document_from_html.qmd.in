@@ -32,7 +32,7 @@ stopifnot(res$message == "OK")
 ## Create a structured document in RSpace
 
 Create a Template from a Form with four text Fields named "Title", "Date", "Main
-part" and "Conclusion". Write down the unique Structured Document identifier,
+part" and "Conclusion". Write down the unique Structured Document identifier (in our case `SD377682`),
 you will need it later. Instructions to design a Template in RSpace can be found
 [here](https://documentation.researchspace.com/article/wxfk9gf0a0-templates).
 
@@ -79,7 +79,7 @@ sufficient:
 ```{r}
 document_create_from_html(
     path = file_name,
-    template_id = template_id
+    template_id = "SD377682"
 )
 ```
 
