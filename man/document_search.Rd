@@ -18,7 +18,7 @@ Can be used to order/filter the results.}
 \item{simplify}{Whether to simplify the returned tibble by converting/removing columns
 Use \code{Inf} to return all results (may take a while).}
 
-\item{api}{RSpace API}
+\item{api}{RSpace API connection object returned by \code{\link[=get_api]{get_api()}} (defaults to \code{get_api()}).}
 }
 \value{
 A tibble with search results, one result per row.

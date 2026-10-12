@@ -1,3 +1,7 @@
+# Ensure all tests never interact with the OS credential store (Keychain / Credential Manager).
+# Uses keyring's in-memory/process-level environment variable backend.
+options(keyring_backend = "env")
+
 helper_get_sections <- function() {
   # Example sections objects
   sections <- tibble::tibble(

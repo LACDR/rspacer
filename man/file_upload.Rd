@@ -9,7 +9,7 @@ file_upload(path, api = get_api())
 \arguments{
 \item{path}{file to be uploaded}
 
-\item{api}{RSpace API}
+\item{api}{RSpace API connection object returned by \code{\link[=get_api]{get_api()}} (defaults to \code{get_api()}).}
 }
 \value{
 Parsed JSON response from the API.

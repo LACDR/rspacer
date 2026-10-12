@@ -4,6 +4,11 @@ template:
   light-switch: true
 
 reference:
+- title: API
+- contents:
+  - contains("api_")
+  - contains("_api")
+  - contains("_instance")
 - title: Documents
 - contents:
   - starts_with("document_")
@@ -16,7 +21,4 @@ reference:
 - title: Utils
 - contents:
   - doc_to_form_id
-- title: Miscellaneous
-- contents:
-  - contains("api_")
   - fields_to_data_frame

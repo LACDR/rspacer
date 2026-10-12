@@ -34,7 +34,7 @@ A basic document is created if no template is specified.}
 
 \item{existing_document_id}{document id of a document to be replaced, if NULL (the default) a new document will be created.}
 
-\item{api}{RSpace API}
+\item{api}{RSpace API connection object returned by \code{\link[=get_api]{get_api()}} (defaults to \code{get_api()}).}
 }
 \value{
 Invisible JSON response from the API.

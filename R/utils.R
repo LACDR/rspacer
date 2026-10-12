@@ -149,3 +149,8 @@ retrieve_results_hateoas <- function(req, key, max_results) {
 
   utils::head(all_results, max_results)
 }
+
+`%||%` <- function(x, y) {
+  if (is.null(x)) y else x
+}
+

@@ -26,7 +26,7 @@ document_append_from_html(
 If this is \code{FALSE}, the html fields cannot be appended to the RSpace document when fields are missing.
 If it is \code{TRUE}, only fields with the same name as in the template will be appended.}
 
-\item{api}{RSpace API}
+\item{api}{RSpace API connection object returned by \code{\link[=get_api]{get_api()}} (defaults to \code{get_api()}).}
 }
 \value{
 Invisible JSON response from the API.

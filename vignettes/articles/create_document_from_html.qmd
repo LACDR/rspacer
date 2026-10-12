@@ -29,11 +29,11 @@ This code checks if the API is available. The API status should be OK.
 ```
 
 ```
-## $message
-## [1] "OK"
-## 
-## $rspaceVersion
-## [1] "1.115.2"
+## <RSpace API status>
+##   * Instance:       default
+##   * API URL:        https://leiden.researchspace.com/api/v1
+##   * Status Message: OK
+##   * RSpace Version: 1.124.3
 ```
 
 ``` r
@@ -81,7 +81,7 @@ If this is not the case, change both the `file_name` and the
 ```
 
 ```
-## [1] "/Users/gerhard/GitHub/rspacer/inst/Template_example.html"
+## [1] "/Users/gerhard/Github/rspacer/inst/Template_example.html"
 ```
 
 ``` r
@@ -89,7 +89,7 @@ If this is not the case, change both the `file_name` and the
 ```
 
 ```
-## /Users/gerhard/GitHub/rspacer/inst/Template_example.qmd
+## /Users/gerhard/Github/rspacer/inst/Template_example.qmd
 ```
 
 ``` r
@@ -111,7 +111,8 @@ document_create_from_html(
 ```
 
 ```
-## Document created: <https://leiden.researchspace.com/globalId/SD426701>
+## Error:
+## ! object 'template_id' not found
 ```
 
 However, `document_create_from_html()` has more parameters, in case you want to,
@@ -129,19 +130,23 @@ folder_tree()
 ```
 
 ```
-## # A tibble: 10 × 7
-##        id globalId name                   created             lastModified        type     owner         
-##     <int> <chr>    <chr>                  <dttm>              <dttm>              <chr>    <chr>         
-##  1 356307 SD356307 Gerhard Burger         2024-01-17 14:56:22 2024-01-17 15:04:39 DOCUMENT Gerhard Burger
-##  2 260004 FL260004 LACDR RDM              2023-11-06 10:19:59 2023-11-06 10:19:59 FOLDER   Gerhard Burger
-##  3 242175 FL242175 GABi001_EMP_regulation 2023-05-30 10:14:51 2023-06-14 12:30:47 FOLDER   Gerhard Burger
-##  4 242400 FL242400 Ontologies             2023-06-01 07:23:10 2023-06-01 07:23:10 FOLDER   Gerhard Burger
-##  5 242398 FL242398 Api Inbox              2023-06-01 07:23:08 2023-06-01 07:23:08 FOLDER   Gerhard Burger
-##  6 242182 FL242182 Publications           2023-05-30 11:07:25 2023-05-30 11:07:25 FOLDER   Gerhard Burger
-##  7  21961 FL21961  DDS2 Data management   2023-03-16 09:50:33 2023-03-16 09:50:33 FOLDER   Gerhard Burger
-##  8   7833 FL7833   Templates              2022-12-22 12:32:22 2022-12-22 12:32:22 FOLDER   Gerhard Burger
-##  9   7819 GF7819   Gallery                2022-12-22 12:32:22 2022-12-22 12:32:22 FOLDER   Gerhard Burger
-## 10   7814 FL7814   Shared                 2022-12-22 12:32:22 2022-12-22 12:32:22 FOLDER   Gerhard Burger
+## # A tibble: 13 × 9
+##        id globalId name            created             lastModified        type  owner
+##     <int> <chr>    <chr>           <dttm>              <dttm>              <chr> <chr>
+##  1 435310 SD435310 from_LACDR-ISA… 2026-02-10 14:36:18 2026-02-10 14:36:18 DOCU… Gerh…
+##  2 435280 SD435280 Untitled docum… 2026-02-10 13:26:32 2026-02-10 13:26:32 DOCU… Gerh…
+##  3 434451 NB434451 My awesome fir… 2026-02-02 14:54:45 2026-02-02 14:54:45 NOTE… Gerh…
+##  4 356307 SD356307 Gerhard Burger  2024-01-17 14:56:22 2024-01-17 15:04:39 DOCU… Gerh…
+##  5 260004 FL260004 LACDR RDM       2023-11-06 10:19:59 2023-11-06 10:19:59 FOLD… Gerh…
+##  6 242175 FL242175 GABi001_EMP_re… 2023-05-30 10:14:51 2023-06-14 12:30:47 FOLD… Gerh…
+##  7 242400 FL242400 Ontologies      2023-06-01 07:23:10 2023-06-01 07:23:10 FOLD… Gerh…
+##  8 242398 FL242398 Api Inbox       2023-06-01 07:23:08 2023-06-01 07:23:08 FOLD… Gerh…
+##  9 242182 FL242182 Publications    2023-05-30 11:07:25 2023-05-30 11:07:25 FOLD… Gerh…
+## 10  21961 FL21961  DDS2 Data mana… 2023-03-16 09:50:33 2023-03-16 09:50:33 FOLD… Gerh…
+## 11   7833 FL7833   Templates       2022-12-22 12:32:22 2022-12-22 12:32:22 FOLD… Gerh…
+## 12   7819 GF7819   Gallery         2022-12-22 12:32:22 2022-12-22 12:32:22 FOLD… Gerh…
+## 13   7814 FL7814   Shared          2022-12-22 12:32:22 2022-12-22 12:32:22 FOLD… Gerh…
+## # ℹ 2 more variables: systemFolder <lgl>, sharedFolder <lgl>
 ```
 
 ``` r
@@ -150,14 +155,14 @@ folder_tree("FL7833")
 
 ```
 ## # A tibble: 6 × 7
-##       id globalId name                                 created             lastModified        type   owner
-##    <int> <chr>    <chr>                                <dttm>              <dttm>              <chr>  <chr>
-## 1 242238 SD242238 LACDR-ISA - Contact v0.2.0           2023-05-30 12:21:36 2023-11-06 11:07:03 DOCUM… Gerh…
-## 2 242213 SD242213 LACDR-ISA - Publication v0.1.0       2023-05-30 11:57:26 2023-11-06 11:05:57 DOCUM… Gerh…
-## 3 260025 SD260025 LACDR-ISA - Assay (General) v1.0.0   2023-11-06 11:03:29 2023-11-06 11:03:29 DOCUM… Gerh…
-## 4 260008 SD260008 LACDR-ISA - Study v1.0.0             2023-11-06 10:23:41 2023-11-06 10:23:41 DOCUM… Gerh…
-## 5 260005 SD260005 LACDR-ISA - Investigation v1.0.0     2023-11-06 10:21:19 2023-11-06 10:21:19 DOCUM… Gerh…
-## 6 242170 SD242170 DDS Beltman - In Silico Assay v1.0.0 2023-05-30 09:57:49 2023-05-30 10:01:47 DOCUM… Gerh…
+##       id globalId name             created             lastModified        type  owner
+##    <int> <chr>    <chr>            <dttm>              <dttm>              <chr> <chr>
+## 1 242238 SD242238 LACDR-ISA - Con… 2023-05-30 12:21:36 2023-11-06 11:07:03 DOCU… Gerh…
+## 2 242213 SD242213 LACDR-ISA - Pub… 2023-05-30 11:57:26 2023-11-06 11:05:57 DOCU… Gerh…
+## 3 260025 SD260025 LACDR-ISA - Ass… 2023-11-06 11:03:29 2023-11-06 11:03:29 DOCU… Gerh…
+## 4 260008 SD260008 LACDR-ISA - Stu… 2023-11-06 10:23:41 2023-11-06 10:23:41 DOCU… Gerh…
+## 5 260005 SD260005 LACDR-ISA - Inv… 2023-11-06 10:21:19 2023-11-06 10:21:19 DOCU… Gerh…
+## 6 242170 SD242170 DDS Beltman - I… 2023-05-30 09:57:49 2023-05-30 10:01:47 DOCU… Gerh…
 ```
 
 Of course you can also find these by going to the web interface of your RSpace instance.
@@ -180,6 +185,6 @@ document_create_from_html(
 ```
 
 ```
-## File uploaded to <https://leiden.researchspace.com/globalId/GL426703>
-## Document created: <https://leiden.researchspace.com/globalId/SD426704>
+## File uploaded to <https://leiden.researchspace.com/globalId/GL459753>
+## Document created: <https://leiden.researchspace.com/globalId/SD459754>
 ```

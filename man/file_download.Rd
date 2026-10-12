@@ -11,7 +11,7 @@ file_download(file_id, path = ".", api = get_api())
 
 \item{path}{download destination}
 
-\item{api}{RSpace API}
+\item{api}{RSpace API connection object returned by \code{\link[=get_api]{get_api()}} (defaults to \code{get_api()}).}
 }
 \value{
 The file path of the downloaded file. If the file already exists,

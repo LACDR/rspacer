@@ -12,7 +12,7 @@ document_add_attachments(doc_id, attachments, api = get_api())
 \item{attachments}{attachments to attach to the fields in tibble/data.frame
 form (one attachment per row), e.g., \code{tibble(field = 7, path = "file.txt")}}
 
-\item{api}{RSpace API}
+\item{api}{RSpace API connection object returned by \code{\link[=get_api]{get_api()}} (defaults to \code{get_api()}).}
 }
 \value{
 A JSON object, invisibly. The function will raise an error if \code{doc_id} is not specified.
