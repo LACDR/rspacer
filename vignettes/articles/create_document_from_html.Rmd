@@ -27,11 +27,11 @@ This code checks if the API is available. The API status should be OK.
 ```
 
 ```
-## $message
-## [1] "OK"
-## 
-## $rspaceVersion
-## [1] "1.107.1"
+## <RSpace API status>
+##   * Instance:       default
+##   * API URL:        https://leiden.researchspace.com/api/v1
+##   * Status Message: OK
+##   * RSpace Version: 1.124.3
 ```
 
 ``` r
@@ -79,7 +79,7 @@ If this is not the case, change both the `file_name` and the
 ```
 
 ```
-## [1] "/Users/gerhard/GitHub/rspacer/inst/Template_example.html"
+## [1] "/Users/gerhard/Github/rspacer/inst/Template_example.html"
 ```
 
 ``` r
@@ -87,7 +87,7 @@ If this is not the case, change both the `file_name` and the
 ```
 
 ```
-## /Users/gerhard/GitHub/rspacer/inst/Template_example.qmd
+## /Users/gerhard/Github/rspacer/inst/Template_example.qmd
 ```
 
 ``` r
@@ -109,7 +109,8 @@ document_create_from_html(
 ```
 
 ```
-## Document created: <https://leiden.researchspace.com/globalId/SD402050>
+## Error:
+## ! object 'template_id' not found
 ```
 
 However, `document_create_from_html()` has more parameters, in case you want to,
@@ -127,19 +128,23 @@ folder_tree()
 ```
 
 ```
-## # A tibble: 10 × 9
-##        id globalId name                   created          lastModified parentFolderId type  `_links` owner       
-##     <int> <chr>    <chr>                  <chr>            <chr>                 <int> <chr> <list>   <list>      
-##  1 356307 SD356307 Gerhard Burger         2024-01-17T14:5… 2024-01-17T…           7813 DOCU… <list>   <named list>
-##  2 260004 FL260004 LACDR RDM              2023-11-06T10:1… 2023-11-06T…           7813 FOLD… <list>   <named list>
-##  3 242175 FL242175 GABi001_EMP_regulation 2023-05-30T10:1… 2023-06-14T…           7813 FOLD… <list>   <named list>
-##  4 242400 FL242400 Ontologies             2023-06-01T07:2… 2023-06-01T…           7813 FOLD… <list>   <named list>
-##  5 242398 FL242398 Api Inbox              2023-06-01T07:2… 2023-06-01T…           7813 FOLD… <list>   <named list>
-##  6 242182 FL242182 Publications           2023-05-30T11:0… 2023-05-30T…           7813 FOLD… <list>   <named list>
-##  7  21961 FL21961  DDS2 Data management   2023-03-16T09:5… 2023-03-16T…           7813 FOLD… <list>   <named list>
-##  8   7833 FL7833   Templates              2022-12-22T12:3… 2022-12-22T…           7813 FOLD… <list>   <named list>
-##  9   7819 GF7819   Gallery                2022-12-22T12:3… 2022-12-22T…           7813 FOLD… <list>   <named list>
-## 10   7814 FL7814   Shared                 2022-12-22T12:3… 2022-12-22T…           7813 FOLD… <list>   <named list>
+## # A tibble: 13 × 11
+##        id globalId name          created lastModified parentFolderId type  `_links` owner        systemFolder
+##     <int> <chr>    <chr>         <chr>   <chr>                 <int> <chr> <list>   <list>       <lgl>       
+##  1 435310 SD435310 from_LACDR-I… 2026-0… 2026-02-10T…           7813 DOCU… <list>   <named list> NA          
+##  2 435280 SD435280 Untitled doc… 2026-0… 2026-02-10T…           7813 DOCU… <list>   <named list> NA          
+##  3 434451 NB434451 My awesome f… 2026-0… 2026-02-02T…           7813 NOTE… <list>   <named list> NA          
+##  4 356307 SD356307 Gerhard Burg… 2024-0… 2024-01-17T…           7813 DOCU… <list>   <named list> NA          
+##  5 260004 FL260004 LACDR RDM     2023-1… 2023-11-06T…           7813 FOLD… <list>   <named list> FALSE       
+##  6 242175 FL242175 GABi001_EMP_… 2023-0… 2023-06-14T…           7813 FOLD… <list>   <named list> FALSE       
+##  7 242400 FL242400 Ontologies    2023-0… 2023-06-01T…           7813 FOLD… <list>   <named list> FALSE       
+##  8 242398 FL242398 Api Inbox     2023-0… 2023-06-01T…           7813 FOLD… <list>   <named list> TRUE        
+##  9 242182 FL242182 Publications  2023-0… 2023-05-30T…           7813 FOLD… <list>   <named list> FALSE       
+## 10  21961 FL21961  DDS2 Data ma… 2023-0… 2023-03-16T…           7813 FOLD… <list>   <named list> FALSE       
+## 11   7833 FL7833   Templates     2022-1… 2022-12-22T…           7813 FOLD… <list>   <named list> TRUE        
+## 12   7819 GF7819   Gallery       2022-1… 2022-12-22T…           7813 FOLD… <list>   <named list> TRUE        
+## 13   7814 FL7814   Shared        2022-1… 2022-12-22T…           7813 FOLD… <list>   <named list> TRUE        
+## # ℹ 1 more variable: sharedFolder <lgl>
 ```
 
 ``` r
@@ -148,14 +153,14 @@ folder_tree("FL7833")
 
 ```
 ## # A tibble: 6 × 9
-##       id globalId name                             created lastModified parentFolderId type  `_links` owner       
-##    <int> <chr>    <chr>                            <chr>   <chr>                 <int> <chr> <list>   <list>      
-## 1 242238 SD242238 LACDR-ISA - Contact v0.2.0       2023-0… 2023-11-06T…           7833 DOCU… <list>   <named list>
-## 2 242213 SD242213 LACDR-ISA - Publication v0.1.0   2023-0… 2023-11-06T…           7833 DOCU… <list>   <named list>
-## 3 260025 SD260025 LACDR-ISA - Assay (General) v1.… 2023-1… 2023-11-06T…           7833 DOCU… <list>   <named list>
-## 4 260008 SD260008 LACDR-ISA - Study v1.0.0         2023-1… 2023-11-06T…           7833 DOCU… <list>   <named list>
-## 5 260005 SD260005 LACDR-ISA - Investigation v1.0.0 2023-1… 2023-11-06T…           7833 DOCU… <list>   <named list>
-## 6 242170 SD242170 DDS Beltman - In Silico Assay v… 2023-0… 2023-05-30T…           7833 DOCU… <list>   <named list>
+##       id globalId name                        created lastModified parentFolderId type  `_links` owner       
+##    <int> <chr>    <chr>                       <chr>   <chr>                 <int> <chr> <list>   <list>      
+## 1 242238 SD242238 LACDR-ISA - Contact v0.2.0  2023-0… 2023-11-06T…           7833 DOCU… <list>   <named list>
+## 2 242213 SD242213 LACDR-ISA - Publication v0… 2023-0… 2023-11-06T…           7833 DOCU… <list>   <named list>
+## 3 260025 SD260025 LACDR-ISA - Assay (General… 2023-1… 2023-11-06T…           7833 DOCU… <list>   <named list>
+## 4 260008 SD260008 LACDR-ISA - Study v1.0.0    2023-1… 2023-11-06T…           7833 DOCU… <list>   <named list>
+## 5 260005 SD260005 LACDR-ISA - Investigation … 2023-1… 2023-11-06T…           7833 DOCU… <list>   <named list>
+## 6 242170 SD242170 DDS Beltman - In Silico As… 2023-0… 2023-05-30T…           7833 DOCU… <list>   <named list>
 ```
 
 Of course you can also find these by going to the web interface of your RSpace instance.
@@ -178,6 +183,6 @@ document_create_from_html(
 ```
 
 ```
-## File uploaded to <https://leiden.researchspace.com/globalId/GL402052>
-## Document created: <https://leiden.researchspace.com/globalId/SD402053>
+## File uploaded to <https://leiden.researchspace.com/globalId/GL459697>
+## Document created: <https://leiden.researchspace.com/globalId/SD459698>
 ```

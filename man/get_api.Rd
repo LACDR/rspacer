@@ -2,19 +2,34 @@
 % Please edit documentation in R/api.R
 \name{get_api}
 \alias{get_api}
-\title{Get the RSpace API}
+\title{Get the RSpace API connection}
 \usage{
-get_api()
+get_api(
+  instance = get_active_instance(),
+  source = get_auth_source(),
+  service = get_keyring_service()
+)
+}
+\arguments{
+\item{instance}{The RSpace instance name (defaults to active instance).}
+
+\item{source}{Credential source: \code{"keyring"} (default) or \code{"env"}.}
+
+\item{service}{Keyring service name (defaults to \code{"rspacer"}).}
+}
+\value{
+An S3 object of class \code{rspace_api} (inheriting from \code{list}) containing
+\code{api_key}, \code{api_url}, and \code{instance}.
 }
 \description{
-Gets the RSpace API list containing the API key and API URL.
+Retrieves the API URL, API key, and instance name as an \code{rspace_api} object.
+}
+\details{
+By default, printing this object in the console hides the sensitive API key.
 }
 \examples{
 \dontrun{
 get_api()
+get_api(instance = "leiden")
 }
-
-}
-\seealso{
-\code{\link[=get_api_key]{get_api_key()}}, \code{\link[=get_api_url]{get_api_url()}}
 }

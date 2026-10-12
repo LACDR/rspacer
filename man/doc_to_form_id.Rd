@@ -11,7 +11,7 @@ doc_to_form_id(doc_id, verbose = TRUE, api = get_api())
 
 \item{verbose}{whether to print the matching document/form}
 
-\item{api}{RSpace API}
+\item{api}{RSpace API connection object returned by \code{\link[=get_api]{get_api()}} (defaults to \code{get_api()}).}
 }
 \description{
 Get the form id used for a document

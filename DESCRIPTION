@@ -17,12 +17,14 @@ License: MIT + file LICENSE
 Encoding: UTF-8
 Depends: R (>= 4.1.0)
 Imports: 
+    askpass,
     cli,
     curl,
     dplyr,
     fs,
     glue,
     httr2,
+    keyring,
     purrr,
     readr,
     readxl,
@@ -36,7 +38,8 @@ Suggests:
     knitr,
     rmarkdown,
     spelling,
-    testthat (>= 3.0.0)
+    testthat (>= 3.0.0),
+    withr
 Config/testthat/edition: 3
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.3.3

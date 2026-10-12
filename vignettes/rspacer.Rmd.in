@@ -12,34 +12,88 @@ knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>"
 )
-options(tidyverse.quiet = TRUE)
+# Disable terminal hyperlinks (OSC 8 '\033]8;;') and ANSI color escape codes
+# so cli output renders as clean plain text in precomputed markdown vignettes
+options(
+  tidyverse.quiet = TRUE,
+  cli.hyperlink = FALSE,
+  cli.num_colors = 1,
+  crayon.enabled = FALSE
+)
+
+options(rspacer.auth_source = "env")
+library(rspacer)
+set_api_url("https://community.researchspace.com/api/v1", instance = "community")
 ```
 
 The goal of rspacer is to "wrap" the [RSpace API](https://community.researchspace.com/public/apiDocs), that is, allow you to use the API directly from R using convenience functions.
-
-**This package (and its documentation) is a work-in-progress. Contributions are welcome!**
 
 ## Setting up rspacer
 
 To use rspacer it needs to know two things:
 
-1. The API URL for your RSpace instance (this is typically the URL of your RSpace instance followed by `api/v1`, e.g. https://leiden.researchspace.com/api/v1)
+1. The API URL for your RSpace instance (this is typically the URL of your RSpace instance followed by `api/v1`, e.g. `https://leiden.researchspace.com/api/v1`)
 2. Your API key, which is an authentication token you can use instead of your username and password. To create an API key go to 'Manage API Key' section of your RSpace profile page (MyRSpace -> My Profile). **You should keep your API key private.** You can regenerate an API key at any time, which will invalidate the old key.
 
-You can use the `set_api_url()` and `set_api_key()` functions to make these available to rspacer in the current session.
-To make this information persistent you can store it in environment variables. An easy way to do this is with `usethis::edit_r_environ()`; in the file that opens, you should add the following lines (insert your own URL and key):
+### Storing Credentials Securely (OS Keyring)
 
+By default, `rspacer` uses your operating system's credential store (keyring) to store credentials securely and encrypted at rest.
+
+You can configure your URL and API key using:
+
+```{r, eval = F}
+library(rspacer)
+
+# Set the URL and interactively enter your API key:
+set_api("https://leiden.researchspace.com/api/v1")
 ```
+
+You can also set them individually using `set_api_url()` and `set_api_key()`.
+
+After configuring credentials, you can check connectivity:
+
+```{r}
+api_status()
+```
+
+### Multiple Instances
+
+If you work with multiple RSpace instances, you can configure and switch between them easily:
+
+
+```{r, eval = F}
+# Configure a second instance (e.g., 'community')
+set_api("https://community.researchspace.com/api/v1", instance = "community")
+
+# Switch the active instance
+use_instance("community")
+```
+```{r}
+# View all configured instances
+list_instances()
+```
+```{r, include = F}
+# Switch back
+use_instance()
+```
+
+### Using Environment Variables (Alternative)
+
+If you prefer to use environment variables (e.g., in non-interactive sessions), you can switch the authentication source:
+
+```r
+options(rspacer.auth_source = "env")
+```
+
+Then use the same commands as above to store your API credentials, this will store your credentials for the current session only.
+For persistent setup, define `RSPACE_API_URL` and `RSPACE_API_KEY` in your `.Renviron` file (e.g., via `usethis::edit_r_environ()`):
+
+```bash
 RSPACE_API_URL="https://leiden.researchspace.com/api/v1"
 RSPACE_API_KEY="<YOUR_API_KEY_HERE>"
 ```
 
-After saving the file and restarting R, you should now be able to run
-
-```{r example}
-library(rspacer)
-api_status()
-```
+For named instances with environment variables, use `RSPACE_<INSTANCE>_API_URL` and `RSPACE_<INSTANCE>_API_KEY`, such as `RSPACE_COMMUNITY_API_KEY`.
 
 ## Functionality
 

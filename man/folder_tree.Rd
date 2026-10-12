@@ -10,7 +10,7 @@ folder_tree(folder_id = NULL, api = get_api())
 \item{folder_id}{Unique identifier of the folder,
 if NULL will return contents of the Workspace Home folder}
 
-\item{api}{RSpace API}
+\item{api}{RSpace API connection object returned by \code{\link[=get_api]{get_api()}} (defaults to \code{get_api()}).}
 }
 \description{
 List contents of a folder

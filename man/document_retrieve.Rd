@@ -9,7 +9,7 @@ document_retrieve(doc_id, api = get_api())
 \arguments{
 \item{doc_id}{Unique identifier of the document}
 
-\item{api}{RSpace API}
+\item{api}{RSpace API connection object returned by \code{\link[=get_api]{get_api()}} (defaults to \code{get_api()}).}
 }
 \description{
 Get document from RSpace based on document ID

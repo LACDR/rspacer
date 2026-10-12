@@ -2,24 +2,32 @@
 % Please edit documentation in R/api.R
 \name{set_api_url}
 \alias{set_api_url}
-\title{Set the \code{RSPACE_API_URL} environment variable}
+\title{Set the RSpace API URL}
 \usage{
-set_api_url(rspace_api_url)
+set_api_url(
+  api_url = NULL,
+  instance = get_active_instance(),
+  source = get_auth_source(),
+  service = get_keyring_service()
+)
 }
 \arguments{
-\item{rspace_api_url}{The RSpace API URL}
+\item{api_url}{The RSpace API URL (e.g. \code{"https://community.researchspace.com/api/v1"}).
+If \code{NULL} and interactive, prompts the user.}
+
+\item{instance}{The RSpace instance name (defaults to active instance).}
+
+\item{source}{Credential source: \code{"keyring"} (default) or \code{"env"}.}
+
+\item{service}{Keyring service name (defaults to \code{"rspacer"}).}
 }
 \description{
-Sets the \code{RSPACE_API_URL} environment variable to the provided RSpace API URL.
-The RSpace API URL is likely the URL of your RSpace instance followed by \code{api/v1}.
-}
-\details{
-This will only set the environment variable for the current session,
-to set it permanently, add \verb{RSPACE_API_URL=<your_api_url_here>} to your \code{.Renviron} file,
-for example, using \code{\link[usethis:edit]{usethis::edit_r_environ()}}.
+Sets the RSpace API URL for the specified instance. If \code{api_url} is \code{NULL} and
+running interactively, prompts the user to enter the URL.
 }
 \examples{
 \dontrun{
-set_api_url("https://leiden.researchspace.com/api/v1")
+set_api_url("https://community.researchspace.com/api/v1")
+set_api_url(instance = "leiden")
 }
 }

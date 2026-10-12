@@ -12,7 +12,7 @@ document_search(query, ..., api = get_api())
 \item{...}{query parameters as documented in
 \url{https://community.researchspace.com/public/apiDocs} [GET /documents]}
 
-\item{api}{RSpace API}
+\item{api}{RSpace API connection object returned by \code{\link[=get_api]{get_api()}} (defaults to \code{get_api()}).}
 }
 \description{
 Global search for a term, works identically to the simple "All" search in RSpace Workspace.

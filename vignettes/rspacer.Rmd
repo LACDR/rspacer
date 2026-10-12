@@ -11,35 +11,83 @@ vignette: >
 
 The goal of rspacer is to "wrap" the [RSpace API](https://community.researchspace.com/public/apiDocs), that is, allow you to use the API directly from R using convenience functions.
 
-**This package (and its documentation) is a work-in-progress. Contributions are welcome!**
-
 ## Setting up rspacer
 
 To use rspacer it needs to know two things:
 
-1. The API URL for your RSpace instance (this is typically the URL of your RSpace instance followed by `api/v1`, e.g. https://leiden.researchspace.com/api/v1)
+1. The API URL for your RSpace instance (this is typically the URL of your RSpace instance followed by `api/v1`, e.g. `https://leiden.researchspace.com/api/v1`)
 2. Your API key, which is an authentication token you can use instead of your username and password. To create an API key go to 'Manage API Key' section of your RSpace profile page (MyRSpace -> My Profile). **You should keep your API key private.** You can regenerate an API key at any time, which will invalidate the old key.
 
-You can use the `set_api_url()` and `set_api_key()` functions to make these available to rspacer in the current session.
-To make this information persistent you can store it in environment variables. An easy way to do this is with `usethis::edit_r_environ()`; in the file that opens, you should add the following lines (insert your own URL and key):
+### Storing Credentials Securely (OS Keyring)
 
-```
-RSPACE_API_URL="https://leiden.researchspace.com/api/v1"
-RSPACE_API_KEY="<YOUR_API_KEY_HERE>"
-```
+By default, `rspacer` uses your operating system's credential store (keyring) to store credentials securely and encrypted at rest.
 
-After saving the file and restarting R, you should now be able to run
+You can configure your URL and API key using:
 
 
 ``` r
 library(rspacer)
-api_status()
-#> $message
-#> [1] "OK"
-#> 
-#> $rspaceVersion
-#> [1] "1.107.1"
+
+# Set the URL and interactively enter your API key:
+set_api("https://leiden.researchspace.com/api/v1")
 ```
+
+You can also set them individually using `set_api_url()` and `set_api_key()`.
+
+After configuring credentials, you can check connectivity:
+
+
+``` r
+api_status()
+#> <RSpace API status>
+#>   * Instance:       default
+#>   * API URL:        https://leiden.researchspace.com/api/v1
+#>   * Status Message: OK
+#>   * RSpace Version: 1.124.3
+```
+
+### Multiple Instances
+
+If you work with multiple RSpace instances, you can configure and switch between them easily:
+
+
+
+``` r
+# Configure a second instance (e.g., 'community')
+set_api("https://community.researchspace.com/api/v1", instance = "community")
+
+# Switch the active instance
+use_instance("community")
+```
+
+``` r
+# View all configured instances
+list_instances()
+#> # A tibble: 2 × 4
+#>   instance  active api_url                                    has_api_key
+#>   <chr>     <lgl>  <chr>                                      <lgl>      
+#> 1 default   TRUE   https://leiden.researchspace.com/api/v1    TRUE       
+#> 2 community FALSE  https://community.researchspace.com/api/v1 TRUE
+```
+
+
+### Using Environment Variables (Alternative)
+
+If you prefer to use environment variables (e.g., in non-interactive sessions), you can switch the authentication source:
+
+```r
+options(rspacer.auth_source = "env")
+```
+
+Then use the same commands as above to store your API credentials, this will store your credentials for the current session only.
+For persistent setup, define `RSPACE_API_URL` and `RSPACE_API_KEY` in your `.Renviron` file (e.g., via `usethis::edit_r_environ()`):
+
+```bash
+RSPACE_API_URL="https://leiden.researchspace.com/api/v1"
+RSPACE_API_KEY="<YOUR_API_KEY_HERE>"
+```
+
+For named instances with environment variables, use `RSPACE_<INSTANCE>_API_URL` and `RSPACE_<INSTANCE>_API_KEY`, such as `RSPACE_COMMUNITY_API_KEY`.
 
 ## Functionality
 
@@ -51,19 +99,23 @@ For example, `folder_tree()` will show you the content of your Workspace as a ti
 
 ``` r
 folder_tree()
-#> # A tibble: 10 × 9
-#>        id globalId name                   created          lastModified parentFolderId type  `_links` owner       
-#>     <int> <chr>    <chr>                  <chr>            <chr>                 <int> <chr> <list>   <list>      
-#>  1 356307 SD356307 Gerhard Burger         2024-01-17T14:5… 2024-01-17T…           7813 DOCU… <list>   <named list>
-#>  2 260004 FL260004 LACDR RDM              2023-11-06T10:1… 2023-11-06T…           7813 FOLD… <list>   <named list>
-#>  3 242175 FL242175 GABi001_EMP_regulation 2023-05-30T10:1… 2023-06-14T…           7813 FOLD… <list>   <named list>
-#>  4 242400 FL242400 Ontologies             2023-06-01T07:2… 2023-06-01T…           7813 FOLD… <list>   <named list>
-#>  5 242398 FL242398 Api Inbox              2023-06-01T07:2… 2023-06-01T…           7813 FOLD… <list>   <named list>
-#>  6 242182 FL242182 Publications           2023-05-30T11:0… 2023-05-30T…           7813 FOLD… <list>   <named list>
-#>  7  21961 FL21961  DDS2 Data management   2023-03-16T09:5… 2023-03-16T…           7813 FOLD… <list>   <named list>
-#>  8   7833 FL7833   Templates              2022-12-22T12:3… 2022-12-22T…           7813 FOLD… <list>   <named list>
-#>  9   7819 GF7819   Gallery                2022-12-22T12:3… 2022-12-22T…           7813 FOLD… <list>   <named list>
-#> 10   7814 FL7814   Shared                 2022-12-22T12:3… 2022-12-22T…           7813 FOLD… <list>   <named list>
+#> # A tibble: 13 × 11
+#>        id globalId name          created lastModified parentFolderId type  `_links` owner        systemFolder
+#>     <int> <chr>    <chr>         <chr>   <chr>                 <int> <chr> <list>   <list>       <lgl>       
+#>  1 435310 SD435310 from_LACDR-I… 2026-0… 2026-02-10T…           7813 DOCU… <list>   <named list> NA          
+#>  2 435280 SD435280 Untitled doc… 2026-0… 2026-02-10T…           7813 DOCU… <list>   <named list> NA          
+#>  3 434451 NB434451 My awesome f… 2026-0… 2026-02-02T…           7813 NOTE… <list>   <named list> NA          
+#>  4 356307 SD356307 Gerhard Burg… 2024-0… 2024-01-17T…           7813 DOCU… <list>   <named list> NA          
+#>  5 260004 FL260004 LACDR RDM     2023-1… 2023-11-06T…           7813 FOLD… <list>   <named list> FALSE       
+#>  6 242175 FL242175 GABi001_EMP_… 2023-0… 2023-06-14T…           7813 FOLD… <list>   <named list> FALSE       
+#>  7 242400 FL242400 Ontologies    2023-0… 2023-06-01T…           7813 FOLD… <list>   <named list> FALSE       
+#>  8 242398 FL242398 Api Inbox     2023-0… 2023-06-01T…           7813 FOLD… <list>   <named list> TRUE        
+#>  9 242182 FL242182 Publications  2023-0… 2023-05-30T…           7813 FOLD… <list>   <named list> FALSE       
+#> 10  21961 FL21961  DDS2 Data ma… 2023-0… 2023-03-16T…           7813 FOLD… <list>   <named list> FALSE       
+#> 11   7833 FL7833   Templates     2022-1… 2022-12-22T…           7813 FOLD… <list>   <named list> TRUE        
+#> 12   7819 GF7819   Gallery       2022-1… 2022-12-22T…           7813 FOLD… <list>   <named list> TRUE        
+#> 13   7814 FL7814   Shared        2022-1… 2022-12-22T…           7813 FOLD… <list>   <named list> TRUE        
+#> # ℹ 1 more variable: sharedFolder <lgl>
 ```
 
 You can also specify an id or Unique ID (`globalId`) to show the contents of a specific folder:
@@ -71,17 +123,18 @@ You can also specify an id or Unique ID (`globalId`) to show the contents of a s
 
 ``` r
 folder_tree(7819)
-#> # A tibble: 8 × 9
-#>      id globalId name          created                  lastModified    parentFolderId type  `_links` owner       
-#>   <int> <chr>    <chr>         <chr>                    <chr>                    <int> <chr> <list>   <list>      
-#> 1  7828 GF7828   Snippets      2022-12-22T12:32:22.318Z 2022-12-22T12:…           7819 FOLD… <list>   <named list>
-#> 2  7827 GF7827   PdfDocuments  2022-12-22T12:32:22.315Z 2022-12-22T12:…           7819 FOLD… <list>   <named list>
-#> 3  7826 GF7826   Miscellaneous 2022-12-22T12:32:22.311Z 2022-12-22T12:…           7819 FOLD… <list>   <named list>
-#> 4  7825 GF7825   Documents     2022-12-22T12:32:22.308Z 2022-12-22T12:…           7819 FOLD… <list>   <named list>
-#> 5  7824 GF7824   Chemistry     2022-12-22T12:32:22.304Z 2022-12-22T12:…           7819 FOLD… <list>   <named list>
-#> 6  7823 GF7823   Videos        2022-12-22T12:32:22.301Z 2022-12-22T12:…           7819 FOLD… <list>   <named list>
-#> 7  7822 GF7822   Audios        2022-12-22T12:32:22.297Z 2022-12-22T12:…           7819 FOLD… <list>   <named list>
-#> 8  7820 GF7820   Images        2022-12-22T12:32:22.290Z 2022-12-22T12:…           7819 FOLD… <list>   <named list>
+#> # A tibble: 8 × 11
+#>      id globalId name          created   lastModified parentFolderId type  systemFolder sharedFolder `_links`
+#>   <int> <chr>    <chr>         <chr>     <chr>                 <int> <chr> <lgl>        <lgl>        <list>  
+#> 1  7828 GF7828   Snippets      2022-12-… 2022-12-22T…           7819 FOLD… TRUE         FALSE        <list>  
+#> 2  7827 GF7827   PdfDocuments  2022-12-… 2022-12-22T…           7819 FOLD… TRUE         FALSE        <list>  
+#> 3  7826 GF7826   Miscellaneous 2022-12-… 2022-12-22T…           7819 FOLD… TRUE         FALSE        <list>  
+#> 4  7825 GF7825   Documents     2022-12-… 2022-12-22T…           7819 FOLD… TRUE         FALSE        <list>  
+#> 5  7824 GF7824   Chemistry     2022-12-… 2022-12-22T…           7819 FOLD… TRUE         FALSE        <list>  
+#> 6  7823 GF7823   Videos        2022-12-… 2022-12-22T…           7819 FOLD… TRUE         FALSE        <list>  
+#> 7  7822 GF7822   Audios        2022-12-… 2022-12-22T…           7819 FOLD… TRUE         FALSE        <list>  
+#> 8  7820 GF7820   Images        2022-12-… 2022-12-22T…           7819 FOLD… TRUE         FALSE        <list>  
+#> # ℹ 1 more variable: owner <list>
 ```
 
 ### Documents
@@ -97,6 +150,7 @@ summary(res)
 #>                Length Class  Mode     
 #> id              1     -none- numeric  
 #> globalId        1     -none- character
+#> version         1     -none- numeric  
 #> name            1     -none- character
 #> created         1     -none- character
 #> lastModified    1     -none- character
@@ -107,7 +161,8 @@ summary(res)
 #> form           10     -none- list     
 #> owner          10     -none- list     
 #> fields          8     -none- list     
-#> _links          1     -none- list
+#> _links          1     -none- list     
+#> grandParentId   1     -none- numeric
 ```
 
 The result is json converted to an R list, to get the field information you could use
@@ -119,15 +174,15 @@ tibble(fields = res$fields) |>
   unnest_wider(fields) |>
   select(name, type, content)
 #> # A tibble: 8 × 3
-#>   name          type   content                                                                                    
-#>   <chr>         <chr>  <chr>                                                                                      
-#> 1 Template Used string "LACDR-ISA - Contact v0.2.0"                                                               
-#> 2 Name          string "Gerhard A. Burger"                                                                        
-#> 3 Email         string "g.a.burger@lacdr.leidenuniv.nl"                                                           
-#> 4 Phone         string ""                                                                                         
-#> 5 ORCID         string "0000-0003-1062-5576"                                                                      
-#> 6 Address       text   "<p><a href=\"https://www.universiteitleiden.nl/en/locations/gorlaeus-building\">Gorlaeus …
-#> 7 Affiliation   string "Leiden University"                                                                        
+#>   name          type   content                                                                               
+#>   <chr>         <chr>  <chr>                                                                                 
+#> 1 Template Used string "LACDR-ISA - Contact v0.2.0"                                                          
+#> 2 Name          string "Gerhard A. Burger"                                                                   
+#> 3 Email         string "g.a.burger@lacdr.leidenuniv.nl"                                                      
+#> 4 Phone         string ""                                                                                    
+#> 5 ORCID         string "0000-0003-1062-5576"                                                                 
+#> 6 Address       text   "<p><a href=\"https://www.universiteitleiden.nl/en/locations/gorlaeus-building\">Gorl…
+#> 7 Affiliation   string "Leiden University"                                                                   
 #> 8 Roles         text   ""
 ```
 

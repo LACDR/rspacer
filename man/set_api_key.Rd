@@ -2,19 +2,33 @@
 % Please edit documentation in R/api.R
 \name{set_api_key}
 \alias{set_api_key}
-\title{Set the \code{RSPACE_API_KEY} environment variable}
+\title{Set the RSpace API key interactively}
 \usage{
-set_api_key(rspace_api_key)
+set_api_key(
+  instance = get_active_instance(),
+  source = get_auth_source(),
+  service = get_keyring_service()
+)
 }
 \arguments{
-\item{rspace_api_key}{Your RSpace API key}
+\item{instance}{The RSpace instance name (defaults to active instance).}
+
+\item{source}{Credential source: \code{"keyring"} (default) or \code{"env"}.}
+
+\item{service}{Keyring service name (defaults to \code{"rspacer"}).}
 }
 \description{
-Sets the \code{RSPACE_API_KEY} environment variable to the provided RSpace API key.
-To create an API key go to 'Manage API Key' section of your profile page (MyRSpace -> Profile).
+Interactively prompts the user to securely enter their RSpace API key and
+stores it in the system credential store (keyring) or session environment.
 }
 \details{
-This will only set the environment variable for the current session,
-to set it permanently, add \verb{RSPACE_API_KEY=<your_api_key_here>} to your \code{.Renviron} file,
-for example, using \code{\link[usethis:edit]{usethis::edit_r_environ()}}.
+By prompting interactively without accepting the key as a function argument,
+sensitive API tokens will not be recorded in your \code{.Rhistory} or code scripts.
+For automated CI environments, use environment variables via \code{options(rspacer.auth_source = "env")}.
+}
+\examples{
+\dontrun{
+set_api_key()
+set_api_key(instance = "leiden")
+}
 }

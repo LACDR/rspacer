@@ -53,3 +53,8 @@ can_overwrite <- function(path) {
 
   ui_yes("Overwrite pre-existing file {.file {path}}?")
 }
+
+`%||%` <- function(x, y) {
+  if (is.null(x)) y else x
+}
+

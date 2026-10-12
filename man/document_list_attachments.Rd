@@ -21,7 +21,7 @@ for the top field, 2 for the second field, etc. It is not the unique field ident
 \item{field_name}{Specify either \code{field_id} or \code{field_name}. The field name
 for which attachments need to be listed.}
 
-\item{api}{RSpace API}
+\item{api}{RSpace API connection object returned by \code{\link[=get_api]{get_api()}} (defaults to \code{get_api()}).}
 }
 \value{
 A data frame with identifiers and information on attachments.
