@@ -127,6 +127,8 @@ test_that("multi-instance management with keyring works", {
   inst_df <- list_instances()
   expect_s3_class(inst_df, "tbl_df")
   expect_true(all(c("default", "leiden") %in% inst_df$instance))
+  expect_true("source" %in% names(inst_df))
+  expect_equal(unique(inst_df$source), "keyring")
   expect_true(inst_df$active[inst_df$instance == "default"])
   expect_false(inst_df$active[inst_df$instance == "leiden"])
 
@@ -172,6 +174,8 @@ test_that("env var backend works with options and multi-instances", {
   # list_instances with env backend
   inst_df <- list_instances()
   expect_true(all(c("default", "leiden") %in% inst_df$instance))
+  expect_true("source" %in% names(inst_df))
+  expect_equal(unique(inst_df$source), "env")
 
   # Unset
   unset_api_key()
@@ -269,6 +273,7 @@ test_that("instance names round-trip through env vars and list_instances", {
 
   inst <- list_instances()
   expect_equal(inst$instance, "lab-a")
+  expect_equal(inst$source, "env")
   expect_true(inst$active)
   # Foreign / invalid RSPACE_* vars are ignored
   expect_false(any(grepl("foo", inst$instance)))

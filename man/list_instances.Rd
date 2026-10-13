@@ -12,7 +12,7 @@ list_instances(source = get_auth_source(), service = get_keyring_service())
 \item{service}{Keyring service name (defaults to \code{"rspacer"}).}
 }
 \value{
-A tibble with columns \code{instance}, \code{active}, \code{api_url}, and \code{has_api_key}.
+A tibble with columns \code{instance}, \code{source}, \code{active}, \code{api_url}, and \code{has_api_key}.
 }
 \description{
 Lists all RSpace instances configured in the active credential store

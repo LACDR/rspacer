@@ -206,7 +206,7 @@ use_instance <- function(instance = "default",
 #' @param source Credential source: `"keyring"` (default) or `"env"`.
 #' @param service Keyring service name (defaults to `"rspacer"`).
 #'
-#' @return A tibble with columns `instance`, `active`, `api_url`, and `has_api_key`.
+#' @return A tibble with columns `instance`, `source`, `active`, `api_url`, and `has_api_key`.
 #'
 #' @examples
 #' \dontrun{
@@ -252,6 +252,7 @@ list_instances <- function(source = get_auth_source(),
   if (length(instances) == 0) {
     return(tibble::tibble(
       instance = character(0),
+      source = character(0),
       active = logical(0),
       api_url = character(0),
       has_api_key = logical(0)
@@ -260,6 +261,7 @@ list_instances <- function(source = get_auth_source(),
 
   tibble::tibble(
     instance = instances,
+    source = source,
     active = instances == active,
     api_url = purrr::map_chr(instances, function(inst) {
       if (identical(source, "keyring")) {
