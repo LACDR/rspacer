@@ -18,7 +18,7 @@ options(
   crayon.enabled = FALSE
 )
 
-options(rspacer.auth_source = "env")
+#options(rspacer.auth_source = "env")
 library(rspacer)
 set_api_url("https://community.researchspace.com/api/v1", instance = "community")
 ```
@@ -67,11 +67,11 @@ If you work with multiple RSpace instances, you can configure and switch between
 ```{r, eval = F}
 # Configure a second instance (e.g., 'community')
 set_api("https://community.researchspace.com/api/v1", instance = "community")
-
-# Switch the active instance
-use_instance("community")
 ```
 ```{r}
+# Switch the active instance
+use_instance("community")
+
 # View all configured instances
 list_instances()
 ```
@@ -80,9 +80,16 @@ list_instances()
 use_instance()
 ```
 
+### Using Environment Variables (Alternative)
 
-You can use the `set_api_url()` and `set_api_key()` functions to make these available to rspacer in the current session.
-To make this information persistent you can store it in environment variables. An easy way to do this is with `usethis::edit_r_environ()`; in the file that opens, you should add the following lines (insert your own URL and key):
+If you prefer to use environment variables (e.g., in non-interactive sessions), you can switch the authentication source:
+
+```r
+options(rspacer.auth_source = "env")
+```
+
+Then use the same commands as above to store your API credentials, this will store your credentials for the current session only.
+For persistent setup, define `RSPACE_API_URL` and `RSPACE_API_KEY` in your `.Renviron` file (e.g., via `usethis::edit_r_environ()`):
 
 ```bash
 RSPACE_API_URL="https://leiden.researchspace.com/api/v1"

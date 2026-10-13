@@ -62,7 +62,7 @@ Make sure that the template_id is the identifier of the template that you previo
 ```{r}
 document_create_from_tabular(
     df = df_to_upload,
-    template_id = "SD377682"
+    template_id = "SD377682" #< change to your template id
 )
 ```
 

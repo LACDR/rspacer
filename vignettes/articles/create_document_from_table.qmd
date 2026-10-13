@@ -29,8 +29,8 @@ The API status should be OK.
 ```
 
 ```
-## <RSpace API status>
-##   * Instance:       default
+## <RSpace API Status>
+##   * Instance:       default (source: keyring)
 ##   * API URL:        https://leiden.researchspace.com/api/v1
 ##   * Status Message: OK
 ##   * RSpace Version: 1.124.3
@@ -75,12 +75,12 @@ Make sure that the template_id is the identifier of the template that you previo
 ``` r
 document_create_from_tabular(
     df = df_to_upload,
-    template_id = "SD377682"
+    template_id = "SD377682" #< change to your template id
 )
 ```
 
 ```
-## Document created: <https://leiden.researchspace.com/globalId/SD459756>
+## Document created: <https://leiden.researchspace.com/globalId/SD459821>
 ```
 
 The function `document_create_from_tabular()` has more parameters, for example, to upload the document to a specified notebook or folder (click the function above to learn more).
@@ -97,21 +97,21 @@ folder_tree()
 
 ```
 ## # A tibble: 13 × 9
-##        id globalId name                                    created             lastModified        type     owner    systemFolder sharedFolder
-##     <int> <chr>    <chr>                                   <dttm>              <dttm>              <chr>    <chr>    <lgl>        <lgl>       
-##  1 435310 SD435310 from_LACDR-ISA - Assay (General) v1.0.0 2026-02-10 14:36:18 2026-02-10 14:36:18 DOCUMENT Gerhard… NA           NA          
-##  2 435280 SD435280 Untitled document                       2026-02-10 13:26:32 2026-02-10 13:26:32 DOCUMENT Gerhard… NA           NA          
-##  3 434451 NB434451 My awesome first notebook               2026-02-02 14:54:45 2026-02-02 14:54:45 NOTEBOOK Gerhard… NA           NA          
-##  4 356307 SD356307 Gerhard Burger                          2024-01-17 14:56:22 2024-01-17 15:04:39 DOCUMENT Gerhard… NA           NA          
-##  5 260004 FL260004 LACDR RDM                               2023-11-06 10:19:59 2023-11-06 10:19:59 FOLDER   Gerhard… FALSE        FALSE       
-##  6 242175 FL242175 GABi001_EMP_regulation                  2023-05-30 10:14:51 2023-06-14 12:30:47 FOLDER   Gerhard… FALSE        FALSE       
-##  7 242400 FL242400 Ontologies                              2023-06-01 07:23:10 2023-06-01 07:23:10 FOLDER   Gerhard… FALSE        FALSE       
-##  8 242398 FL242398 Api Inbox                               2023-06-01 07:23:08 2023-06-01 07:23:08 FOLDER   Gerhard… TRUE         FALSE       
-##  9 242182 FL242182 Publications                            2023-05-30 11:07:25 2023-05-30 11:07:25 FOLDER   Gerhard… FALSE        FALSE       
-## 10  21961 FL21961  DDS2 Data management                    2023-03-16 09:50:33 2023-03-16 09:50:33 FOLDER   Gerhard… FALSE        FALSE       
-## 11   7833 FL7833   Templates                               2022-12-22 12:32:22 2022-12-22 12:32:22 FOLDER   Gerhard… TRUE         FALSE       
-## 12   7819 GF7819   Gallery                                 2022-12-22 12:32:22 2022-12-22 12:32:22 FOLDER   Gerhard… TRUE         FALSE       
-## 13   7814 FL7814   Shared                                  2022-12-22 12:32:22 2022-12-22 12:32:22 FOLDER   Gerhard… TRUE         FALSE
+##        id globalId name      created             lastModified        type  owner systemFolder sharedFolder
+##     <int> <chr>    <chr>     <dttm>              <dttm>              <chr> <chr> <lgl>        <lgl>       
+##  1 435310 SD435310 from_LAC… 2026-02-10 14:36:18 2026-02-10 14:36:18 DOCU… Gerh… NA           NA          
+##  2 435280 SD435280 Untitled… 2026-02-10 13:26:32 2026-02-10 13:26:32 DOCU… Gerh… NA           NA          
+##  3 434451 NB434451 My aweso… 2026-02-02 14:54:45 2026-02-02 14:54:45 NOTE… Gerh… NA           NA          
+##  4 356307 SD356307 Gerhard … 2024-01-17 14:56:22 2024-01-17 15:04:39 DOCU… Gerh… NA           NA          
+##  5 260004 FL260004 LACDR RDM 2023-11-06 10:19:59 2023-11-06 10:19:59 FOLD… Gerh… FALSE        FALSE       
+##  6 242175 FL242175 GABi001_… 2023-05-30 10:14:51 2023-06-14 12:30:47 FOLD… Gerh… FALSE        FALSE       
+##  7 242400 FL242400 Ontologi… 2023-06-01 07:23:10 2023-06-01 07:23:10 FOLD… Gerh… FALSE        FALSE       
+##  8 242398 FL242398 Api Inbox 2023-06-01 07:23:08 2023-06-01 07:23:08 FOLD… Gerh… TRUE         FALSE       
+##  9 242182 FL242182 Publicat… 2023-05-30 11:07:25 2023-05-30 11:07:25 FOLD… Gerh… FALSE        FALSE       
+## 10  21961 FL21961  DDS2 Dat… 2023-03-16 09:50:33 2023-03-16 09:50:33 FOLD… Gerh… FALSE        FALSE       
+## 11   7833 FL7833   Templates 2022-12-22 12:32:22 2022-12-22 12:32:22 FOLD… Gerh… TRUE         FALSE       
+## 12   7819 GF7819   Gallery   2022-12-22 12:32:22 2022-12-22 12:32:22 FOLD… Gerh… TRUE         FALSE       
+## 13   7814 FL7814   Shared    2022-12-22 12:32:22 2022-12-22 12:32:22 FOLD… Gerh… TRUE         FALSE
 ```
 
 ``` r
@@ -120,12 +120,12 @@ folder_tree("FL409926")
 
 ```
 ## # A tibble: 4 × 7
-##       id globalId name                      created             lastModified        type     owner            
-##    <int> <chr>    <chr>                     <dttm>              <dttm>              <chr>    <chr>            
-## 1 409948 SD409948 example title             2025-04-24 10:12:56 2025-04-24 10:13:06 DOCUMENT Hanneke Leegwater
-## 2 409942 SD409942 example title             2025-04-24 10:11:01 2025-04-24 10:11:10 DOCUMENT Hanneke Leegwater
-## 3 409929 SD409929 a002_normalize_lipidomics 2025-04-24 10:01:59 2025-04-24 10:02:14 DOCUMENT Hanneke Leegwater
-## 4 409928 SD409928 a001_preprocess_data      2025-04-24 10:01:34 2025-04-24 10:01:52 DOCUMENT Hanneke Leegwater
+##       id globalId name                      created             lastModified        type     owner        
+##    <int> <chr>    <chr>                     <dttm>              <dttm>              <chr>    <chr>        
+## 1 409948 SD409948 example title             2025-04-24 10:12:56 2025-04-24 10:13:06 DOCUMENT Hanneke Leeg…
+## 2 409942 SD409942 example title             2025-04-24 10:11:01 2025-04-24 10:11:10 DOCUMENT Hanneke Leeg…
+## 3 409929 SD409929 a002_normalize_lipidomics 2025-04-24 10:01:59 2025-04-24 10:02:14 DOCUMENT Hanneke Leeg…
+## 4 409928 SD409928 a001_preprocess_data      2025-04-24 10:01:34 2025-04-24 10:01:52 DOCUMENT Hanneke Leeg…
 ```
 
 Of course you can also find these by going to the web interface of your RSpace instance.
@@ -158,9 +158,9 @@ document_create_from_tabular(
 ```
 
 ```
-## File uploaded to <https://leiden.researchspace.com/globalId/GL459758>
-## File uploaded to <https://leiden.researchspace.com/globalId/GL459759>
-## Document created: <https://leiden.researchspace.com/globalId/SD459760>
+## File uploaded to <https://leiden.researchspace.com/globalId/GL459823>
+## File uploaded to <https://leiden.researchspace.com/globalId/GL459824>
+## Document created: <https://leiden.researchspace.com/globalId/SD459825>
 ```
 
 ## Uploading directly from file
@@ -182,6 +182,6 @@ document_create_from_tabfile(
 ```
 
 ```
-## Document created: <https://leiden.researchspace.com/globalId/SD459762>
+## Document created: <https://leiden.researchspace.com/globalId/SD459827>
 ```
 

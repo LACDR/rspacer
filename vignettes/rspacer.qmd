@@ -47,8 +47,8 @@ api_status()
 ```
 
 ```
-## <RSpace API status>
-##   * Instance:       default
+## <RSpace API Status>
+##   * Instance:       default (source: keyring)
 ##   * API URL:        https://leiden.researchspace.com/api/v1
 ##   * Status Message: OK
 ##   * RSpace Version: 1.124.3
@@ -63,9 +63,15 @@ If you work with multiple RSpace instances, you can configure and switch between
 ``` r
 # Configure a second instance (e.g., 'community')
 set_api("https://community.researchspace.com/api/v1", instance = "community")
+```
 
+``` r
 # Switch the active instance
 use_instance("community")
+```
+
+```
+## ✔ Active RSpace instance switched to "community" (URL: <https://community.researchspace.com/api/v1>).
 ```
 
 ``` r
@@ -74,17 +80,24 @@ list_instances()
 ```
 
 ```
-## # A tibble: 2 × 4
-##   instance  active api_url                                    has_api_key
-##   <chr>     <lgl>  <chr>                                      <lgl>      
-## 1 default   TRUE   https://leiden.researchspace.com/api/v1    TRUE       
-## 2 community FALSE  https://community.researchspace.com/api/v1 TRUE
+## # A tibble: 2 × 5
+##   instance  source  active api_url                                    has_api_key
+##   <chr>     <chr>   <lgl>  <chr>                                      <lgl>      
+## 1 community keyring TRUE   https://community.researchspace.com/api/v1 TRUE       
+## 2 default   keyring FALSE  https://leiden.researchspace.com/api/v1    TRUE
 ```
 
 
+### Using Environment Variables (Alternative)
 
-You can use the `set_api_url()` and `set_api_key()` functions to make these available to rspacer in the current session.
-To make this information persistent you can store it in environment variables. An easy way to do this is with `usethis::edit_r_environ()`; in the file that opens, you should add the following lines (insert your own URL and key):
+If you prefer to use environment variables (e.g., in non-interactive sessions), you can switch the authentication source:
+
+```r
+options(rspacer.auth_source = "env")
+```
+
+Then use the same commands as above to store your API credentials, this will store your credentials for the current session only.
+For persistent setup, define `RSPACE_API_URL` and `RSPACE_API_KEY` in your `.Renviron` file (e.g., via `usethis::edit_r_environ()`):
 
 ```bash
 RSPACE_API_URL="https://leiden.researchspace.com/api/v1"
@@ -107,21 +120,21 @@ folder_tree()
 
 ```
 ## # A tibble: 13 × 9
-##        id globalId name                                    created             lastModified        type     owner          systemFolder sharedFolder
-##     <int> <chr>    <chr>                                   <dttm>              <dttm>              <chr>    <chr>          <lgl>        <lgl>       
-##  1 435310 SD435310 from_LACDR-ISA - Assay (General) v1.0.0 2026-02-10 14:36:18 2026-02-10 14:36:18 DOCUMENT Gerhard Burger NA           NA          
-##  2 435280 SD435280 Untitled document                       2026-02-10 13:26:32 2026-02-10 13:26:32 DOCUMENT Gerhard Burger NA           NA          
-##  3 434451 NB434451 My awesome first notebook               2026-02-02 14:54:45 2026-02-02 14:54:45 NOTEBOOK Gerhard Burger NA           NA          
-##  4 356307 SD356307 Gerhard Burger                          2024-01-17 14:56:22 2024-01-17 15:04:39 DOCUMENT Gerhard Burger NA           NA          
-##  5 260004 FL260004 LACDR RDM                               2023-11-06 10:19:59 2023-11-06 10:19:59 FOLDER   Gerhard Burger FALSE        FALSE       
-##  6 242175 FL242175 GABi001_EMP_regulation                  2023-05-30 10:14:51 2023-06-14 12:30:47 FOLDER   Gerhard Burger FALSE        FALSE       
-##  7 242400 FL242400 Ontologies                              2023-06-01 07:23:10 2023-06-01 07:23:10 FOLDER   Gerhard Burger FALSE        FALSE       
-##  8 242398 FL242398 Api Inbox                               2023-06-01 07:23:08 2023-06-01 07:23:08 FOLDER   Gerhard Burger TRUE         FALSE       
-##  9 242182 FL242182 Publications                            2023-05-30 11:07:25 2023-05-30 11:07:25 FOLDER   Gerhard Burger FALSE        FALSE       
-## 10  21961 FL21961  DDS2 Data management                    2023-03-16 09:50:33 2023-03-16 09:50:33 FOLDER   Gerhard Burger FALSE        FALSE       
-## 11   7833 FL7833   Templates                               2022-12-22 12:32:22 2022-12-22 12:32:22 FOLDER   Gerhard Burger TRUE         FALSE       
-## 12   7819 GF7819   Gallery                                 2022-12-22 12:32:22 2022-12-22 12:32:22 FOLDER   Gerhard Burger TRUE         FALSE       
-## 13   7814 FL7814   Shared                                  2022-12-22 12:32:22 2022-12-22 12:32:22 FOLDER   Gerhard Burger TRUE         FALSE
+##        id globalId name      created             lastModified        type  owner systemFolder sharedFolder
+##     <int> <chr>    <chr>     <dttm>              <dttm>              <chr> <chr> <lgl>        <lgl>       
+##  1 435310 SD435310 from_LAC… 2026-02-10 14:36:18 2026-02-10 14:36:18 DOCU… Gerh… NA           NA          
+##  2 435280 SD435280 Untitled… 2026-02-10 13:26:32 2026-02-10 13:26:32 DOCU… Gerh… NA           NA          
+##  3 434451 NB434451 My aweso… 2026-02-02 14:54:45 2026-02-02 14:54:45 NOTE… Gerh… NA           NA          
+##  4 356307 SD356307 Gerhard … 2024-01-17 14:56:22 2024-01-17 15:04:39 DOCU… Gerh… NA           NA          
+##  5 260004 FL260004 LACDR RDM 2023-11-06 10:19:59 2023-11-06 10:19:59 FOLD… Gerh… FALSE        FALSE       
+##  6 242175 FL242175 GABi001_… 2023-05-30 10:14:51 2023-06-14 12:30:47 FOLD… Gerh… FALSE        FALSE       
+##  7 242400 FL242400 Ontologi… 2023-06-01 07:23:10 2023-06-01 07:23:10 FOLD… Gerh… FALSE        FALSE       
+##  8 242398 FL242398 Api Inbox 2023-06-01 07:23:08 2023-06-01 07:23:08 FOLD… Gerh… TRUE         FALSE       
+##  9 242182 FL242182 Publicat… 2023-05-30 11:07:25 2023-05-30 11:07:25 FOLD… Gerh… FALSE        FALSE       
+## 10  21961 FL21961  DDS2 Dat… 2023-03-16 09:50:33 2023-03-16 09:50:33 FOLD… Gerh… FALSE        FALSE       
+## 11   7833 FL7833   Templates 2022-12-22 12:32:22 2022-12-22 12:32:22 FOLD… Gerh… TRUE         FALSE       
+## 12   7819 GF7819   Gallery   2022-12-22 12:32:22 2022-12-22 12:32:22 FOLD… Gerh… TRUE         FALSE       
+## 13   7814 FL7814   Shared    2022-12-22 12:32:22 2022-12-22 12:32:22 FOLD… Gerh… TRUE         FALSE
 ```
 
 You can also specify an id or Unique ID (`globalId`) to show the contents of a specific folder:
@@ -133,16 +146,16 @@ folder_tree(7819)
 
 ```
 ## # A tibble: 8 × 9
-##      id globalId name          created             lastModified        type   systemFolder sharedFolder owner         
-##   <int> <chr>    <chr>         <dttm>              <dttm>              <chr>  <lgl>        <lgl>        <chr>         
-## 1  7828 GF7828   Snippets      2022-12-22 12:32:22 2022-12-22 12:32:22 FOLDER TRUE         FALSE        Gerhard Burger
-## 2  7827 GF7827   PdfDocuments  2022-12-22 12:32:22 2022-12-22 12:32:22 FOLDER TRUE         FALSE        Gerhard Burger
-## 3  7826 GF7826   Miscellaneous 2022-12-22 12:32:22 2022-12-22 12:32:22 FOLDER TRUE         FALSE        Gerhard Burger
-## 4  7825 GF7825   Documents     2022-12-22 12:32:22 2022-12-22 12:32:22 FOLDER TRUE         FALSE        Gerhard Burger
-## 5  7824 GF7824   Chemistry     2022-12-22 12:32:22 2022-12-22 12:32:22 FOLDER TRUE         FALSE        Gerhard Burger
-## 6  7823 GF7823   Videos        2022-12-22 12:32:22 2022-12-22 12:32:22 FOLDER TRUE         FALSE        Gerhard Burger
-## 7  7822 GF7822   Audios        2022-12-22 12:32:22 2022-12-22 12:32:22 FOLDER TRUE         FALSE        Gerhard Burger
-## 8  7820 GF7820   Images        2022-12-22 12:32:22 2022-12-22 12:32:22 FOLDER TRUE         FALSE        Gerhard Burger
+##      id globalId name        created             lastModified        type  systemFolder sharedFolder owner
+##   <int> <chr>    <chr>       <dttm>              <dttm>              <chr> <lgl>        <lgl>        <chr>
+## 1  7828 GF7828   Snippets    2022-12-22 12:32:22 2022-12-22 12:32:22 FOLD… TRUE         FALSE        Gerh…
+## 2  7827 GF7827   PdfDocumen… 2022-12-22 12:32:22 2022-12-22 12:32:22 FOLD… TRUE         FALSE        Gerh…
+## 3  7826 GF7826   Miscellane… 2022-12-22 12:32:22 2022-12-22 12:32:22 FOLD… TRUE         FALSE        Gerh…
+## 4  7825 GF7825   Documents   2022-12-22 12:32:22 2022-12-22 12:32:22 FOLD… TRUE         FALSE        Gerh…
+## 5  7824 GF7824   Chemistry   2022-12-22 12:32:22 2022-12-22 12:32:22 FOLD… TRUE         FALSE        Gerh…
+## 6  7823 GF7823   Videos      2022-12-22 12:32:22 2022-12-22 12:32:22 FOLD… TRUE         FALSE        Gerh…
+## 7  7822 GF7822   Audios      2022-12-22 12:32:22 2022-12-22 12:32:22 FOLD… TRUE         FALSE        Gerh…
+## 8  7820 GF7820   Images      2022-12-22 12:32:22 2022-12-22 12:32:22 FOLD… TRUE         FALSE        Gerh…
 ```
 
 ### Documents
@@ -158,19 +171,20 @@ document_search("test")
 
 ```
 ## # A tibble: 50 × 12
-##        id globalId version name                                    created             lastModified        parentFolderId grandParentId tags  tagMetaData form  owner
-##     <int> <chr>      <int> <chr>                                   <dttm>              <dttm>                       <int>         <int> <chr> <chr>       <chr> <chr>
-##  1 455673 SD455673       5 260817_Naked_mole_rat_iPSC_culture_fir… 2026-08-18 09:46:26 2026-08-21 08:23:45             NA            NA <NA>  <NA>        Basi… Max …
-##  2 454518 SD454518       4 260xxx_Timecourse_MedB_MNPs_cyno_H9_KO… 2026-07-31 10:12:18 2026-08-17 15:20:10             NA            NA <NA>  <NA>        Basi… Max …
-##  3 442827 SD442827       6 260422_KOLF_MNs_setup_Tun_DEM           2026-04-22 12:34:56 2026-05-01 07:58:23             NA            NA <NA>  <NA>        Basi… Max …
-##  4 435354 SD435354       8 2026_02_16_SA0036_TP24HR_R3_P1          2026-02-11 14:29:56 2026-02-20 10:26:58             NA            NA <NA>  <NA>        Basi… Serk…
-##  5 434423 SD434423       5 260202_test_SRB_assay_in_Assay_plate    2026-02-02 13:22:39 2026-02-05 15:26:38             NA            NA <NA>  <NA>        Basi… Max …
-##  6 426660 SD426660      16 251117_collect_pERK_western_samples     2025-11-17 16:13:27 2025-12-18 13:02:28             NA            NA <NA>  <NA>        Basi… Max …
-##  7 429449 SD429449       1 Untitled document                       2025-12-13 16:32:44 2025-12-13 16:32:44             NA            NA <NA>  <NA>        ISA … Paul…
-##  8 427470 SD427470       9 251202_Stress_Assay_5lines_DEM_Tun_End… 2025-11-25 15:38:22 2025-12-05 08:29:07             NA            NA <NA>  <NA>        Basi… Max …
-##  9 426662 SD426662      11 251120_test_SPY650_concentration_mouse… 2025-11-17 16:17:44 2025-11-24 11:52:31             NA            NA <NA>  <NA>        Basi… Max …
-## 10 426750 SD426750       2 Untitled document                       2025-11-18 14:04:50 2025-11-18 14:04:56         242398          7813 rspa… rspacer     Basi… Gerh…
+##        id globalId version name       created             lastModified        parentFolderId grandParentId
+##     <int> <chr>      <int> <chr>      <dttm>              <dttm>                       <int>         <int>
+##  1 455673 SD455673       5 260817_Na… 2026-08-18 09:46:26 2026-08-21 08:23:45             NA            NA
+##  2 454518 SD454518       4 260xxx_Ti… 2026-07-31 10:12:18 2026-08-17 15:20:10             NA            NA
+##  3 442827 SD442827       6 260422_KO… 2026-04-22 12:34:56 2026-05-01 07:58:23             NA            NA
+##  4 435354 SD435354       8 2026_02_1… 2026-02-11 14:29:56 2026-02-20 10:26:58             NA            NA
+##  5 434423 SD434423       5 260202_te… 2026-02-02 13:22:39 2026-02-05 15:26:38             NA            NA
+##  6 426660 SD426660      16 251117_co… 2025-11-17 16:13:27 2025-12-18 13:02:28             NA            NA
+##  7 429449 SD429449       1 Untitled … 2025-12-13 16:32:44 2025-12-13 16:32:44             NA            NA
+##  8 427470 SD427470       9 251202_St… 2025-11-25 15:38:22 2025-12-05 08:29:07             NA            NA
+##  9 426662 SD426662      11 251120_te… 2025-11-17 16:17:44 2025-11-24 11:52:31             NA            NA
+## 10 426750 SD426750       2 Untitled … 2025-11-18 14:04:50 2025-11-18 14:04:56         242398          7813
 ## # ℹ 40 more rows
+## # ℹ 4 more variables: tags <chr>, tagMetaData <chr>, form <chr>, owner <chr>
 ```
 
 #### Retrieve
@@ -213,16 +227,16 @@ library(tidyverse)
 
 ```
 ## # A tibble: 8 × 10
-##        id globalId  name          type   content                                                       lastModified        columnIndex files listOfMaterials `_links`
-##     <int> <chr>     <chr>         <chr>  <chr>                                                         <dttm>                    <int> <lgl> <lgl>           <lgl>   
-## 1 1873444 FD1873444 Template Used string "LACDR-ISA - Contact v0.2.0"                                  2024-01-17 14:56:22           0 NA    NA              NA      
-## 2 1873445 FD1873445 Name          string "Gerhard A. Burger"                                           2024-01-17 14:56:39           1 NA    NA              NA      
-## 3 1873446 FD1873446 Email         string "g.a.burger@lacdr.leidenuniv.nl"                              2024-01-17 14:57:02           2 NA    NA              NA      
-## 4 1873447 FD1873447 Phone         string ""                                                            2024-01-17 14:56:22           3 NA    NA              NA      
-## 5 1873448 FD1873448 ORCID         string "0000-0003-1062-5576"                                         2024-01-17 14:59:29           4 NA    NA              NA      
-## 6 1873449 FD1873449 Address       text   "<p><a href=\"https://www.universiteitleiden.nl/en/locations… 2024-01-17 14:57:49           5 NA    NA              NA      
-## 7 1873450 FD1873450 Affiliation   string "Leiden University"                                           2024-01-17 14:59:13           6 NA    NA              NA      
-## 8 1873451 FD1873451 Roles         text   ""                                                            2024-01-17 14:56:22           7 NA    NA              NA
+##        id globalId  name      type  content lastModified        columnIndex files listOfMaterials `_links`
+##     <int> <chr>     <chr>     <chr> <chr>   <dttm>                    <int> <lgl> <lgl>           <lgl>   
+## 1 1873444 FD1873444 Template… stri… "LACDR… 2024-01-17 14:56:22           0 NA    NA              NA      
+## 2 1873445 FD1873445 Name      stri… "Gerha… 2024-01-17 14:56:39           1 NA    NA              NA      
+## 3 1873446 FD1873446 Email     stri… "g.a.b… 2024-01-17 14:57:02           2 NA    NA              NA      
+## 4 1873447 FD1873447 Phone     stri… ""      2024-01-17 14:56:22           3 NA    NA              NA      
+## 5 1873448 FD1873448 ORCID     stri… "0000-… 2024-01-17 14:59:29           4 NA    NA              NA      
+## 6 1873449 FD1873449 Address   text  "<p><a… 2024-01-17 14:57:49           5 NA    NA              NA      
+## 7 1873450 FD1873450 Affiliat… stri… "Leide… 2024-01-17 14:59:13           6 NA    NA              NA      
+## 8 1873451 FD1873451 Roles     text  ""      2024-01-17 14:56:22           7 NA    NA              NA
 ```
 
 Since the fields typically contain HTML formatted information, this can be better displayed using the [`gt`](https://gt.rstudio.com/) package:
@@ -234,23 +248,23 @@ res_df |>
   fmt_markdown(columns = c(content))
 ```
 
-<!--html_preserve--><div id="pionludrag" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#pionludrag table {
+<!--html_preserve--><div id="lskestuihf" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#lskestuihf table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#pionludrag thead, #pionludrag tbody, #pionludrag tfoot, #pionludrag tr, #pionludrag td, #pionludrag th {
+#lskestuihf thead, #lskestuihf tbody, #lskestuihf tfoot, #lskestuihf tr, #lskestuihf td, #lskestuihf th {
   border-style: none;
 }
 
-#pionludrag p {
+#lskestuihf p {
   margin: 0;
   padding: 0;
 }
 
-#pionludrag .gt_table {
+#lskestuihf .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -276,12 +290,12 @@ res_df |>
   border-left-color: #D3D3D3;
 }
 
-#pionludrag .gt_caption {
+#lskestuihf .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#pionludrag .gt_title {
+#lskestuihf .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -293,7 +307,7 @@ res_df |>
   border-bottom-width: 0;
 }
 
-#pionludrag .gt_subtitle {
+#lskestuihf .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -305,7 +319,7 @@ res_df |>
   border-top-width: 0;
 }
 
-#pionludrag .gt_heading {
+#lskestuihf .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -317,13 +331,13 @@ res_df |>
   border-right-color: #D3D3D3;
 }
 
-#pionludrag .gt_bottom_border {
+#lskestuihf .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#pionludrag .gt_col_headings {
+#lskestuihf .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -338,7 +352,7 @@ res_df |>
   border-right-color: #D3D3D3;
 }
 
-#pionludrag .gt_col_heading {
+#lskestuihf .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -358,7 +372,7 @@ res_df |>
   overflow-x: hidden;
 }
 
-#pionludrag .gt_column_spanner_outer {
+#lskestuihf .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -370,15 +384,15 @@ res_df |>
   padding-right: 4px;
 }
 
-#pionludrag .gt_column_spanner_outer:first-child {
+#lskestuihf .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#pionludrag .gt_column_spanner_outer:last-child {
+#lskestuihf .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#pionludrag .gt_column_spanner {
+#lskestuihf .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -390,11 +404,11 @@ res_df |>
   width: 100%;
 }
 
-#pionludrag .gt_spanner_row {
+#lskestuihf .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#pionludrag .gt_group_heading {
+#lskestuihf .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -420,7 +434,7 @@ res_df |>
   text-align: left;
 }
 
-#pionludrag .gt_empty_group_heading {
+#lskestuihf .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -435,15 +449,15 @@ res_df |>
   vertical-align: middle;
 }
 
-#pionludrag .gt_from_md > :first-child {
+#lskestuihf .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#pionludrag .gt_from_md > :last-child {
+#lskestuihf .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#pionludrag .gt_row {
+#lskestuihf .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -462,7 +476,7 @@ res_df |>
   overflow-x: hidden;
 }
 
-#pionludrag .gt_stub {
+#lskestuihf .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -475,7 +489,7 @@ res_df |>
   padding-right: 5px;
 }
 
-#pionludrag .gt_stub_row_group {
+#lskestuihf .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -489,15 +503,15 @@ res_df |>
   vertical-align: top;
 }
 
-#pionludrag .gt_row_group_first td {
+#lskestuihf .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#pionludrag .gt_row_group_first th {
+#lskestuihf .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#pionludrag .gt_summary_row {
+#lskestuihf .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -507,16 +521,16 @@ res_df |>
   padding-right: 5px;
 }
 
-#pionludrag .gt_first_summary_row {
+#lskestuihf .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#pionludrag .gt_first_summary_row.thick {
+#lskestuihf .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#pionludrag .gt_last_summary_row {
+#lskestuihf .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -526,7 +540,7 @@ res_df |>
   border-bottom-color: #D3D3D3;
 }
 
-#pionludrag .gt_grand_summary_row {
+#lskestuihf .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -536,7 +550,7 @@ res_df |>
   padding-right: 5px;
 }
 
-#pionludrag .gt_first_grand_summary_row {
+#lskestuihf .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -546,7 +560,7 @@ res_df |>
   border-top-color: #D3D3D3;
 }
 
-#pionludrag .gt_last_grand_summary_row_top {
+#lskestuihf .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -556,11 +570,11 @@ res_df |>
   border-bottom-color: #D3D3D3;
 }
 
-#pionludrag .gt_striped {
+#lskestuihf .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#pionludrag .gt_table_body {
+#lskestuihf .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -569,7 +583,7 @@ res_df |>
   border-bottom-color: #D3D3D3;
 }
 
-#pionludrag .gt_footnotes {
+#lskestuihf .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -583,7 +597,7 @@ res_df |>
   border-right-color: #D3D3D3;
 }
 
-#pionludrag .gt_footnote {
+#lskestuihf .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -592,7 +606,7 @@ res_df |>
   padding-right: 5px;
 }
 
-#pionludrag .gt_sourcenotes {
+#lskestuihf .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -606,7 +620,7 @@ res_df |>
   border-right-color: #D3D3D3;
 }
 
-#pionludrag .gt_sourcenote {
+#lskestuihf .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -614,72 +628,72 @@ res_df |>
   padding-right: 5px;
 }
 
-#pionludrag .gt_left {
+#lskestuihf .gt_left {
   text-align: left;
 }
 
-#pionludrag .gt_center {
+#lskestuihf .gt_center {
   text-align: center;
 }
 
-#pionludrag .gt_right {
+#lskestuihf .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#pionludrag .gt_font_normal {
+#lskestuihf .gt_font_normal {
   font-weight: normal;
 }
 
-#pionludrag .gt_font_bold {
+#lskestuihf .gt_font_bold {
   font-weight: bold;
 }
 
-#pionludrag .gt_font_italic {
+#lskestuihf .gt_font_italic {
   font-style: italic;
 }
 
-#pionludrag .gt_super {
+#lskestuihf .gt_super {
   font-size: 65%;
 }
 
-#pionludrag .gt_footnote_marks {
+#lskestuihf .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#pionludrag .gt_asterisk {
+#lskestuihf .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#pionludrag .gt_indent_1 {
+#lskestuihf .gt_indent_1 {
   text-indent: 5px;
 }
 
-#pionludrag .gt_indent_2 {
+#lskestuihf .gt_indent_2 {
   text-indent: 10px;
 }
 
-#pionludrag .gt_indent_3 {
+#lskestuihf .gt_indent_3 {
   text-indent: 15px;
 }
 
-#pionludrag .gt_indent_4 {
+#lskestuihf .gt_indent_4 {
   text-indent: 20px;
 }
 
-#pionludrag .gt_indent_5 {
+#lskestuihf .gt_indent_5 {
   text-indent: 25px;
 }
 
-#pionludrag .katex-display {
+#lskestuihf .katex-display {
   display: inline-flex !important;
   margin-bottom: 0.75em !important;
 }
 
-#pionludrag div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+#lskestuihf div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
   height: 0px !important;
 }
 </style>
@@ -800,7 +814,7 @@ document_create_from_tabular(df = doc_df_to_upload, document_name = "Example doc
 ```
 
 ```
-## Document created: <https://leiden.researchspace.com/globalId/SD459750>
+## Document created: <https://leiden.researchspace.com/globalId/SD459806>
 ```
 
 Support for multiple fields is supported if a compatible RSpace template
