@@ -349,10 +349,7 @@ list_instances <- function() {
       if (is.data.frame(keys) && ("username" %in% names(keys)) && !(acct_u %in% keys$username)) {
         return(NA_character_)
       }
-      u <- tryCatch(
-        get_keyring_value(service, acct_u),
-        error = function(e) NULL
-      )
+      u <- get_keyring_value(service, acct_u)
       u %||% NA_character_
     })
     has_api_keys <- purrr::map_lgl(instances, function(inst) {
