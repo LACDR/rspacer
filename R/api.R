@@ -156,6 +156,36 @@ delete_keyring_value <- function(service, username) {
   invisible(TRUE)
 }
 
+auth_sitrep <- function() {
+  cli::cli_h1("Authentication/Keyring Situation Report")
+  cli::cli_inform(c(
+    "i" = paste0("Active backend: {.strong ", class(keyring::default_backend())[1], "}"),
+    "*" = paste0("getOption('keyring_backend'): {.val ", getOption("keyring_backend", "<unset>"), "}"),
+    "*" = paste0("Sys.getenv('R_KEYRING_BACKEND'): {.val ", Sys.getenv("R_KEYRING_BACKEND", "<unset>"), "}"),
+    "i" = paste0("rspacer auth source: {.val ", get_auth_source(), "}"),
+    "*" = paste0("getOption('rspacer.auth_source'): {.val ", getOption("rspacer.auth_source", "<unset>"), "}"),
+    "*" = paste0("Sys.getenv('RSPACER_AUTH_SOURCE'): {.val ", Sys.getenv("RSPACER_AUTH_SOURCE", "<unset>"), "}"),
+    "i" = paste0("rspacer keyring service: {.val ", get_keyring_service(), "}"),
+    "*" = paste0("getOption('rspacer.keyring_service'): {.val ", getOption("rspacer.keyring_service", "<unset>"), "}"),
+    "*" = paste0("Sys.getenv('RSPACER_KEYRING_SERVICE'): {.val ", Sys.getenv("RSPACER_KEYRING_SERVICE", "<unset>"), "}"),
+    "i" = paste0("rspacer active instance: {.val ", get_active_instance(), "}"),
+    "*" = paste0("getOption('rspacer.active_instance'): {.val ", getOption("rspacer.active_instance", "<unset>"), "}"),
+    "*" = paste0("Sys.getenv('RSPACER_ACTIVE_INSTANCE'): {.val ", Sys.getenv("RSPACER_ACTIVE_INSTANCE", "<unset>"), "}")
+  ))
+}
+
+auth_reset <- function() {
+  options(keyring_backend = NULL)
+  options(rspacer.auth_source = NULL)
+  options(rspacer.keyring_service = NULL)
+  options(rspacer.active_instance = NULL)
+  Sys.unsetenv("R_KEYRING_BACKEND")
+  Sys.unsetenv("RSPACER_AUTH_SOURCE")
+  Sys.unsetenv("RSPACER_KEYRING_SERVICE")
+  Sys.unsetenv("RSPACER_ACTIVE_INSTANCE")
+}
+
+
 # Instance Management ---------------------------------------------------------
 
 #' Get the active RSpace instance name

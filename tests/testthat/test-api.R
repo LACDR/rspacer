@@ -1,22 +1,32 @@
-test_that("get_auth_source and get_active_instance default and option overrides", {
+test_that("get_auth_source, get_active_instance, and get_keyring_service defaults and overrides", {
   rlang::local_interactive(FALSE)
   withr::local_options(list(
     rspacer.auth_source = NULL,
-    rspacer.active_instance = NULL
+    rspacer.active_instance = NULL,
+    rspacer.keyring_service = NULL
   ))
   withr::local_envvar(list(
     RSPACER_AUTH_SOURCE = "",
-    RSPACER_ACTIVE_INSTANCE = ""
+    RSPACER_ACTIVE_INSTANCE = "",
+    RSPACER_KEYRING_SERVICE = ""
   ))
 
   expect_equal(get_auth_source(), "keyring")
   expect_equal(get_active_instance(), "default")
+  expect_equal(get_keyring_service(), "rspacer")
 
   withr::local_options(list(rspacer.auth_source = "env"))
   expect_equal(get_auth_source(), "env")
 
   withr::local_options(list(rspacer.active_instance = "leiden"))
   expect_equal(get_active_instance(), "leiden")
+
+  withr::local_options(list(rspacer.keyring_service = "custom_service"))
+  expect_equal(get_keyring_service(), "custom_service")
+
+  withr::local_options(list(rspacer.keyring_service = NULL))
+  withr::local_envvar(list(RSPACER_KEYRING_SERVICE = "env_service"))
+  expect_equal(get_keyring_service(), "env_service")
 })
 
 test_that("keyring backend stores and retrieves credentials", {
