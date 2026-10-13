@@ -44,8 +44,10 @@ Imports:
     xml2,
     lubridate
 Suggests:
+    callr,
     quarto,
     knitr,
+    pkgload,
     rmarkdown,
     spelling,
     testthat (>= 3.0.0),
