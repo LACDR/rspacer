@@ -2,7 +2,7 @@
 % Please edit documentation in R/api.R
 \name{print.rspace_api}
 \alias{print.rspace_api}
-\title{Print method for RSpace API connection}
+\title{Print method for RSpace API credentials}
 \usage{
 \method{print}{rspace_api}(x, ..., reveal_key = FALSE)
 }
@@ -14,6 +14,6 @@
 \item{reveal_key}{Logical; if \code{TRUE}, reveals the full API key. Defaults to \code{FALSE}.}
 }
 \description{
-Displays the RSpace API connection information while masking the API key by default.
+Displays the RSpace API credentials while masking the API key by default.
 }
 \keyword{internal}

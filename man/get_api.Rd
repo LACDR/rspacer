@@ -2,7 +2,7 @@
 % Please edit documentation in R/api.R
 \name{get_api}
 \alias{get_api}
-\title{Get the RSpace API connection}
+\title{Get RSpace API credentials}
 \usage{
 get_api(
   instance = get_active_instance(),
@@ -19,11 +19,11 @@ get_api(
 }
 \value{
 An S3 object of class \code{rspace_api} (inheriting from \code{list}) containing
-\code{api_key}, \code{api_url}, and \code{instance}. When printed, the API key is masked by
+\code{instance}, \code{source}, \code{api_url}, and \code{api_key}. When printed, the API key is masked by
 default (\verb{<hidden>}). Pass \code{reveal_key = TRUE} to \code{print()} to reveal the key.
 }
 \description{
-Retrieves the API URL, API key, and instance name as an \code{rspace_api} object.
+Retrieves the API URL, API key, instance name, and authentication source as an \code{rspace_api} object.
 }
 \details{
 By default, printing this object in the console hides the sensitive API key.

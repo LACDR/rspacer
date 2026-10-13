@@ -53,14 +53,19 @@ test_that("keyring backend stores and retrieves credentials", {
   expect_equal(api$api_key, "secret_key_123")
   expect_equal(api$api_url, "https://example.com/api/v1")
   expect_equal(api$instance, "default")
+  expect_equal(api$source, "keyring")
 
   # print method masks key
   out <- utils::capture.output(print(api))
+  expect_true(any(grepl("<RSpace API Credentials>", out)))
+  expect_true(any(grepl("Instance:\\s+default \\(source: keyring\\)", out)))
   expect_true(any(grepl("<hidden>", out)))
   expect_false(any(grepl("secret_key_123", out)))
 
   # reveal_key = TRUE shows key
   out_revealed <- utils::capture.output(print(api, reveal_key = TRUE))
+  expect_true(any(grepl("<RSpace API Credentials>", out_revealed)))
+  expect_true(any(grepl("Instance:\\s+default \\(source: keyring\\)", out_revealed)))
   expect_true(any(grepl("secret_key_123", out_revealed)))
 
   # Unset
@@ -189,7 +194,8 @@ test_that("api_status returns rspace_api_status object with instance and api_url
     list(
       api_key = "test_key",
       api_url = "https://leiden.researchspace.com/api/v1",
-      instance = "leiden"
+      instance = "leiden",
+      source = "keyring"
     ),
     class = c("rspace_api", "list")
   )
@@ -197,13 +203,14 @@ test_that("api_status returns rspace_api_status object with instance and api_url
   status <- api_status(api = api)
   expect_s3_class(status, "rspace_api_status")
   expect_equal(status$instance, "leiden")
+  expect_equal(status$source, "keyring")
   expect_equal(status$api_url, "https://leiden.researchspace.com/api/v1")
   expect_equal(status$message, "OK")
   expect_equal(status$rspaceVersion, "1.107.1")
 
   out <- utils::capture.output(print(status))
-  expect_true(any(grepl("<RSpace API status>", out)))
-  expect_true(any(grepl("Instance:\\s+leiden", out)))
+  expect_true(any(grepl("<RSpace API Status>", out)))
+  expect_true(any(grepl("Instance:\\s+leiden \\(source: keyring\\)", out)))
   expect_true(any(grepl("https://leiden.researchspace.com/api/v1", out)))
   expect_true(any(grepl("Status Message:\\s+OK", out)))
   expect_true(any(grepl("RSpace Version:\\s+1.107.1", out)))

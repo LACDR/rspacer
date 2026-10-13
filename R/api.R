@@ -646,9 +646,9 @@ get_api_url <- function(instance = get_active_instance(),
   api_url
 }
 
-#' Get the RSpace API connection
+#' Get RSpace API credentials
 #'
-#' Retrieves the API URL, API key, and instance name as an `rspace_api` object.
+#' Retrieves the API URL, API key, instance name, and authentication source as an `rspace_api` object.
 #'
 #' By default, printing this object in the console hides the sensitive API key.
 #'
@@ -657,7 +657,7 @@ get_api_url <- function(instance = get_active_instance(),
 #' @param service Keyring service name (defaults to `"rspacer"`).
 #'
 #' @return An S3 object of class `rspace_api` (inheriting from `list`) containing
-#'   `api_key`, `api_url`, and `instance`. When printed, the API key is masked by
+#'   `instance`, `source`, `api_url`, and `api_key`. When printed, the API key is masked by
 #'   default (`<hidden>`). Pass `reveal_key = TRUE` to `print()` to reveal the key.
 #'
 #' @examples
@@ -669,10 +669,12 @@ get_api_url <- function(instance = get_active_instance(),
 get_api <- function(instance = get_active_instance(),
                     source = get_auth_source(),
                     service = get_keyring_service()) {
+  source <- match.arg(source, c("keyring", "env"))
   instance <- normalize_instance(instance, inform = TRUE)
   structure(
     list(
       instance = instance,
+      source = source,
       api_url = get_api_url(instance = instance, source = source, service = service),
       api_key = get_api_key(instance = instance, source = source, service = service)
     ),
@@ -680,9 +682,9 @@ get_api <- function(instance = get_active_instance(),
   )
 }
 
-#' Print method for RSpace API connection
+#' Print method for RSpace API credentials
 #'
-#' Displays the RSpace API connection information while masking the API key by default.
+#' Displays the RSpace API credentials while masking the API key by default.
 #'
 #' @param x An `rspace_api` object returned by [get_api()].
 #' @param ... Additional arguments passed to print methods.
@@ -698,7 +700,10 @@ print.rspace_api <- function(x, ..., reveal_key = FALSE) {
   }
 
   inst_name <- x$instance %||% "default"
-  cat("<RSpace API connection>\n")
+  if (!is.null(x$source) && nzchar(x$source)) {
+    inst_name <- paste0(inst_name, " (source: ", x$source, ")")
+  }
+  cat("<RSpace API Credentials>\n")
   cat(paste0("  * Instance: ", inst_name, "\n"))
   cat(paste0("  * API URL:  ", x$api_url, "\n"))
   cat(paste0("  * API Key:  ", key_display, "\n"))
@@ -748,7 +753,7 @@ request <- function(api) {
 #' @param api RSpace API connection object returned by [get_api()] (defaults to `get_api()`).
 #'
 #' @return An S3 object of class `rspace_api_status` (inheriting from `list`) containing
-#'   `instance`, `api_url`, `message`, `rspaceVersion`, and any additional status response fields.
+#'   `instance`, `source`, `api_url`, `message`, `rspaceVersion`, and any additional status response fields.
 #'
 #' @returns If the request succeeds, a list with the status message and the RSpace version of the API.
 #' @examples
@@ -765,6 +770,7 @@ api_status <- function(api = get_api()) {
   res <- c(
     list(
       instance = api$instance %||% "default",
+      source = api$source,
       api_url = api$api_url
     ),
     resp
@@ -783,7 +789,10 @@ api_status <- function(api = get_api()) {
 #' @export
 print.rspace_api_status <- function(x, ...) {
   inst_name <- x$instance %||% "default"
-  cat("<RSpace API status>\n")
+  if (!is.null(x$source) && nzchar(x$source)) {
+    inst_name <- paste0(inst_name, " (source: ", x$source, ")")
+  }
+  cat("<RSpace API Status>\n")
   cat(paste0("  * Instance:       ", inst_name, "\n"))
   cat(paste0("  * API URL:        ", x$api_url, "\n"))
   if (!is.null(x$message)) {
@@ -792,7 +801,7 @@ print.rspace_api_status <- function(x, ...) {
   if (!is.null(x$rspaceVersion)) {
     cat(paste0("  * RSpace Version: ", x$rspaceVersion, "\n"))
   }
-  other_fields <- setdiff(names(x), c("instance", "api_url", "message", "rspaceVersion"))
+  other_fields <- setdiff(names(x), c("instance", "source", "api_url", "message", "rspaceVersion"))
   for (f in other_fields) {
     cat(paste0("  * ", f, ": ", x[[f]], "\n"))
   }

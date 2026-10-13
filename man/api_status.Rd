@@ -11,7 +11,7 @@ api_status(api = get_api())
 }
 \value{
 An S3 object of class \code{rspace_api_status} (inheriting from \code{list}) containing
-\code{instance}, \code{api_url}, \code{message}, \code{rspaceVersion}, and any additional status response fields.
+\code{instance}, \code{source}, \code{api_url}, \code{message}, \code{rspaceVersion}, and any additional status response fields.
 
 If the request succeeds, a list with the status message and the RSpace version of the API.
 }
