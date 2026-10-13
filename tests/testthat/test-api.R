@@ -77,15 +77,18 @@ test_that("keyring backend stores and retrieves credentials", {
   expect_error(get_api_url(), class = "rlang_error")
 })
 
-test_that("set_api and set_api_key error in non-interactive environment", {
+test_that("set_api and set_api_key error in non-interactive environment without mutating credentials", {
   rlang::local_interactive(FALSE)
   withr::local_options(list(
     keyring_backend = "env",
     rspacer.keyring_service = "rspacer_test_suite"
   ))
 
+  unset_api()
   expect_error(set_api_key(), "can only be called interactively")
   expect_error(set_api("https://example.com/api/v1"), "can only be called interactively")
+  # Verify URL was NOT stored when set_api was rejected
+  expect_error(get_api_url(), class = "rlang_error")
 })
 
 test_that("multi-instance management with keyring works", {

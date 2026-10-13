@@ -367,6 +367,12 @@ list_instances <- function() {
 #' @export
 set_api <- function(api_url = NULL,
                     instance = get_active_instance()) {
+  if (!rlang::is_interactive()) {
+    cli::cli_abort(c(
+      "{.fun set_api} can only be called interactively.",
+      "i" = "In automated or CI environments, configure environment variables: {.code options(rspacer.auth_source = \"env\")}"
+    ))
+  }
   instance <- normalize_instance(instance, inform = TRUE)
   set_api_url(
     api_url = api_url,
