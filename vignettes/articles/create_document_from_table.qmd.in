@@ -4,6 +4,12 @@ title: "Tutorial: creating a document from a table"
 
 ```{r, include = FALSE}
 options(tidyverse.quiet = TRUE)
+
+library(rspacer)
+options(rspacer.auth_source = "keyring")
+options(rspacer.keyring_service = "rspacer_vignettes")
+set_api_url("https://leiden.researchspace.com/api/v1", instance = "default")
+set_api_url("https://community.researchspace.com/api/v1", instance = "community")
 ```
 
 ## Before you start
