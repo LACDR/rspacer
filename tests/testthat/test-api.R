@@ -391,6 +391,17 @@ test_that("rspace_error_body safely extracts messages and handles non-JSON bodie
   # No body
   resp_empty <- httr2::response(status_code = 204)
   expect_null(rspace_error_body(resp_empty))
+
+  # Missing content-type header with body -> returns NULL safely (-> falls back to default handler)
+  resp_missing_ct <- httr2::response(status_code = 500, body = charToRaw("Internal Error"))
+  expect_null(rspace_error_body(resp_missing_ct))
+
+  resp_empty_ct <- httr2::response(
+    status_code = 500,
+    headers = list("content-type" = ""),
+    body = charToRaw("Internal Error")
+  )
+  expect_null(rspace_error_body(resp_empty_ct))
 })
 
 test_that("is_keyring_not_found_msg correctly classifies missing vs operational errors", {
