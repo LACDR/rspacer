@@ -144,6 +144,10 @@ test_that("multi-instance management with keyring works", {
   expect_equal(unique(inst_df$source), "keyring")
   expect_true(inst_df$active[inst_df$instance == "default"])
   expect_false(inst_df$active[inst_df$instance == "leiden"])
+  expect_equal(inst_df$api_url[inst_df$instance == "default"], "https://default.example.com/api/v1")
+  expect_equal(inst_df$api_url[inst_df$instance == "leiden"], "https://leiden.example.com/api/v1")
+  expect_true(inst_df$has_api_key[inst_df$instance == "default"])
+  expect_true(inst_df$has_api_key[inst_df$instance == "leiden"])
 
   # unset_api clears both key and url
   unset_api(instance = "leiden")

@@ -238,13 +238,18 @@ use_instance <- function(instance = "default") {
 
   if (identical(source, "keyring")) {
     service <- get_keyring_service()
+    keys <- keyring_service_keys(service)
+
     acct_u <- keyring_account_name(instance, "api_url")
-    url_val <- get_keyring_value(service, acct_u)
-    has_url <- !is.null(url_val) && !identical(url_val, "")
+    has_url <- is.data.frame(keys) && ("username" %in% names(keys)) && (acct_u %in% keys$username)
+    url_val <- if (has_url) {
+      get_keyring_value(service, acct_u)
+    } else {
+      NULL
+    }
 
     acct_k <- keyring_account_name(instance, "api_key")
-    key_val <- get_keyring_value(service, acct_k)
-    has_key <- !is.null(key_val) && !identical(key_val, "")
+    has_key <- is.data.frame(keys) && ("username" %in% names(keys)) && (acct_k %in% keys$username)
   } else {
     var_u <- env_var_name(instance, "api_url")
     val_u <- Sys.getenv(var_u)
@@ -338,34 +343,45 @@ list_instances <- function() {
     ))
   }
 
+  if (identical(source, "keyring")) {
+    api_urls <- purrr::map_chr(instances, function(inst) {
+      acct_u <- keyring_account_name(inst, "api_url")
+      if (is.data.frame(keys) && ("username" %in% names(keys)) && !(acct_u %in% keys$username)) {
+        return(NA_character_)
+      }
+      u <- tryCatch(
+        get_keyring_value(service, acct_u),
+        error = function(e) NULL
+      )
+      u %||% NA_character_
+    })
+    has_api_keys <- purrr::map_lgl(instances, function(inst) {
+      acct_k <- keyring_account_name(inst, "api_key")
+      is.data.frame(keys) && ("username" %in% names(keys)) && (acct_k %in% keys$username)
+    })
+  } else {
+    api_urls <- purrr::map_chr(instances, function(inst) {
+      u <- Sys.getenv(env_var_name(inst, "api_url"))
+      if (identical(u, "") && identical(inst, "default")) {
+        u <- Sys.getenv("RSPACE_DEFAULT_API_URL")
+      }
+      if (identical(u, "")) NA_character_ else u
+    })
+    has_api_keys <- purrr::map_lgl(instances, function(inst) {
+      k <- Sys.getenv(env_var_name(inst, "api_key"))
+      if (identical(k, "") && identical(inst, "default")) {
+        k <- Sys.getenv("RSPACE_DEFAULT_API_KEY")
+      }
+      !identical(k, "")
+    })
+  }
+
   tibble::tibble(
     instance = instances,
     source = source,
     active = instances == active,
-    api_url = purrr::map_chr(instances, function(inst) {
-      if (identical(source, "keyring")) {
-        u <- get_keyring_value(service, keyring_account_name(inst, "api_url"))
-        u %||% NA_character_
-      } else {
-        u <- Sys.getenv(env_var_name(inst, "api_url"))
-        if (identical(u, "") && identical(inst, "default")) {
-          u <- Sys.getenv("RSPACE_DEFAULT_API_URL")
-        }
-        if (identical(u, "")) NA_character_ else u
-      }
-    }),
-    has_api_key = purrr::map_lgl(instances, function(inst) {
-      if (identical(source, "keyring")) {
-        k <- get_keyring_value(service, keyring_account_name(inst, "api_key"))
-        !is.null(k) && !identical(k, "")
-      } else {
-        k <- Sys.getenv(env_var_name(inst, "api_key"))
-        if (identical(k, "") && identical(inst, "default")) {
-          k <- Sys.getenv("RSPACE_DEFAULT_API_KEY")
-        }
-        !identical(k, "")
-      }
-    })
+    api_url = api_urls,
+    has_api_key = has_api_keys
   )
 }
 
