@@ -390,3 +390,78 @@ test_that("rspace_error_body safely extracts messages and handles non-JSON bodie
   expect_null(rspace_error_body(resp_empty))
 })
 
+test_that("is_keyring_not_found_msg correctly classifies missing vs operational errors", {
+  # Missing entry patterns
+  expect_true(is_keyring_not_found_msg("The specified item could not be found in the keychain."))
+  expect_true(is_keyring_not_found_msg("Cannot find password"))
+  expect_true(is_keyring_not_found_msg("Element not found"))
+  expect_true(is_keyring_not_found_msg("No such object"))
+  expect_true(is_keyring_not_found_msg("org.freedesktop.Secret.Error.NoSuchObject"))
+  expect_true(is_keyring_not_found_msg("The 'system' keyring does not exist"))
+
+  # Operational failures -> must never be treated as not found
+  expect_false(is_keyring_not_found_msg("Keyring is locked"))
+  expect_false(is_keyring_not_found_msg("Aborted"))
+  expect_false(is_keyring_not_found_msg("Cannot connect to D-Bus daemon"))
+  expect_false(is_keyring_not_found_msg("The name org.freedesktop.secrets was not provided by any .service files"))
+  expect_false(is_keyring_not_found_msg("User interaction is not allowed"))
+  expect_false(is_keyring_not_found_msg("Access is denied"))
+  expect_false(is_keyring_not_found_msg("Operation not permitted"))
+  expect_false(is_keyring_not_found_msg("Authentication failed"))
+})
+
+test_that("keyring read operational errors are propagated with cause rather than masked as missing", {
+  rlang::local_interactive(FALSE)
+  withr::local_options(list(
+    keyring_backend = "env",
+    rspacer.auth_source = "keyring",
+    rspacer.active_instance = "default",
+    rspacer.keyring_service = "rspacer_test_read_errors"
+  ))
+  withr::defer(unset_api(instance = "default", service = "rspacer_test_read_errors"))
+
+  # Set valid credentials
+  set_api_key_with_value("key_123", instance = "default")
+  set_api_url_with_value("https://example.com/api/v1", instance = "default")
+
+  # 1. Operational error during key_get (e.g. locked keyring) -> must propagate
+  local_mocked_bindings(
+    key_get = function(...) stop("Keyring is locked"),
+    .package = "keyring"
+  )
+
+  err_k <- expect_error(
+    get_api_key(instance = "default", service = "rspacer_test_read_errors"),
+    class = "rlang_error"
+  )
+  expect_match(conditionMessage(err_k), "Failed to read credential from keyring")
+  expect_match(conditionMessage(err_k), "Keyring is locked")
+
+  err_u <- expect_error(
+    get_api_url(instance = "default", service = "rspacer_test_read_errors"),
+    class = "rlang_error"
+  )
+  expect_match(conditionMessage(err_u), "Failed to read credential from keyring")
+  expect_match(conditionMessage(err_u), "Keyring is locked")
+
+  # 2. Operational error during key_list (e.g. D-Bus daemon unavailable) -> must propagate
+  local_mocked_bindings(
+    key_list = function(...) stop("Cannot connect to D-Bus daemon"),
+    .package = "keyring"
+  )
+
+  err_list <- expect_error(
+    get_api_key(instance = "default", service = "rspacer_test_read_errors"),
+    class = "rlang_error"
+  )
+  expect_match(conditionMessage(err_list), "Failed to access keyring service")
+  expect_match(conditionMessage(err_list), "Cannot connect to D-Bus daemon")
+
+  err_instances <- expect_error(
+    list_instances(source = "keyring", service = "rspacer_test_read_errors"),
+    class = "rlang_error"
+  )
+  expect_match(conditionMessage(err_instances), "Failed to access keyring service")
+})
+
+

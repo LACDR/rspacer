@@ -61,15 +61,8 @@ env_var_name <- function(instance, type = c("api_key", "api_url")) {
   }
 }
 
-get_keyring_value <- function(service, username) {
+keyring_service_keys <- function(service) {
   tryCatch(
-    keyring::key_get(service = service, username = username),
-    error = function(e) NULL
-  )
-}
-
-delete_keyring_credential <- function(service, username) {
-  keys <- tryCatch(
     keyring::key_list(service = service),
     error = function(e) {
       if (grepl("does not exist", conditionMessage(e), ignore.case = TRUE)) {
@@ -84,11 +77,63 @@ delete_keyring_credential <- function(service, username) {
       )
     }
   )
+}
+
+is_keyring_not_found_msg <- function(msg) {
+  locked_or_unavailable <- c(
+    "locked", "aborted", "denied", "canceled", "cancelled",
+    "cannot connect", "not provided", "interaction is not allowed",
+    "auth failed", "operation not permitted"
+  )
+  if (any(vapply(locked_or_unavailable, function(p) grepl(p, msg, ignore.case = TRUE), logical(1)))) {
+    return(FALSE)
+  }
+
+  not_found_patterns <- c(
+    "cannot find password",
+    "could not be found",
+    "not found",
+    "no such object",
+    "nosuchobject",
+    "does not exist"
+  )
+  any(vapply(not_found_patterns, function(p) grepl(p, msg, ignore.case = TRUE), logical(1)))
+}
+
+get_keyring_value <- function(service, username) {
+  keys <- keyring_service_keys(service)
+  if (is.data.frame(keys) && ("username" %in% names(keys)) && !(username %in% keys$username)) {
+    return(NULL)
+  }
+
+  tryCatch(
+    keyring::key_get(service = service, username = username),
+    error = function(e) {
+      if (is_keyring_not_found_msg(conditionMessage(e))) {
+        return(NULL)
+      }
+      cli::cli_abort(
+        c(
+          "Failed to read credential from keyring.",
+          "x" = "Could not retrieve {.val {username}} from service {.val {service}}.",
+          "i" = "Backend error: {conditionMessage(e)}"
+        ),
+        parent = e
+      )
+    }
+  )
+}
+
+delete_keyring_value <- function(service, username) {
+  keys <- keyring_service_keys(service)
 
   if (is.data.frame(keys) && ("username" %in% names(keys)) && username %in% keys$username) {
     tryCatch(
       keyring::key_delete(service = service, username = username),
       error = function(e) {
+        if (is_keyring_not_found_msg(conditionMessage(e))) {
+          return(invisible(FALSE))
+        }
         cli::cli_abort(
           c(
             "Failed to remove credential from keyring.",
@@ -219,7 +264,7 @@ list_instances <- function(source = get_auth_source(),
   active <- get_active_instance()
 
   if (identical(source, "keyring")) {
-    keys <- tryCatch(keyring::key_list(service = service), error = function(e) NULL)
+    keys <- keyring_service_keys(service)
     if (is.null(keys) || nrow(keys) == 0) {
       instances <- character(0)
     } else {
@@ -485,7 +530,7 @@ unset_api_url <- function(instance = get_active_instance(),
   instance <- normalize_instance(instance, inform = TRUE)
   if (identical(source, "keyring")) {
     acct <- keyring_account_name(instance, "api_url")
-    delete_keyring_credential(service = service, username = acct)
+    delete_keyring_value(service = service, username = acct)
     cli::cli_alert_success("RSpace API URL unset from system keyring for instance {.val {instance}}.")
   } else {
     var_name <- env_var_name(instance, "api_url")
@@ -508,7 +553,7 @@ unset_api_key <- function(instance = get_active_instance(),
   instance <- normalize_instance(instance, inform = TRUE)
   if (identical(source, "keyring")) {
     acct <- keyring_account_name(instance, "api_key")
-    delete_keyring_credential(service = service, username = acct)
+    delete_keyring_value(service = service, username = acct)
     cli::cli_alert_success("RSpace API key unset from system keyring for instance {.val {instance}}.")
   } else {
     var_name <- env_var_name(instance, "api_key")
