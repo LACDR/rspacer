@@ -340,3 +340,41 @@ test_that("keyring deletion errors are propagated and verified absence succeeds 
   expect_message(unset_api_key(instance = "default", service = "rspacer_test_deletion"), "unset")
 })
 
+test_that("rspace_error_body safely extracts messages and handles non-JSON bodies", {
+  # JSON with message
+  resp_json_msg <- httr2::response(
+    status_code = 401,
+    headers = list("content-type" = "application/json"),
+    body = charToRaw('{"message":"Invalid API key"}')
+  )
+  expect_equal(rspace_error_body(resp_json_msg), "Invalid API key")
+
+  # JSON with error
+  resp_json_err <- httr2::response(
+    status_code = 400,
+    headers = list("content-type" = "application/json"),
+    body = charToRaw('{"error":"Bad Request"}')
+  )
+  expect_equal(rspace_error_body(resp_json_err), "Bad Request")
+
+  # HTML body (e.g. 404 / 502 page) -> returns NULL without crashing
+  resp_html <- httr2::response(
+    status_code = 404,
+    headers = list("content-type" = "text/html"),
+    body = charToRaw('<html><body>Not Found</body></html>')
+  )
+  expect_null(rspace_error_body(resp_html))
+
+  # Plain text body
+  resp_txt <- httr2::response(
+    status_code = 500,
+    headers = list("content-type" = "text/plain"),
+    body = charToRaw('Internal Server Error\n')
+  )
+  expect_equal(rspace_error_body(resp_txt), "Internal Server Error")
+
+  # No body
+  resp_empty <- httr2::response(status_code = 204)
+  expect_null(rspace_error_body(resp_empty))
+})
+

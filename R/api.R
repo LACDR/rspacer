@@ -708,9 +708,25 @@ print.rspace_api <- function(x, ..., reveal_key = FALSE) {
 # Request & Communication -----------------------------------------------------
 
 rspace_error_body <- function(resp) {
-  resp |>
-    httr2::resp_body_json() |>
-    purrr::pluck("message")
+  if (!httr2::resp_has_body(resp)) {
+    return(NULL)
+  }
+  c_type <- httr2::resp_content_type(resp)
+  if (grepl("json", c_type, ignore.case = TRUE)) {
+    body <- tryCatch(httr2::resp_body_json(resp), error = function(e) NULL)
+    if (is.list(body)) {
+      msg <- body$message %||% body$error
+      if (is.character(msg) && length(msg) > 0) {
+        return(msg)
+      }
+    }
+  } else if (grepl("text/plain", c_type, ignore.case = TRUE)) {
+    msg <- tryCatch(httr2::resp_body_string(resp), error = function(e) NULL)
+    if (is.character(msg) && nzchar(trimws(msg))) {
+      return(trimws(msg))
+    }
+  }
+  NULL
 }
 
 create_global_id_link <- function(global_id, api) {
