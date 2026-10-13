@@ -4,12 +4,7 @@
 \alias{list_instances}
 \title{List configured RSpace instances}
 \usage{
-list_instances(source = get_auth_source(), service = get_keyring_service())
-}
-\arguments{
-\item{source}{Credential source: \code{"keyring"} (default) or \code{"env"}.}
-
-\item{service}{Keyring service name (defaults to \code{"rspacer"}).}
+list_instances()
 }
 \value{
 A tibble with columns \code{instance}, \code{source}, \code{active}, \code{api_url}, and \code{has_api_key}.

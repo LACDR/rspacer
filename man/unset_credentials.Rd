@@ -7,30 +7,14 @@
 \alias{unset_api_key}
 \title{Unset RSpace API credentials}
 \usage{
-unset_api(
-  instance = get_active_instance(),
-  source = get_auth_source(),
-  service = get_keyring_service()
-)
+unset_api(instance = get_active_instance())
 
-unset_api_url(
-  instance = get_active_instance(),
-  source = get_auth_source(),
-  service = get_keyring_service()
-)
+unset_api_url(instance = get_active_instance())
 
-unset_api_key(
-  instance = get_active_instance(),
-  source = get_auth_source(),
-  service = get_keyring_service()
-)
+unset_api_key(instance = get_active_instance())
 }
 \arguments{
 \item{instance}{The RSpace instance name (defaults to active instance).}
-
-\item{source}{Credential source: \code{"keyring"} (default) or \code{"env"}.}
-
-\item{service}{Keyring service name (defaults to \code{"rspacer"}).}
 }
 \description{
 Removes stored credentials from the system keyring or current session environment.

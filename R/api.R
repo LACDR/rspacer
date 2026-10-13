@@ -12,7 +12,14 @@ get_auth_source <- function() {
 }
 
 get_keyring_service <- function() {
-  getOption("rspacer.keyring_service", "rspacer")
+  srv <- getOption("rspacer.keyring_service")
+  if (is.null(srv) || identical(srv, "")) {
+    srv <- Sys.getenv("RSPACER_KEYRING_SERVICE", "")
+  }
+  if (is.null(srv) || identical(srv, "")) {
+    srv <- "rspacer"
+  }
+  srv
 }
 
 is_valid_instance <- function(x) {
@@ -181,8 +188,6 @@ get_active_instance <- function() {
 #' @param instance The instance name as a string (e.g. `"leiden"`, `"bristol"`, or `"default"`).
 #'   Names are case-insensitive and `_` is treated as `-`; see [get_active_instance()].
 #'   If the canonical form differs from the name you provide, you are informed.
-#' @param source Credential source: `"keyring"` (default) or `"env"`.
-#' @param service Keyring service name (defaults to `"rspacer"`).
 #'
 #' @return Invisibly returns the previous active instance name.
 #'
@@ -192,11 +197,9 @@ get_active_instance <- function() {
 #' use_instance("default")
 #' }
 #' @export
-use_instance <- function(instance = "default",
-                         source = get_auth_source(),
-                         service = get_keyring_service()) {
+use_instance <- function(instance = "default") {
   instance <- normalize_instance(instance, inform = TRUE)
-  source <- match.arg(source, c("keyring", "env"))
+  source <- get_auth_source()
   old_instance <- get_active_instance()
   options(rspacer.active_instance = instance)
 
@@ -206,6 +209,7 @@ use_instance <- function(instance = "default",
   url_val <- NULL
 
   if (identical(source, "keyring")) {
+    service <- get_keyring_service()
     acct_u <- keyring_account_name(instance, "api_url")
     url_val <- get_keyring_value(service, acct_u)
     has_url <- !is.null(url_val) && !identical(url_val, "")
@@ -248,9 +252,6 @@ use_instance <- function(instance = "default",
 #' Lists all RSpace instances configured in the active credential store
 #' (system keyring or environment variables).
 #'
-#' @param source Credential source: `"keyring"` (default) or `"env"`.
-#' @param service Keyring service name (defaults to `"rspacer"`).
-#'
 #' @return A tibble with columns `instance`, `source`, `active`, `api_url`, and `has_api_key`.
 #'
 #' @examples
@@ -258,12 +259,12 @@ use_instance <- function(instance = "default",
 #' list_instances()
 #' }
 #' @export
-list_instances <- function(source = get_auth_source(),
-                           service = get_keyring_service()) {
-  source <- match.arg(source, c("keyring", "env"))
+list_instances <- function() {
+  source <- get_auth_source()
   active <- get_active_instance()
 
   if (identical(source, "keyring")) {
+    service <- get_keyring_service()
     keys <- keyring_service_keys(service)
     if (is.null(keys) || nrow(keys) == 0) {
       instances <- character(0)
@@ -350,8 +351,6 @@ list_instances <- function(source = get_auth_source(),
 #' @param api_url The RSpace API URL string (e.g. `"https://community.researchspace.com/api/v1"`).
 #'   If `NULL` and running interactively, prompts the user to enter the URL.
 #' @param instance The RSpace instance name (defaults to active instance).
-#' @param source Credential source: `"keyring"` (default) or `"env"`.
-#' @param service Keyring service name (defaults to `"rspacer"`).
 #'
 #' @examples
 #' \dontrun{
@@ -367,20 +366,14 @@ list_instances <- function(source = get_auth_source(),
 #' @name set_credentials
 #' @export
 set_api <- function(api_url = NULL,
-                    instance = get_active_instance(),
-                    source = get_auth_source(),
-                    service = get_keyring_service()) {
+                    instance = get_active_instance()) {
   instance <- normalize_instance(instance, inform = TRUE)
   set_api_url(
     api_url = api_url,
-    instance = instance,
-    source = source,
-    service = service
+    instance = instance
   )
   set_api_key(
-    instance = instance,
-    source = source,
-    service = service
+    instance = instance
   )
   invisible(TRUE)
 }
@@ -388,10 +381,7 @@ set_api <- function(api_url = NULL,
 #' @rdname set_credentials
 #' @export
 set_api_url <- function(api_url = NULL,
-                        instance = get_active_instance(),
-                        source = get_auth_source(),
-                        service = get_keyring_service()) {
-  source <- match.arg(source, c("keyring", "env"))
+                        instance = get_active_instance()) {
   instance <- normalize_instance(instance, inform = TRUE)
   if (is.null(api_url)) {
     if (!rlang::is_interactive()) {
@@ -408,19 +398,15 @@ set_api_url <- function(api_url = NULL,
 
   set_api_url_with_value(
     api_url = api_url,
-    instance = instance,
-    source = source,
-    service = service
+    instance = instance
   )
 }
 
 #' Set the RSpace API URL programmatically
 #' @noRd
 set_api_url_with_value <- function(api_url,
-                                   instance = get_active_instance(),
-                                   source = get_auth_source(),
-                                   service = get_keyring_service()) {
-  source <- match.arg(source, c("keyring", "env"))
+                                   instance = get_active_instance()) {
+  source <- get_auth_source()
   instance <- normalize_instance(instance)
   if (missing(api_url) || !is.character(api_url) || length(api_url) != 1 || identical(trimws(api_url), "")) {
     cli::cli_abort("Please provide a valid character string for {.arg api_url}.")
@@ -428,6 +414,7 @@ set_api_url_with_value <- function(api_url,
   api_url <- trimws(api_url)
 
   if (identical(source, "keyring")) {
+    service <- get_keyring_service()
     acct <- keyring_account_name(instance, "api_url")
     keyring::key_set_with_value(service = service, username = acct, password = api_url)
     cli::cli_alert_success("RSpace API URL stored in system keyring for instance {.val {instance}}.")
@@ -441,10 +428,8 @@ set_api_url_with_value <- function(api_url,
 
 #' @rdname set_credentials
 #' @export
-set_api_key <- function(instance = get_active_instance(),
-                        source = get_auth_source(),
-                        service = get_keyring_service()) {
-  source <- match.arg(source, c("keyring", "env"))
+set_api_key <- function(instance = get_active_instance()) {
+  source <- get_auth_source()
   instance <- normalize_instance(instance, inform = TRUE)
   if (!rlang::is_interactive()) {
     cli::cli_abort(c(
@@ -455,6 +440,7 @@ set_api_key <- function(instance = get_active_instance(),
 
   prompt_msg <- paste0("Enter RSpace API key for instance '", instance, "': ")
   if (identical(source, "keyring")) {
+    service <- get_keyring_service()
     acct <- keyring_account_name(instance, "api_key")
     keyring::key_set(service = service, username = acct, prompt = prompt_msg)
     cli::cli_alert_success("RSpace API key stored in system keyring for instance {.val {instance}}.")
@@ -473,16 +459,15 @@ set_api_key <- function(instance = get_active_instance(),
 #' Set the RSpace API key programmatically
 #' @noRd
 set_api_key_with_value <- function(api_key,
-                                   instance = get_active_instance(),
-                                   source = get_auth_source(),
-                                   service = get_keyring_service()) {
-  source <- match.arg(source, c("keyring", "env"))
+                                   instance = get_active_instance()) {
+  source <- get_auth_source()
   instance <- normalize_instance(instance)
   if (missing(api_key) || !is.character(api_key) || length(api_key) != 1 || identical(api_key, "")) {
     cli::cli_abort("Please provide a non-empty character string for {.arg api_key}.")
   }
 
   if (identical(source, "keyring")) {
+    service <- get_keyring_service()
     acct <- keyring_account_name(instance, "api_key")
     keyring::key_set_with_value(service = service, username = acct, password = api_key)
     cli::cli_alert_success("RSpace API key stored in system keyring for instance {.val {instance}}.")
@@ -501,9 +486,6 @@ set_api_key_with_value <- function(api_key,
 #' Removes stored credentials from the system keyring or current session environment.
 #'
 #' @param instance The RSpace instance name (defaults to active instance).
-#' @param source Credential source: `"keyring"` (default) or `"env"`.
-#' @param service Keyring service name (defaults to `"rspacer"`).
-#'
 #' @examples
 #' \dontrun{
 #' unset_api()
@@ -512,23 +494,20 @@ set_api_key_with_value <- function(api_key,
 #' }
 #' @name unset_credentials
 #' @export
-unset_api <- function(instance = get_active_instance(),
-                      source = get_auth_source(),
-                      service = get_keyring_service()) {
+unset_api <- function(instance = get_active_instance()) {
   instance <- normalize_instance(instance, inform = TRUE)
-  unset_api_key(instance = instance, source = source, service = service)
-  unset_api_url(instance = instance, source = source, service = service)
+  unset_api_key(instance = instance)
+  unset_api_url(instance = instance)
   invisible(TRUE)
 }
 
 #' @rdname unset_credentials
 #' @export
-unset_api_url <- function(instance = get_active_instance(),
-                          source = get_auth_source(),
-                          service = get_keyring_service()) {
-  source <- match.arg(source, c("keyring", "env"))
+unset_api_url <- function(instance = get_active_instance()) {
+  source <- get_auth_source()
   instance <- normalize_instance(instance, inform = TRUE)
   if (identical(source, "keyring")) {
+    service <- get_keyring_service()
     acct <- keyring_account_name(instance, "api_url")
     delete_keyring_value(service = service, username = acct)
     cli::cli_alert_success("RSpace API URL unset from system keyring for instance {.val {instance}}.")
@@ -546,12 +525,11 @@ unset_api_url <- function(instance = get_active_instance(),
 
 #' @rdname unset_credentials
 #' @export
-unset_api_key <- function(instance = get_active_instance(),
-                          source = get_auth_source(),
-                          service = get_keyring_service()) {
-  source <- match.arg(source, c("keyring", "env"))
+unset_api_key <- function(instance = get_active_instance()) {
+  source <- get_auth_source()
   instance <- normalize_instance(instance, inform = TRUE)
   if (identical(source, "keyring")) {
+    service <- get_keyring_service()
     acct <- keyring_account_name(instance, "api_key")
     delete_keyring_value(service = service, username = acct)
     cli::cli_alert_success("RSpace API key unset from system keyring for instance {.val {instance}}.")
@@ -576,19 +554,16 @@ unset_api_key <- function(instance = get_active_instance(),
 #' to prompt and store it immediately.
 #'
 #' @param instance The RSpace instance name (defaults to active instance).
-#' @param source Credential source: `"keyring"` (default) or `"env"`.
-#' @param service Keyring service name (defaults to `"rspacer"`).
 #'
 #' @return The RSpace API key string.
 #' @noRd
-get_api_key <- function(instance = get_active_instance(),
-                        source = get_auth_source(),
-                        service = get_keyring_service()) {
-  source <- match.arg(source, c("keyring", "env"))
+get_api_key <- function(instance = get_active_instance()) {
+  source <- get_auth_source()
   instance <- normalize_instance(instance)
   api_key <- NULL
 
   if (identical(source, "keyring")) {
+    service <- get_keyring_service()
     acct <- keyring_account_name(instance, "api_key")
     api_key <- get_keyring_value(service, acct)
   } else {
@@ -608,8 +583,8 @@ get_api_key <- function(instance = get_active_instance(),
     if (rlang::is_interactive()) {
       cli::cli_alert_warning("No RSpace API key found for instance {.val {instance}} (source: {.val {source}}).")
       if (ui_yes("Would you like to enter an API key now?")) {
-        set_api_key(instance = instance, source = source, service = service)
-        return(get_api_key(instance = instance, source = source, service = service))
+        set_api_key(instance = instance)
+        return(get_api_key(instance = instance))
       }
     }
 
@@ -638,19 +613,16 @@ get_api_key <- function(instance = get_active_instance(),
 #' to prompt and store it immediately.
 #'
 #' @param instance The RSpace instance name (defaults to active instance).
-#' @param source Credential source: `"keyring"` (default) or `"env"`.
-#' @param service Keyring service name (defaults to `"rspacer"`).
 #'
 #' @return The RSpace API URL string.
 #' @noRd
-get_api_url <- function(instance = get_active_instance(),
-                        source = get_auth_source(),
-                        service = get_keyring_service()) {
-  source <- match.arg(source, c("keyring", "env"))
+get_api_url <- function(instance = get_active_instance()) {
+  source <- get_auth_source()
   instance <- normalize_instance(instance)
   api_url <- NULL
 
   if (identical(source, "keyring")) {
+    service <- get_keyring_service()
     acct <- keyring_account_name(instance, "api_url")
     api_url <- get_keyring_value(service, acct)
   } else {
@@ -670,8 +642,8 @@ get_api_url <- function(instance = get_active_instance(),
     if (rlang::is_interactive()) {
       cli::cli_alert_warning("No RSpace API URL found for instance {.val {instance}} (source: {.val {source}}).")
       if (ui_yes("Would you like to enter an API URL now?")) {
-        set_api_url(instance = instance, source = source, service = service)
-        return(get_api_url(instance = instance, source = source, service = service))
+        set_api_url(instance = instance)
+        return(get_api_url(instance = instance))
       }
     }
 
@@ -700,8 +672,6 @@ get_api_url <- function(instance = get_active_instance(),
 #' By default, printing this object in the console hides the sensitive API key.
 #'
 #' @param instance The RSpace instance name (defaults to active instance).
-#' @param source Credential source: `"keyring"` (default) or `"env"`.
-#' @param service Keyring service name (defaults to `"rspacer"`).
 #'
 #' @return An S3 object of class `rspace_api` (inheriting from `list`) containing
 #'   `instance`, `source`, `api_url`, and `api_key`. When printed, the API key is masked by
@@ -713,17 +683,15 @@ get_api_url <- function(instance = get_active_instance(),
 #' get_api(instance = "leiden")
 #' }
 #' @export
-get_api <- function(instance = get_active_instance(),
-                    source = get_auth_source(),
-                    service = get_keyring_service()) {
-  source <- match.arg(source, c("keyring", "env"))
+get_api <- function(instance = get_active_instance()) {
+  source <- get_auth_source()
   instance <- normalize_instance(instance, inform = TRUE)
   structure(
     list(
       instance = instance,
       source = source,
-      api_url = get_api_url(instance = instance, source = source, service = service),
-      api_key = get_api_key(instance = instance, source = source, service = service)
+      api_url = get_api_url(instance = instance),
+      api_key = get_api_key(instance = instance)
     ),
     class = c("rspace_api", "list")
   )

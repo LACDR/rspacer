@@ -4,18 +4,10 @@
 \alias{get_api}
 \title{Get RSpace API credentials}
 \usage{
-get_api(
-  instance = get_active_instance(),
-  source = get_auth_source(),
-  service = get_keyring_service()
-)
+get_api(instance = get_active_instance())
 }
 \arguments{
 \item{instance}{The RSpace instance name (defaults to active instance).}
-
-\item{source}{Credential source: \code{"keyring"} (default) or \code{"env"}.}
-
-\item{service}{Keyring service name (defaults to \code{"rspacer"}).}
 }
 \value{
 An S3 object of class \code{rspace_api} (inheriting from \code{list}) containing

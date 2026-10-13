@@ -4,20 +4,12 @@
 \alias{use_instance}
 \title{Set the active RSpace instance}
 \usage{
-use_instance(
-  instance = "default",
-  source = get_auth_source(),
-  service = get_keyring_service()
-)
+use_instance(instance = "default")
 }
 \arguments{
 \item{instance}{The instance name as a string (e.g. \code{"leiden"}, \code{"bristol"}, or \code{"default"}).
 Names are case-insensitive and \verb{_} is treated as \code{-}; see \code{\link[=get_active_instance]{get_active_instance()}}.
 If the canonical form differs from the name you provide, you are informed.}
-
-\item{source}{Credential source: \code{"keyring"} (default) or \code{"env"}.}
-
-\item{service}{Keyring service name (defaults to \code{"rspacer"}).}
 }
 \value{
 Invisibly returns the previous active instance name.

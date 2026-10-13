@@ -7,35 +7,17 @@
 \alias{set_api_key}
 \title{Set RSpace API credentials}
 \usage{
-set_api(
-  api_url = NULL,
-  instance = get_active_instance(),
-  source = get_auth_source(),
-  service = get_keyring_service()
-)
+set_api(api_url = NULL, instance = get_active_instance())
 
-set_api_url(
-  api_url = NULL,
-  instance = get_active_instance(),
-  source = get_auth_source(),
-  service = get_keyring_service()
-)
+set_api_url(api_url = NULL, instance = get_active_instance())
 
-set_api_key(
-  instance = get_active_instance(),
-  source = get_auth_source(),
-  service = get_keyring_service()
-)
+set_api_key(instance = get_active_instance())
 }
 \arguments{
 \item{api_url}{The RSpace API URL string (e.g. \code{"https://community.researchspace.com/api/v1"}).
 If \code{NULL} and running interactively, prompts the user to enter the URL.}
 
 \item{instance}{The RSpace instance name (defaults to active instance).}
-
-\item{source}{Credential source: \code{"keyring"} (default) or \code{"env"}.}
-
-\item{service}{Keyring service name (defaults to \code{"rspacer"}).}
 }
 \description{
 Sets the API URL, API key, or both for the specified RSpace instance in the

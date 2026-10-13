@@ -29,8 +29,8 @@ test_that("keyring backend stores and retrieves credentials", {
   ))
 
   # Ensure clean starting state and guaranteed cleanup on exit
-  unset_api(instance = "default", service = "rspacer_test_suite")
-  withr::defer(unset_api(instance = "default", service = "rspacer_test_suite"))
+  unset_api(instance = "default")
+  withr::defer(unset_api(instance = "default"))
 
   # Initially empty -> should error in non-interactive session
   expect_error(get_api_key(), class = "rlang_error")
@@ -97,11 +97,11 @@ test_that("multi-instance management with keyring works", {
   ))
 
   # Ensure clean starting state and guaranteed cleanup on exit
-  unset_api(instance = "default", service = "rspacer_test_multi")
-  unset_api(instance = "leiden", service = "rspacer_test_multi")
+  unset_api(instance = "default")
+  unset_api(instance = "leiden")
   withr::defer({
-    unset_api(instance = "default", service = "rspacer_test_multi")
-    unset_api(instance = "leiden", service = "rspacer_test_multi")
+    unset_api(instance = "default")
+    unset_api(instance = "leiden")
   })
 
   # Configure default instance
@@ -288,8 +288,8 @@ test_that("user is informed when the canonical instance name differs", {
     rspacer.active_instance = NULL
   ))
   withr::defer({
-    unset_api(instance = "lab-a", service = "rspacer_test_names")
-    unset_api(instance = "default", service = "rspacer_test_names")
+    unset_api(instance = "lab-a")
+    unset_api(instance = "default")
   })
 
   expect_message(use_instance("Lab_A"), "normalized to")
@@ -307,10 +307,10 @@ test_that("keyring deletion errors are propagated and verified absence succeeds 
     rspacer.active_instance = "default",
     rspacer.keyring_service = "rspacer_test_deletion"
   ))
-  withr::defer(unset_api(instance = "default", service = "rspacer_test_deletion"))
+  withr::defer(unset_api(instance = "default"))
 
   # 1. Unsetting when no credentials exist succeeds cleanly (verified absent)
-  expect_message(unset_api_key(instance = "default", service = "rspacer_test_deletion"), "unset")
+  expect_message(unset_api_key(instance = "default"), "unset")
 
   # 2. Store credentials
   set_api_key_with_value("key_123", instance = "default")
@@ -324,11 +324,11 @@ test_that("keyring deletion errors are propagated and verified absence succeeds 
 
   # Should abort with rlang_error and describe failure
   expect_error(
-    unset_api_key(instance = "default", service = "rspacer_test_deletion"),
+    unset_api_key(instance = "default"),
     class = "rlang_error"
   )
   expect_error(
-    unset_api_url(instance = "default", service = "rspacer_test_deletion"),
+    unset_api_url(instance = "default"),
     class = "rlang_error"
   )
 
@@ -339,7 +339,7 @@ test_that("keyring deletion errors are propagated and verified absence succeeds 
   )
 
   expect_error(
-    unset_api_key(instance = "default", service = "rspacer_test_deletion"),
+    unset_api_key(instance = "default"),
     class = "rlang_error"
   )
 
@@ -349,7 +349,7 @@ test_that("keyring deletion errors are propagated and verified absence succeeds 
     .package = "keyring"
   )
 
-  expect_message(unset_api_key(instance = "default", service = "rspacer_test_deletion"), "unset")
+  expect_message(unset_api_key(instance = "default"), "unset")
 })
 
 test_that("rspace_error_body safely extracts messages and handles non-JSON bodies", {
@@ -418,7 +418,7 @@ test_that("keyring read operational errors are propagated with cause rather than
     rspacer.active_instance = "default",
     rspacer.keyring_service = "rspacer_test_read_errors"
   ))
-  withr::defer(unset_api(instance = "default", service = "rspacer_test_read_errors"))
+  withr::defer(unset_api(instance = "default"))
 
   # Set valid credentials
   set_api_key_with_value("key_123", instance = "default")
@@ -431,14 +431,14 @@ test_that("keyring read operational errors are propagated with cause rather than
   )
 
   err_k <- expect_error(
-    get_api_key(instance = "default", service = "rspacer_test_read_errors"),
+    get_api_key(instance = "default"),
     class = "rlang_error"
   )
   expect_match(conditionMessage(err_k), "Failed to read credential from keyring")
   expect_match(conditionMessage(err_k), "Keyring is locked")
 
   err_u <- expect_error(
-    get_api_url(instance = "default", service = "rspacer_test_read_errors"),
+    get_api_url(instance = "default"),
     class = "rlang_error"
   )
   expect_match(conditionMessage(err_u), "Failed to read credential from keyring")
@@ -451,14 +451,14 @@ test_that("keyring read operational errors are propagated with cause rather than
   )
 
   err_list <- expect_error(
-    get_api_key(instance = "default", service = "rspacer_test_read_errors"),
+    get_api_key(instance = "default"),
     class = "rlang_error"
   )
   expect_match(conditionMessage(err_list), "Failed to access keyring service")
   expect_match(conditionMessage(err_list), "Cannot connect to D-Bus daemon")
 
   err_instances <- expect_error(
-    list_instances(source = "keyring", service = "rspacer_test_read_errors"),
+    list_instances(),
     class = "rlang_error"
   )
   expect_match(conditionMessage(err_instances), "Failed to access keyring service")
