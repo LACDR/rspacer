@@ -200,8 +200,6 @@ get_active_instance <- function() {
 use_instance <- function(instance = "default") {
   instance <- normalize_instance(instance, inform = TRUE)
   source <- get_auth_source()
-  old_instance <- get_active_instance()
-  options(rspacer.active_instance = instance)
 
   # Check configuration without triggering interactive prompt
   has_url <- FALSE
@@ -234,14 +232,19 @@ use_instance <- function(instance = "default") {
     has_key <- !identical(val_k, "")
   }
 
+  old_instance <- get_active_instance()
+  options(rspacer.active_instance = instance)
+
   if (has_url && has_key) {
     cli::cli_alert_success("Active RSpace instance switched to {.val {instance}} (URL: {.url {url_val}}).")
   } else {
-    cli::cli_alert_info("Active RSpace instance switched to {.val {instance}}.")
-    cli::cli_inform(c(
-      "i" = "Credentials for {.val {instance}} are not fully configured.",
-      "i" = "Run {.run rspacer::set_api()} to configure."
-    ))
+    if(has_url) {
+      cli::cli_alert_info("Active RSpace instance switched to {.val {instance}} (URL: {.url {url_val}}).")
+    } else {
+      cli::cli_alert_info("Active RSpace instance switched to {.val {instance}}.")
+      cli::cli_inform(c("*" = "Run {.run rspacer::set_api_url()} to configure the API URL."))
+    }
+    if(!has_key) cli::cli_inform(c("*" = "Run {.run rspacer::set_api_key()} to configure the API key"))
   }
 
   invisible(old_instance)
