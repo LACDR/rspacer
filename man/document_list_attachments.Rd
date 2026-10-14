@@ -4,12 +4,12 @@
 \alias{document_list_attachments}
 \title{List attachments of a structured document}
 \usage{
-document_list_attachments(doc_id, api_key = get_api_key())
+document_list_attachments(doc_id, api = get_api())
 }
 \arguments{
 \item{doc_id}{Unique identifier of the document}
 
-\item{api_key}{RSpace API key}
+\item{api}{RSpace API connection object returned by \code{\link[=get_api]{get_api()}} (defaults to \code{get_api()}).}
 }
 \value{
 description A tibble with identifiers and information on attachments, one attachment per row.

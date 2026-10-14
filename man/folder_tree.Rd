@@ -9,7 +9,7 @@ folder_tree(
   ...,
   max_results = Inf,
   simplify = T,
-  api_key = get_api_key()
+  api = get_api()
 )
 }
 \arguments{
@@ -24,7 +24,7 @@ Can be used to order/filter the results.}
 
 \item{simplify}{Whether to simplify the returned tibble by converting/removing columns}
 
-\item{api_key}{RSpace API key}
+\item{api}{RSpace API connection object returned by \code{\link[=get_api]{get_api()}} (defaults to \code{get_api()}).}
 }
 \value{
 A tibble with the folder content as rows.

@@ -1,5 +1,6 @@
 CMD
 ELN
+Keyring
 MyRSpace
 RSpace
 rspacer's
@@ -10,6 +11,7 @@ WIP
 XLSX
 csv
 json
+keyring
 pre
 qmd
 subheaders

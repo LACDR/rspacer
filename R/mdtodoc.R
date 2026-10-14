@@ -95,7 +95,7 @@ tabfile_to_df <- function(path, file_type = NULL){
 #' @returns Invisible JSON response from the API.
 #' @export
 document_create_from_html <- function(path, template_id = NULL, folder_id = NULL, tags = NULL, attachments = NULL,
-                                      existing_document_id = NULL, api_key = get_api_key()) {
+                                      existing_document_id = NULL, api = get_api()) {
   doc_body <- html_to_doc_body(path, verbose = FALSE)
 
   if (!is.null(existing_document_id)) {
@@ -103,7 +103,7 @@ document_create_from_html <- function(path, template_id = NULL, folder_id = NULL
   }
 
   if (!is.null(template_id)) {
-    template_fields <- document_get_fields(template_id)
+    template_fields <- document_get_fields(template_id, api = api)
 
     if (length(doc_body$fields) != nrow(template_fields)) {
       cli::cli_abort("Document has different number of fields ({length(doc_body$fields)}) than template ({nrow(template_fields)})")
@@ -120,13 +120,13 @@ document_create_from_html <- function(path, template_id = NULL, folder_id = NULL
     doc_body$fields <- put_all_fields_in_one_field(doc_body$fields)
   }
   # Add tags, form ID and attachments to doc_body
-  doc_body <- add_information_to_doc_body(doc_body, template_id, folder_id, tags, attachments, api_key)
+  doc_body <- add_information_to_doc_body(doc_body, template_id, folder_id, tags, attachments, api = api)
 
   # Create or replace the document
   if (is.null(existing_document_id)) {
-    json <- document_post(doc_body)
+    json <- document_post(doc_body, api = api)
   } else {
-    json <- document_put(doc_body, existing_document_id)
+    json <- document_put(doc_body, existing_document_id, api = api)
   }
 
   return(invisible(json))
@@ -147,9 +147,9 @@ document_create_from_html <- function(path, template_id = NULL, folder_id = NULL
 #' @returns Invisible JSON response from the API.
 #' @export
 document_append_from_html <- function(path, existing_document_id, tags = NULL, attachments = NULL,
-                                      allow_missing_fields = FALSE, api_key = get_api_key()) {
+                                      allow_missing_fields = FALSE, api = get_api()) {
   # Get the current fields
-  current_fields <- document_get_fields(existing_document_id)
+  current_fields <- document_get_fields(existing_document_id, api = api)
 
   # Create a doc_body from the html file and process the fields to be put in a tibble
   doc_body <- html_to_doc_body(path, verbose = FALSE)
@@ -213,10 +213,10 @@ document_append_from_html <- function(path, existing_document_id, tags = NULL, a
   # Update tags and upload attachments
   doc_body <- add_information_to_doc_body(doc_body, tags = tags,
                                           attachments = attachments,
-                                          api_key = api_key)
+                                          api = api)
 
   # Replace old fields with new fields
-  json <- document_put(doc_body, existing_document_id)
+  json <- document_put(doc_body, existing_document_id, api = api)
   return(json)
 }
 
@@ -235,7 +235,7 @@ document_append_from_html <- function(path, existing_document_id, tags = NULL, a
 #' @returns Invisible JSON response from the API.
 #' @export
 document_create_from_tabfile <- function(path, file_type = NULL, document_name = NULL, template_id = NULL, folder_id = NULL,
-                                       tags = NULL, attachments = NULL, existing_document_id = NULL, api_key = get_api_key()) {
+                                       tags = NULL, attachments = NULL, existing_document_id = NULL, api = get_api()) {
   # get file contents as sections df
   sections <- tabfile_to_df(path, file_type = file_type)
 
@@ -248,7 +248,7 @@ document_create_from_tabfile <- function(path, file_type = NULL, document_name =
 
   document_create_from_tabular(sections, document_name = name, template_id = template_id,
                              folder_id = folder_id, tags = tags, attachments = attachments,
-                             existing_document_id = existing_document_id, api_key = api_key)
+                             existing_document_id = existing_document_id, api = api)
 
 }
 
@@ -266,7 +266,7 @@ document_create_from_tabfile <- function(path, file_type = NULL, document_name =
 #' @returns Invisible JSON response from the API.
 #' @export
 document_create_from_tabular <- function(df, document_name = NULL, template_id = NULL, folder_id = NULL,
-                                       tags = NULL, attachments = NULL, existing_document_id = NULL, api_key = get_api_key()) {
+                                       tags = NULL, attachments = NULL, existing_document_id = NULL, api = get_api()) {
   doc_body <- tabular_to_doc_body(df, verbose = FALSE)
 
   title <- create_rspace_document_name(df, document_name)
@@ -278,7 +278,7 @@ document_create_from_tabular <- function(df, document_name = NULL, template_id =
     template_id <- existing_document_id
   }
   if (!is.null(template_id)) {
-    template_fields <- document_get_fields(template_id)
+    template_fields <- document_get_fields(template_id, api = api)
 
     if (length(doc_body$fields) != nrow(template_fields)) {
       cli::cli_abort("Document has different number of fields ({length(doc_body$fields)}) than template ({nrow(template_fields)})")
@@ -287,13 +287,13 @@ document_create_from_tabular <- function(df, document_name = NULL, template_id =
     doc_body$fields <- put_all_fields_in_one_field(doc_body$fields)
   }
   # Add tags, form ID and attachments to doc_body
-  doc_body <- add_information_to_doc_body(doc_body, template_id = template_id, folder_id = folder_id, tags = tags, attachments = attachments)
+  doc_body <- add_information_to_doc_body(doc_body, template_id = template_id, folder_id = folder_id, tags = tags, attachments = attachments, api = api)
 
   # Create or replace the document
   if (is.null(existing_document_id)) {
-    json <- document_post(doc_body)
+    json <- document_post(doc_body, api = api)
   } else {
-    json <- document_put(doc_body, existing_document_id)
+    json <- document_put(doc_body, existing_document_id, api = api)
   }
 
   return(invisible(json))

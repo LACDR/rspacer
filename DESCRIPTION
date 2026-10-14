@@ -23,13 +23,16 @@ License: MIT + file LICENSE
 Encoding: UTF-8
 Depends:
     R (>= 4.1.0)
-Imports:
+LazyData: true
+Imports: 
+    askpass,
     cli,
     curl,
     dplyr,
     fs,
     glue,
     httr2 (>= 1.1.0),
+    keyring,
     purrr,
     readr,
     readxl,
@@ -41,15 +44,18 @@ Imports:
     xml2,
     lubridate
 Suggests:
+    callr,
     quarto,
     knitr,
+    pkgload,
     rmarkdown,
     spelling,
     testthat (>= 3.0.0),
-    usethis
+    usethis,
+    withr
 Config/testthat/edition: 3
 Roxygen: list(markdown = TRUE)
-RoxygenNote: 7.3.2
+RoxygenNote: 7.3.3
 Language: en-US
 URL: https://github.com/lacdr/rspacer, https://lacdr.github.io/rspacer/
 BugReports: https://github.com/lacdr/rspacer/issues

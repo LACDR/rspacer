@@ -6,31 +6,29 @@
 #' @returns An RSpace document as parsed JSON.
 #' @export
 #'
-document_retrieve <- function(doc_id, api_key = get_api_key()) {
-  request() |>
+document_retrieve <- function(doc_id, api = get_api()) {
+  request(api) |>
     httr2::req_url_path_append("documents", parse_rspace_id(doc_id)) |>
-    httr2::req_headers(`apiKey` = api_key) |>
     httr2::req_perform() |>
     httr2::resp_body_json()
 }
 
-document_post <- function(body, api_key = get_api_key()) {
+document_post <- function(body, api) {
   if(getOption("rspacer.set_rspacer_tag", TRUE))
     body$tags <- paste0(c("rspacer", body$tags), collapse = ",")
 
-  request() |>
+  request(api) |>
     httr2::req_url_path_append("documents") |>
-    httr2::req_headers(`apiKey` = api_key) |>
     httr2::req_body_json(body) |>
     httr2::req_perform() |>
     httr2::resp_body_json() -> json
 
-  cli::cli_inform("Document created: {.url {create_global_id_link(json$globalId)}}")
+  cli::cli_inform("Document created: {.url {create_global_id_link(json$globalId, api)}}")
 
   json
 }
 
-document_put <- function(body, existing_document_id, api_key = get_api_key()) {
+document_put <- function(body, existing_document_id, api) {
   if(getOption("rspacer.set_rspacer_tag", TRUE)) {
     if(is.null(body$tags)) {
       body$tags <- "rspacer"
@@ -41,15 +39,14 @@ document_put <- function(body, existing_document_id, api_key = get_api_key()) {
     }
   }
 
-  request() |>
+  request(api) |>
     httr2::req_url_path_append("documents", parse_rspace_id(existing_document_id)) |>
-    httr2::req_headers(`apiKey` = api_key) |>
     httr2::req_body_json(body) |>
     httr2::req_method("PUT") |>
     httr2::req_perform() |>
     httr2::resp_body_json() -> json
 
-  cli::cli_inform("Document updated: {.url {create_global_id_link(json$globalId)}}")
+  cli::cli_inform("Document updated: {.url {create_global_id_link(json$globalId, api)}}")
 
   return(json)
 }
@@ -71,12 +68,11 @@ document_put <- function(body, existing_document_id, api_key = get_api_key()) {
 #'
 #' @returns A tibble with search results, one result per row.
 #' @export
-document_search <- function(query, ..., max_results = 50, simplify = T, api_key = get_api_key()) {
+document_search <- function(query, ..., max_results = 50, simplify = T, api = get_api()) {
 
-  req <- request() |>
+  req <- request(api) |>
     httr2::req_url_path_append("documents") |>
-    httr2::req_url_query(query = query, ...) |>
-    httr2::req_headers(`apiKey` = get_api_key())
+    httr2::req_url_query(query = query, ...)
 
   documents <- retrieve_results(req, "documents", max_results)
 
@@ -104,8 +100,8 @@ document_search <- function(query, ..., max_results = 50, simplify = T, api_key 
 #' @inheritParams document_retrieve
 #' @returns A form id.
 #' @export
-doc_to_form_id <- function(doc_id, verbose = TRUE, api_key = get_api_key()) {
-  json <- document_retrieve(doc_id, api_key)
+doc_to_form_id <- function(doc_id, verbose = TRUE, api = get_api()) {
+  json <- document_retrieve(doc_id, api)
   if (verbose) {
     cli::cli_inform(c(
       "{.field Document}: {json$globalId} ({json$name})",
@@ -125,10 +121,10 @@ doc_to_form_id <- function(doc_id, verbose = TRUE, api_key = get_api_key()) {
 #' @returns description A tibble with identifiers and information on attachments, one attachment per row.
 #' Returns an empty tibble if no files are attached to the field.
 #' @export
-document_list_attachments <- function(doc_id, api_key = get_api_key()) {
+document_list_attachments <- function(doc_id, api = get_api()) {
   if (is.null(doc_id)) cli::cli_abort("Specify the document identifier `doc_id`")
 
-  attachments <- document_get_fields(doc_id) |>
+  attachments <- document_get_fields(doc_id, api) |>
     tibble::rowid_to_column(var = "field_id") |>
     dplyr::select("field_id", field_name = "name", "files") |>
     tidyr::drop_na("files")
@@ -156,14 +152,14 @@ document_list_attachments <- function(doc_id, api_key = get_api_key()) {
 #' A JSON object, invisibly. The function will raise an error if `doc_id` is not specified.
 #'
 #' @export
-document_add_attachments <- function(doc_id, attachments, api_key = get_api_key()) {
+document_add_attachments <- function(doc_id, attachments, api = get_api()) {
   if (is.null(doc_id)) cli::cli_abort("Specify the document identifier `doc_id`")
 
   doc_body <- list()
-  doc_body$fields <- document_retrieve(doc_id, api_key)$fields
-  doc_body <- add_information_to_doc_body(doc_body, attachments = attachments, api_key = api_key)
+  doc_body$fields <- document_retrieve(doc_id, api)$fields
+  doc_body <- add_information_to_doc_body(doc_body, attachments = attachments, api = api)
 
-  json <- document_put(doc_body, doc_id)
+  json <- document_put(doc_body, doc_id, api = api)
 
   return(invisible(json))
 

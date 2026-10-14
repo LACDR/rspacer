@@ -4,20 +4,23 @@
 \alias{api_status}
 \title{Function to check availability of the API service}
 \usage{
-api_status(api_key = get_api_key())
+api_status(api = get_api())
 }
 \arguments{
-\item{api_key}{RSpace API key}
+\item{api}{RSpace API connection object returned by \code{\link[=get_api]{get_api()}} (defaults to \code{get_api()}).}
 }
 \value{
+An S3 object of class \code{rspace_api_status} (inheriting from \code{list}) containing
+\code{instance}, \code{source}, \code{api_url}, \code{message}, \code{rspaceVersion}, and any additional status response fields.
+
 If the request succeeds, a list with the status message and the RSpace version of the API.
 }
 \description{
-Function to check availability of the API service
+Queries the status endpoint of the RSpace API service and returns
+connection and server status information.
 }
 \examples{
 \dontrun{
 api_status()
 }
-
 }

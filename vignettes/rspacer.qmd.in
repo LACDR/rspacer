@@ -8,6 +8,22 @@ vignette: >
 
 ```{r, include = FALSE}
 options(tidyverse.quiet = TRUE)
+
+# Disable terminal hyperlinks (OSC 8 '\033]8;;') and ANSI color escape codes
+# so cli output renders as clean plain text in precomputed markdown vignettes
+options(
+  tidyverse.quiet = TRUE,
+  cli.hyperlink = FALSE,
+  cli.num_colors = 1,
+  crayon.enabled = FALSE
+)
+
+library(rspacer)
+options(rspacer.auth_source = "keyring")
+options(rspacer.keyring_service = "rspacer_vignettes")
+set_api_url("https://leiden.researchspace.com/api/v1", instance = "default")
+set_api_url("https://community.researchspace.com/api/v1", instance = "community")
+# set the api keys manually in this keyring service
 ```
 
 The rspacer package is a wrapper for the RSpace Electronic Lab Notebook
@@ -25,18 +41,24 @@ To use rspacer it needs two things:
 1. The API URL for your RSpace instance (this is typically the URL of your RSpace instance followed by `api/v1`, e.g., `https://leiden.researchspace.com/api/v1`)^[If you don't have an RSpace instance yet, you can use the <https://community.researchspace.com/> instance.]
 2. Your API key, which is an authentication token you can use instead of your username and password. To create an API key go to 'Manage API Key' section of your RSpace profile page (MyRSpace -> My Profile). **You should keep your API key private.** You can regenerate an API key at any time, which will invalidate the old key.
 
-You can use the `set_api_url()` and `set_api_key()` functions to make these available to rspacer in the current session.
-To make this information persistent you can store it in environment variables. An easy way to do this is with `usethis::edit_r_environ()`; in the file that opens, you should add the following lines (insert your own URL and key):
+### Storing Credentials Securely (OS Keyring)
 
-```
-RSPACE_API_URL="https://leiden.researchspace.com/api/v1"
-RSPACE_API_KEY="<YOUR_API_KEY_HERE>"
-```
+By default, `rspacer` uses your operating system's credential store (keyring) to store credentials securely and encrypted at rest.
 
-After saving the file and restarting R, you should now be able to run
+You can configure your URL and API key using:
 
-```{r example}
+```{r, eval = F}
 library(rspacer)
+
+# Set the URL and interactively enter your API key:
+set_api("https://leiden.researchspace.com/api/v1")
+```
+
+You can also set them individually using `set_api_url()` and `set_api_key()`.
+
+After configuring credentials, you can check connectivity:
+
+```{r}
 api_status()
 ```
 
@@ -92,7 +114,6 @@ res_df |>
   fmt_markdown(columns = c(content))
 ```
 
-
 #### Create
 
 To create a document you need to specify name and content of the fields to be created.
@@ -100,8 +121,8 @@ The simplest way to do this is specify these in tabular form:
 
 ```{r}
 doc_df_to_upload <- tribble(
-~name, ~content,
-"Example field", "Example content"
+  ~name, ~content,
+  "Example field", "Example content"
 )
 document_create_from_tabular(df = doc_df_to_upload, document_name = "Example document")
 ```
@@ -109,10 +130,52 @@ document_create_from_tabular(df = doc_df_to_upload, document_name = "Example doc
 Support for multiple fields is supported if a compatible RSpace template
 is provided with the `template_id` argument; if `template_id = NULL` all fields
 will be concatenated into a single field using the field names as section headers.
-The Articles tab contains more detailed instructions on how to create more structured
+The Articles tab contains more detailed instructions on how to create structured
 documents in RSpace using the rspacer `document_create_*` functions and their arguments.
 
-##### The `rspacer` document tag
+## Advanced features
+
+### Multiple Instances
+
+If you work with multiple RSpace instances, you can configure and switch between them easily:
+
+```{r, eval = F}
+# Configure a second instance (e.g., 'community')
+set_api("https://community.researchspace.com/api/v1", instance = "community")
+```
+```{r}
+# Switch the active instance
+use_instance("community")
+
+# View all configured instances
+list_instances()
+```
+```{r, include = F}
+# Switch back
+use_instance()
+```
+
+### Using Environment Variables for credentials
+
+If you prefer to use environment variables (e.g., in non-interactive sessions), you can switch the authentication source:
+
+```r
+options(rspacer.auth_source = "env")
+```
+
+Then use the same commands as above to store your API credentials, this will store your credentials for the current session only.
+For persistent setup, define `RSPACER_AUTH_SOURCE`, `RSPACE_API_URL` and `RSPACE_API_KEY` in your `.Renviron` file (e.g., via `usethis::edit_r_environ()`):
+
+```bash
+RSPACER_AUTH_SOURCE="env"
+RSPACE_API_URL="https://leiden.researchspace.com/api/v1"
+RSPACE_API_KEY="<YOUR_API_KEY_HERE>"
+```
+
+For named instances with environment variables, use `RSPACE_<INSTANCE>_API_URL` and `RSPACE_<INSTANCE>_API_KEY`, such as `RSPACE_COMMUNITY_API_KEY`.
+
+
+### The `rspacer` document tag
 
 By default rspacer tags all RSpace documents created/updated using rspacer
 functions with the `rspacer` tag. To disable this^[this might be necessary on

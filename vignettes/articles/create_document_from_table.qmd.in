@@ -4,6 +4,12 @@ title: "Tutorial: creating a document from a table"
 
 ```{r, include = FALSE}
 options(tidyverse.quiet = TRUE)
+
+library(rspacer)
+options(rspacer.auth_source = "keyring")
+options(rspacer.keyring_service = "rspacer_vignettes")
+set_api_url("https://leiden.researchspace.com/api/v1", instance = "default")
+set_api_url("https://community.researchspace.com/api/v1", instance = "community")
 ```
 
 ## Before you start
@@ -62,7 +68,7 @@ Make sure that the template_id is the identifier of the template that you previo
 ```{r}
 document_create_from_tabular(
     df = df_to_upload,
-    template_id = "SD377682"
+    template_id = "SD377682" #< change to your template id
 )
 ```
 

@@ -54,9 +54,9 @@ can_overwrite <- function(path) {
   ui_yes("Overwrite pre-existing file {.file {path}}?")
 }
 
-add_information_to_doc_body <- function(doc_body, template_id = NULL, folder_id = NULL, tags = NULL, attachments = NULL, api_key = get_api_key()) {
+add_information_to_doc_body <- function(doc_body, template_id = NULL, folder_id = NULL, tags = NULL, attachments = NULL, api = NULL) {
   if (!is.null(template_id)) {
-    form_id <- parse_rspace_id(doc_to_form_id(template_id, verbose = FALSE))
+    form_id <- parse_rspace_id(doc_to_form_id(template_id, verbose = FALSE, api))
     doc_body$form <- list(id = form_id)
   }
 
@@ -69,7 +69,7 @@ add_information_to_doc_body <- function(doc_body, template_id = NULL, folder_id 
   }
 
   if (!is.null(attachments)) {
-    doc_body <- attachment_upload(doc_body, attachments, api_key)
+    doc_body <- attachment_upload(doc_body, attachments, api)
   }
 
   return(doc_body)
@@ -149,3 +149,8 @@ retrieve_results_hateoas <- function(req, key, max_results) {
 
   utils::head(all_results, max_results)
 }
+
+`%||%` <- function(x, y) {
+  if (is.null(x)) y else x
+}
+
